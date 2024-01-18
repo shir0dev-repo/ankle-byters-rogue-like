@@ -14,7 +14,7 @@ public class InsanityTimer : MonoBehaviour
 
     void Start()
     {
-        timeRemaining = 0f;
+        timeRemaining = 0f; 
     }
 
     void Update()
