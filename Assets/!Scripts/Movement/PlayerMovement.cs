@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     private PlayerInputHandler _playerInputHandler;
 
     [SerializeField] private float _moveSpeed = 8.0f;
+    [SerializeField] private float _rotationSpeed = 15.0f;
     private Vector3 _direction = Vector3.zero;
 
     private void Awake()
@@ -18,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
         _moveAction = _playerInputHandler.PlayerActions.FindAction(_MOVE_ACTION_NAME);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         // move action is in progress
         if (_moveAction.ReadValue<Vector2>().sqrMagnitude > 0.1f)
@@ -26,19 +27,19 @@ public class PlayerMovement : MonoBehaviour
             HandleMovement();
             HandleRotation();
         }
-        // no movement input recieved.
-        else
-            _direction = Vector3.zero;
     }
 
     private void HandleMovement()
     {
         _direction = _moveAction.ReadValue<Vector2>().normalized;
-        transform.position += _moveSpeed * Time.deltaTime * _direction;
+        transform.position += _moveSpeed * Time.fixedDeltaTime * _direction;
     }
+
     private void HandleRotation()
     {
         float angle = Mathf.Atan2(_direction.x, _direction.y) * Mathf.Rad2Deg * -1f;
-        transform.rotation = Quaternion.Euler(Vector3.forward * angle);
+        Quaternion targetRotation = Quaternion.Euler(angle * Vector3.forward);
+
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, _rotationSpeed * Time.fixedDeltaTime);
     }
 }
