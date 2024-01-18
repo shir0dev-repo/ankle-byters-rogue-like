@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -46,16 +47,21 @@ public class PlayerMovement : MonoBehaviour
         //
         //transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, _rotationSpeed * Time.fixedDeltaTime);
 
-        Vector3 lookDir = transform.position - _mainCam.ScreenToWorldPoint(Input.mousePosition);
-        Quaternion lookRotation = Quaternion.LookRotation(lookDir, Vector3.forward);
-        transform.rotation = Quaternion.Euler(0, 0, lookRotation.eulerAngles.z);
+        Vector3 lookDir = transform.position - _mainCam.ScreenToWorldPoint(Mouse.current.position.value);
+        
+        if (lookDir != Vector3.zero)
+        {
+            Quaternion lookRotation = Quaternion.LookRotation(lookDir, Vector3.forward);
+            transform.rotation = Quaternion.Euler(0, 0, lookRotation.eulerAngles.z);
+        }
     }
 
     private void OnDrawGizmosSelected()
     {
+        if (!Application.isPlaying) return;
         if (!_useDebugging) return;
 
-        Debug.DrawLine(transform.position, _mainCam.ScreenToWorldPoint(Input.mousePosition), Color.red);
+        Debug.DrawLine(transform.position, _mainCam.ScreenToWorldPoint(Mouse.current.position.value), Color.red);
         
     }
 }

@@ -1,11 +1,15 @@
+using System;
 using UnityEngine;
 
 public class Health : MonoBehaviour, IDamageable
 {
     [SerializeField] private int _maxHealth;
-    [SerializeField] private bool _useDebugging;
+
     public int MaxHealth => _maxHealth;
     public int CurrentHealth { get; private set; }
+
+    public Action<int> OnHealthChanged { get; set; }
+    public Action OnDeath { get; set; }
 
     private void Awake()
     {
