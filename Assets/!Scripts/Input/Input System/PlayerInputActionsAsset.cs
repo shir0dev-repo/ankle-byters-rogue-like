@@ -35,6 +35,15 @@ public partial class @PlayerInputActionsAsset: IInputActionCollection2, IDisposa
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""RangedAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""bc3a4830-266c-4b32-ab22-833ba62a1806"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -92,6 +101,17 @@ public partial class @PlayerInputActionsAsset: IInputActionCollection2, IDisposa
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a8b5fb98-a6c4-485c-90cf-4a772444a22b"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RangedAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -118,6 +138,7 @@ public partial class @PlayerInputActionsAsset: IInputActionCollection2, IDisposa
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
+        m_Player_RangedAttack = m_Player.FindAction("RangedAttack", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -180,11 +201,13 @@ public partial class @PlayerInputActionsAsset: IInputActionCollection2, IDisposa
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
+    private readonly InputAction m_Player_RangedAttack;
     public struct PlayerActions
     {
         private @PlayerInputActionsAsset m_Wrapper;
         public PlayerActions(@PlayerInputActionsAsset wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
+        public InputAction @RangedAttack => m_Wrapper.m_Player_RangedAttack;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -197,6 +220,9 @@ public partial class @PlayerInputActionsAsset: IInputActionCollection2, IDisposa
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
+            @RangedAttack.started += instance.OnRangedAttack;
+            @RangedAttack.performed += instance.OnRangedAttack;
+            @RangedAttack.canceled += instance.OnRangedAttack;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -204,6 +230,9 @@ public partial class @PlayerInputActionsAsset: IInputActionCollection2, IDisposa
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
+            @RangedAttack.started -= instance.OnRangedAttack;
+            @RangedAttack.performed -= instance.OnRangedAttack;
+            @RangedAttack.canceled -= instance.OnRangedAttack;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -233,5 +262,6 @@ public partial class @PlayerInputActionsAsset: IInputActionCollection2, IDisposa
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
+        void OnRangedAttack(InputAction.CallbackContext context);
     }
 }
