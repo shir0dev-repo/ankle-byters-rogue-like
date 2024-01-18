@@ -18,7 +18,7 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void Awake()
     {
-        _playerInputActionsAsset = new PlayerInputActionsAsset();
+        _playerInputActionsAsset ??= new PlayerInputActionsAsset();
     }
 
     private void OnEnable()
