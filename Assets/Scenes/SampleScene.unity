@@ -950,6 +950,8 @@ GameObject:
   - component: {fileID: 2045313268}
   - component: {fileID: 2045313267}
   - component: {fileID: 2045313266}
+  - component: {fileID: 2045313269}
+  - component: {fileID: 2045313270}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -970,7 +972,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 8
-  _rotationSpeed: 15
+  _useDebugging: 1
 --- !u!114 &2045313267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -999,6 +1001,35 @@ Transform:
   - {fileID: 260621310}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2045313269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2045313265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7435b70ff6df452468655bc56de8bf4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 6
+--- !u!114 &2045313270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2045313265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 966169a640cba5040892e8ca553a3da5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxTime: 5
+  player: {fileID: 0}
+  youDiedText: {fileID: 0}
+  timerImage: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
