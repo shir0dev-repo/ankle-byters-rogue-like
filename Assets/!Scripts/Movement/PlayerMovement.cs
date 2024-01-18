@@ -9,11 +9,10 @@ public class PlayerMovement : MonoBehaviour
     private PlayerInputHandler _playerInputHandler;
 
     [SerializeField] private float _moveSpeed = 8.0f;
-    [SerializeField] private float _rotationSpeed = 15.0f;
     private Vector3 _direction = Vector3.zero;
 
-    [SerializeField] private bool _useDebugging;
     private Camera _mainCam;
+    [Space, SerializeField] private bool _useDebugging;
 
     private void Awake()
     {
