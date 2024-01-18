@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,12 +20,25 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        // move keys are not pressed
-        if (_moveAction.ReadValue<Vector2>().sqrMagnitude < 0.1f)
-            return;
+        // move action is in progress
+        if (_moveAction.ReadValue<Vector2>().sqrMagnitude > 0.1f)
+        {
+            HandleMovement();
+            HandleRotation();
+        }
+        // no movement input recieved.
+        else
+            _direction = Vector3.zero;
+    }
 
+    private void HandleMovement()
+    {
         _direction = _moveAction.ReadValue<Vector2>().normalized;
         transform.position += _moveSpeed * Time.deltaTime * _direction;
-
+    }
+    private void HandleRotation()
+    {
+        float angle = Mathf.Atan2(_direction.x, _direction.y) * Mathf.Rad2Deg * -1f;
+        transform.rotation = Quaternion.Euler(Vector3.forward * angle);
     }
 }
