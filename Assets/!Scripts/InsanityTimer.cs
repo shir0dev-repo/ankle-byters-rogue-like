@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class InsanityTimer : MonoBehaviour
 {
     [SerializeField] public float maxTime = 5.0f;
+    [SerializeField] GameObject player;
     public GameObject youDiedText;
     public Image timerImage;
 
@@ -26,6 +27,7 @@ public class InsanityTimer : MonoBehaviour
         else
         {
             youDiedText.SetActive(true);
+            Destroy(player);
         }
     }
 }

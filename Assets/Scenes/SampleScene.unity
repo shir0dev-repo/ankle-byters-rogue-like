@@ -921,6 +921,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxTime: 5
+  player: {fileID: 2045313265}
   youDiedText: {fileID: 166097714}
   timerImage: {fileID: 313206817}
 --- !u!4 &1543122714
