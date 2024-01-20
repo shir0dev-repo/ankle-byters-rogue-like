@@ -962,6 +962,7 @@ GameObject:
   - component: {fileID: 2045313266}
   - component: {fileID: 2045313269}
   - component: {fileID: 2045313270}
+  - component: {fileID: 2045313271}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1038,6 +1039,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _projectilePrefab: {fileID: 3248226580217940092, guid: c53a207d0409bbe4faaa212feb800485, type: 3}
   fireCooldown: 0.5
+--- !u!114 &2045313271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2045313265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe801dd9417af074dbe6c890540466c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerMovement: {fileID: 2045313266}
+  _maxDistance: 2
+  _dashForce: 1
+  _dashDuration: 0.5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
