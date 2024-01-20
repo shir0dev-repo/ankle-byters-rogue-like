@@ -27,8 +27,6 @@ public class DashAbility : MonoBehaviour
 
         _playerInputHandler = GetComponent<PlayerInputHandler>();
         _dashAction = _playerInputHandler.PlayerActions.FindAction(_DASH_ACTION_NAME);
-
-        _cooldownRemaining = _dashCooldown;
     }
 
     private void OnEnable()
@@ -50,21 +48,21 @@ public class DashAbility : MonoBehaviour
     private void ExecuteDash(InputAction.CallbackContext obj)
     {
         // dash not ready
-        if (_isDashing) return; // || _cooldownRemaining > 0.0f) return;
-
-        Vector3 dashDirection = _mainCam.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-        dashDirection.z = 0;
-        dashDirection.Normalize();
-        
-        Debug.DrawRay(transform.position, dashDirection * _maxDistance, Color.green, 2f);
-        transform.Translate(dashDirection * _maxDistance, Space.World);
-        //StartCoroutine(DashCoroutine(dashDirection));
+        if (_isDashing) return;
+        Vector3 mousePosPX = Mouse.current.position.value;
+        mousePosPX.z = 10.0f;
+        // dash direction with correct magnitude
+        Vector3 dashDirection = (_mainCam.ScreenToWorldPoint(mousePosPX) - transform.position).normalized * _maxDistance;
+        Debug.Log(dashDirection);
+        Debug.DrawLine(transform.position, dashDirection + transform.position, Color.green, 2f);
+        StartCoroutine(DashCoroutine(dashDirection));
     }
 
     private IEnumerator DashCoroutine(Vector3 dashDirection)
     {
         _isDashing = true;
         _playerMovement.CanMove = false;
+        Vector3 startingPosition = transform.position;
         float timeElapsed = 0.0f;
 
         while (timeElapsed < _dashDuration)
@@ -72,7 +70,7 @@ public class DashAbility : MonoBehaviour
             timeElapsed += Time.deltaTime;
 
             float total = timeElapsed / _dashDuration;
-            transform.position = Vector3.Lerp(transform.position, dashDirection, total);
+            transform.position = startingPosition + dashDirection * total;
 
             yield return new WaitForEndOfFrame();
         }
@@ -80,6 +78,7 @@ public class DashAbility : MonoBehaviour
         yield return null;
 
         _playerMovement.CanMove = true;
+        _dashCooldown = _cooldownRemaining;
         _isDashing = false;
     }
 }

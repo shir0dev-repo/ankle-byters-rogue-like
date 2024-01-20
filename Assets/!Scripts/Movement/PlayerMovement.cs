@@ -65,6 +65,5 @@ public class PlayerMovement : MonoBehaviour
         if (!_useDebugging) return;
 
         Debug.DrawLine(transform.position, _mainCam.ScreenToWorldPoint(Mouse.current.position.value), Color.red);
-        
     }
 }
