@@ -28,12 +28,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!CanMove) return;
-
         HandleRotation();
         
-        // move action is in progress
-        if (_moveAction.ReadValue<Vector2>().sqrMagnitude > 0.1f)
+        // able to move && move action is in progress
+        if (CanMove && _moveAction.ReadValue<Vector2>().sqrMagnitude > 0.1f)
             HandleMovement();
     }
 

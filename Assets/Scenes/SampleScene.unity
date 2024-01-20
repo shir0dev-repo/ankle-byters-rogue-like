@@ -1052,8 +1052,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerMovement: {fileID: 2045313266}
-  _maxDistance: 2
-  _dashForce: 1
+  _dashDistance: 5
   _dashDuration: 0.5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
