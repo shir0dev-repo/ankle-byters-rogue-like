@@ -15,23 +15,24 @@ public class PlayerMovement : MonoBehaviour
     private Camera _mainCam;
     [Space, SerializeField] private bool _useDebugging;
 
+    public bool CanMove { get; set; }
+
     private void Awake()
     {
         _mainCam = Camera.main;
 
         _playerInputHandler = GetComponent<PlayerInputHandler>();
         _moveAction = _playerInputHandler.PlayerActions.FindAction(_MOVE_ACTION_NAME);
+        CanMove = true;
     }
 
     private void FixedUpdate()
     {
         HandleRotation();
         
-        // move action is in progress
-        if (_moveAction.ReadValue<Vector2>().sqrMagnitude > 0.1f)
+        // able to move && move action is in progress
+        if (CanMove && _moveAction.ReadValue<Vector2>().sqrMagnitude > 0.1f)
             HandleMovement();
-
-
     }
 
     private void HandleMovement()
@@ -62,6 +63,5 @@ public class PlayerMovement : MonoBehaviour
         if (!_useDebugging) return;
 
         Debug.DrawLine(transform.position, _mainCam.ScreenToWorldPoint(Mouse.current.position.value), Color.red);
-        
     }
 }
