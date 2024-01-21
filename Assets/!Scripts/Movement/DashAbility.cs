@@ -42,6 +42,11 @@ public class DashAbility : MonoBehaviour
         // dash not ready
         if (_isDashing) return;
 
+        _playerMovement.ApplyForce(GetDashDirection(), true, _dashDuration, InterpolateDashDirection);
+    }
+
+    private Vector3 GetDashDirection()
+    {
         // get mouse position
         Vector3 mousePosPX = Mouse.current.position.value;
 
@@ -49,10 +54,15 @@ public class DashAbility : MonoBehaviour
         mousePosPX.z = -_mainCam.transform.position.z;
 
         // dash direction with correct magnitude
-        Vector3 dashDirection = (_mainCam.ScreenToWorldPoint(mousePosPX) - transform.position).normalized * _dashDistance;
-        
-        StartCoroutine(DashCoroutine(dashDirection));
-        Debug.DrawLine(transform.position, dashDirection + transform.position, Color.green, 2f);
+        return (_mainCam.ScreenToWorldPoint(mousePosPX) - transform.position).normalized * _dashDistance;
+    }
+
+    private Vector3 InterpolateDashDirection(Vector3 dashDirection, float elapsedTime)
+    {
+        float total = elapsedTime / _dashDuration;
+        float easeExpo = total == 1 ? 1 : 1 - Mathf.Pow(2.0f, -10.0f * total);
+
+        return Vector3.Lerp(Vector3.zero, dashDirection, easeExpo);
     }
 
     private IEnumerator DashCoroutine(Vector3 dashDirection)

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -55,6 +56,35 @@ public class PlayerMovement : MonoBehaviour
             Quaternion lookRotation = Quaternion.LookRotation(lookDir, Vector3.forward);
             transform.rotation = Quaternion.Euler(0, 0, lookRotation.eulerAngles.z);
         }
+    }
+
+    public void ApplyForce(Vector3 forceDirection, bool interruptMovement, float duration, Func<Vector3, float, Vector3> positionDelegate)
+    {
+        if (forceDirection.sqrMagnitude < 0.1f) return;
+
+        if (interruptMovement)
+            CanMove = false;
+
+        StartCoroutine(ApplyForceCoroutine(forceDirection, duration, interruptMovement, positionDelegate));
+    }
+
+    private IEnumerator ApplyForceCoroutine(Vector3 forceDirection, float duration, bool interruptMovement, Func<Vector3, float, Vector3> positionDelegate)
+    {
+        Vector3 startPosition = transform.position;
+        float timeElapsed = 0.0f;
+
+        while (timeElapsed <= duration)
+        {
+            timeElapsed += Time.deltaTime;
+            float total = timeElapsed / duration;
+            transform.position = startPosition + positionDelegate(forceDirection, total);
+
+            yield return new WaitForEndOfFrame();
+        }
+
+        yield return null;
+        if (interruptMovement && !CanMove)
+            CanMove = true;
     }
 
     private void OnDrawGizmosSelected()
