@@ -52,12 +52,9 @@ public class PlayerMovement : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, angle - 90.0f);
     }
 
-    public void ApplyForce(Vector3 forceDirection, bool interruptMovement, float duration, VectorEasingMode easingMode)
+    public void ApplyForce(Vector3 forceDirection, float duration, VectorEasingMode easingMode)
     {
         if (forceDirection.sqrMagnitude < 0.1f) return;
-
-        if (interruptMovement)
-            _moveAction.Disable();
 
         StartCoroutine(ApplyForceCoroutine(forceDirection, duration, easingMode));
     }
@@ -65,6 +62,8 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator ApplyForceCoroutine(Vector3 forceDirection, float duration, VectorEasingMode easingMode)
     {
+        _moveAction.Disable();
+
         Vector3 startPosition = transform.position;
         float timeElapsed = 0.0f;
 
@@ -74,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
             float total = timeElapsed / duration;
             transform.position = easingMode.Evaluate(startPosition, forceDirection, total);
             
-            // finish the loop early if _player is already at position; in cases where lerp value is too high.
+            // finish the loop early if player is already at position; in cases where duration is longer than asymptotic value of curve.
             if (Vector3.Distance(transform.position, startPosition + forceDirection) < 0.1f)
                 break;
            

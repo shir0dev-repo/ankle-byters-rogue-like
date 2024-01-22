@@ -6,9 +6,9 @@ public class DashAbility : MonoBehaviour
     private const string _DASH_ACTION_NAME = "DashAbility";
     private InputAction _dashAction;
     private PlayerInputHandler _playerInputHandler;
+    private PlayerMovement _playerMovement;
 
-    [SerializeField] private PlayerMovement _playerMovement;
-    [Space]
+    [SerializeField] private VectorEasingMode _dashCurve;
     [SerializeField] private float _dashDistance = 5.0f;
     [SerializeField] private float _dashDuration = 0.5f;
     [SerializeField] private float _dashCooldown = 0.75f;
@@ -46,19 +46,7 @@ public class DashAbility : MonoBehaviour
     {
         if (_cooldownRemaining > 0f) return;
 
-        _playerMovement.ApplyForce(GetDashDirection(), true, _dashDuration, VectorEasingMode.EaseOutExpo);
+        _playerMovement.ApplyForce(transform.DirectionToMouseWorldSpace(normalized: true) * _dashDistance, _dashDuration, _dashCurve);
         _cooldownRemaining = _dashCooldown;
-    }
-
-    private Vector3 GetDashDirection()
-    {
-        // get mouse position
-        Vector3 mousePosPX = Mouse.current.position.value;
-
-        // offset mousepos by camera's z-position to stay at z = 0
-        mousePosPX.z = -_mainCam.transform.position.z;
-
-        // dash direction with correct magnitude
-        return (_mainCam.ScreenToWorldPoint(mousePosPX) - transform.position).normalized * _dashDistance;
     }
 }
