@@ -37,6 +37,15 @@ public partial class @PlayerInputActionsAsset: IInputActionCollection2, IDisposa
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""MeleeAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""8419764c-97e7-46e8-af25-7a508e252866"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""RangedAttack"",
                     ""type"": ""Button"",
                     ""id"": ""bc3a4830-266c-4b32-ab22-833ba62a1806"",
@@ -46,9 +55,18 @@ public partial class @PlayerInputActionsAsset: IInputActionCollection2, IDisposa
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Dash"",
+                    ""name"": ""DashAbility"",
                     ""type"": ""Button"",
                     ""id"": ""364e380d-cb75-4d55-a87e-dd5160e71a48"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""BlockAbility"",
+                    ""type"": ""Button"",
+                    ""id"": ""7d6ca094-61c2-49cb-be70-9279d52d3d31"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -125,11 +143,33 @@ public partial class @PlayerInputActionsAsset: IInputActionCollection2, IDisposa
                 {
                     ""name"": """",
                     ""id"": ""cebaece8-9a5b-436b-8373-96e91f52448d"",
-                    ""path"": ""<Keyboard>/leftShift"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Dash"",
+                    ""groups"": ""KBM"",
+                    ""action"": ""DashAbility"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""81b81242-0d46-454f-8c35-9a5cc4cadb02"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM"",
+                    ""action"": ""BlockAbility"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""70392c83-c4cc-46c9-b3c2-d0684946a4c8"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM"",
+                    ""action"": ""MeleeAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -158,8 +198,10 @@ public partial class @PlayerInputActionsAsset: IInputActionCollection2, IDisposa
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
+        m_Player_MeleeAttack = m_Player.FindAction("MeleeAttack", throwIfNotFound: true);
         m_Player_RangedAttack = m_Player.FindAction("RangedAttack", throwIfNotFound: true);
-        m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
+        m_Player_DashAbility = m_Player.FindAction("DashAbility", throwIfNotFound: true);
+        m_Player_BlockAbility = m_Player.FindAction("BlockAbility", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -222,15 +264,19 @@ public partial class @PlayerInputActionsAsset: IInputActionCollection2, IDisposa
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
+    private readonly InputAction m_Player_MeleeAttack;
     private readonly InputAction m_Player_RangedAttack;
-    private readonly InputAction m_Player_Dash;
+    private readonly InputAction m_Player_DashAbility;
+    private readonly InputAction m_Player_BlockAbility;
     public struct PlayerActions
     {
         private @PlayerInputActionsAsset m_Wrapper;
         public PlayerActions(@PlayerInputActionsAsset wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
+        public InputAction @MeleeAttack => m_Wrapper.m_Player_MeleeAttack;
         public InputAction @RangedAttack => m_Wrapper.m_Player_RangedAttack;
-        public InputAction @Dash => m_Wrapper.m_Player_Dash;
+        public InputAction @DashAbility => m_Wrapper.m_Player_DashAbility;
+        public InputAction @BlockAbility => m_Wrapper.m_Player_BlockAbility;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -243,12 +289,18 @@ public partial class @PlayerInputActionsAsset: IInputActionCollection2, IDisposa
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
+            @MeleeAttack.started += instance.OnMeleeAttack;
+            @MeleeAttack.performed += instance.OnMeleeAttack;
+            @MeleeAttack.canceled += instance.OnMeleeAttack;
             @RangedAttack.started += instance.OnRangedAttack;
             @RangedAttack.performed += instance.OnRangedAttack;
             @RangedAttack.canceled += instance.OnRangedAttack;
-            @Dash.started += instance.OnDash;
-            @Dash.performed += instance.OnDash;
-            @Dash.canceled += instance.OnDash;
+            @DashAbility.started += instance.OnDashAbility;
+            @DashAbility.performed += instance.OnDashAbility;
+            @DashAbility.canceled += instance.OnDashAbility;
+            @BlockAbility.started += instance.OnBlockAbility;
+            @BlockAbility.performed += instance.OnBlockAbility;
+            @BlockAbility.canceled += instance.OnBlockAbility;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -256,12 +308,18 @@ public partial class @PlayerInputActionsAsset: IInputActionCollection2, IDisposa
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
+            @MeleeAttack.started -= instance.OnMeleeAttack;
+            @MeleeAttack.performed -= instance.OnMeleeAttack;
+            @MeleeAttack.canceled -= instance.OnMeleeAttack;
             @RangedAttack.started -= instance.OnRangedAttack;
             @RangedAttack.performed -= instance.OnRangedAttack;
             @RangedAttack.canceled -= instance.OnRangedAttack;
-            @Dash.started -= instance.OnDash;
-            @Dash.performed -= instance.OnDash;
-            @Dash.canceled -= instance.OnDash;
+            @DashAbility.started -= instance.OnDashAbility;
+            @DashAbility.performed -= instance.OnDashAbility;
+            @DashAbility.canceled -= instance.OnDashAbility;
+            @BlockAbility.started -= instance.OnBlockAbility;
+            @BlockAbility.performed -= instance.OnBlockAbility;
+            @BlockAbility.canceled -= instance.OnBlockAbility;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -291,7 +349,9 @@ public partial class @PlayerInputActionsAsset: IInputActionCollection2, IDisposa
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
+        void OnMeleeAttack(InputAction.CallbackContext context);
         void OnRangedAttack(InputAction.CallbackContext context);
-        void OnDash(InputAction.CallbackContext context);
+        void OnDashAbility(InputAction.CallbackContext context);
+        void OnBlockAbility(InputAction.CallbackContext context);
     }
 }

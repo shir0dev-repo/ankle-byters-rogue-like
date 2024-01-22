@@ -16,13 +16,6 @@ public class Health : MonoBehaviour, IDamageable
         CurrentHealth = _maxHealth;
     }
 
-    // uncomment to test damage taking
-    //private void Update()
-    //{
-    //    if (Keyboard.current.spaceKey.wasPressedThisFrame)
-    //        TakeDamage(3);
-    //}
-
     public void TakeDamage(int damage)
     {
         if (damage <= 0) return;
