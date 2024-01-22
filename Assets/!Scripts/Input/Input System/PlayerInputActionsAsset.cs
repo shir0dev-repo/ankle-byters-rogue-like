@@ -53,6 +53,15 @@ public partial class @PlayerInputActionsAsset: IInputActionCollection2, IDisposa
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MeleeAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""9f663b35-537c-4841-9d84-dbdc811b3930"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -132,6 +141,17 @@ public partial class @PlayerInputActionsAsset: IInputActionCollection2, IDisposa
                     ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""37d5d22a-b131-4932-86f1-eef523ea2f74"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MeleeAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -160,6 +180,7 @@ public partial class @PlayerInputActionsAsset: IInputActionCollection2, IDisposa
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_RangedAttack = m_Player.FindAction("RangedAttack", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
+        m_Player_MeleeAttack = m_Player.FindAction("MeleeAttack", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -224,6 +245,7 @@ public partial class @PlayerInputActionsAsset: IInputActionCollection2, IDisposa
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_RangedAttack;
     private readonly InputAction m_Player_Dash;
+    private readonly InputAction m_Player_MeleeAttack;
     public struct PlayerActions
     {
         private @PlayerInputActionsAsset m_Wrapper;
@@ -231,6 +253,7 @@ public partial class @PlayerInputActionsAsset: IInputActionCollection2, IDisposa
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @RangedAttack => m_Wrapper.m_Player_RangedAttack;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
+        public InputAction @MeleeAttack => m_Wrapper.m_Player_MeleeAttack;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -249,6 +272,9 @@ public partial class @PlayerInputActionsAsset: IInputActionCollection2, IDisposa
             @Dash.started += instance.OnDash;
             @Dash.performed += instance.OnDash;
             @Dash.canceled += instance.OnDash;
+            @MeleeAttack.started += instance.OnMeleeAttack;
+            @MeleeAttack.performed += instance.OnMeleeAttack;
+            @MeleeAttack.canceled += instance.OnMeleeAttack;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -262,6 +288,9 @@ public partial class @PlayerInputActionsAsset: IInputActionCollection2, IDisposa
             @Dash.started -= instance.OnDash;
             @Dash.performed -= instance.OnDash;
             @Dash.canceled -= instance.OnDash;
+            @MeleeAttack.started -= instance.OnMeleeAttack;
+            @MeleeAttack.performed -= instance.OnMeleeAttack;
+            @MeleeAttack.canceled -= instance.OnMeleeAttack;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -293,5 +322,6 @@ public partial class @PlayerInputActionsAsset: IInputActionCollection2, IDisposa
         void OnMove(InputAction.CallbackContext context);
         void OnRangedAttack(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
+        void OnMeleeAttack(InputAction.CallbackContext context);
     }
 }
