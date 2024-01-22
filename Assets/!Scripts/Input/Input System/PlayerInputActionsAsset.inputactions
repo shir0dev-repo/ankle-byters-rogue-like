@@ -24,9 +24,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Dash",
+                    "name": "DashAbility",
                     "type": "Button",
                     "id": "364e380d-cb75-4d55-a87e-dd5160e71a48",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "BlockAbility",
+                    "type": "Button",
+                    "id": "7d6ca094-61c2-49cb-be70-9279d52d3d31",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -103,11 +112,22 @@
                 {
                     "name": "",
                     "id": "cebaece8-9a5b-436b-8373-96e91f52448d",
-                    "path": "<Keyboard>/leftShift",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "Dash",
+                    "groups": "KBM",
+                    "action": "DashAbility",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "81b81242-0d46-454f-8c35-9a5cc4cadb02",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM",
+                    "action": "BlockAbility",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class DashAbility : MonoBehaviour
 {
-    private const string _DASH_ACTION_NAME = "Dash";
+    private const string _DASH_ACTION_NAME = "DashAbility";
     private InputAction _dashAction;
     private PlayerInputHandler _playerInputHandler;
 

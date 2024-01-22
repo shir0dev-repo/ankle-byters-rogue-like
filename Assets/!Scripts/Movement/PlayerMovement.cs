@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private PlayerInputHandler _playerInputHandler;
 
     [SerializeField] private float _moveSpeed = 8.0f;
+
     private Vector3 _direction = Vector3.zero;
 
     private Camera _mainCam;
