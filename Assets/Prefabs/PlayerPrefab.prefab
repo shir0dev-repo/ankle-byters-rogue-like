@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3513054677863654798}
   - component: {fileID: 5343712692880755131}
   - component: {fileID: 8023652916106344681}
+  - component: {fileID: -1945460860211951059}
   - component: {fileID: 9077444808894784943}
   - component: {fileID: 6472614956592963129}
   m_Layer: 6
@@ -126,6 +127,25 @@ MonoBehaviour:
   _blockDistance: 1
   _blockLifetime: 1
   _blockCooldown: 1
+--- !u!114 &-1945460860211951059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391261372506745937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3536889caf43d9c459c7f4cd8cd601e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startTimeBtwnAttack: 0
+  attackPos: {fileID: 0}
+  attackRange: 0
+  enemyToAttack:
+    serializedVersion: 2
+    m_Bits: 0
+  damage: 0
 --- !u!61 &9077444808894784943
 BoxCollider2D:
   m_ObjectHideFlags: 0

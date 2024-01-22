@@ -15,6 +15,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "MeleeAttack",
+                    "type": "Button",
+                    "id": "8419764c-97e7-46e8-af25-7a508e252866",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "RangedAttack",
                     "type": "Button",
                     "id": "bc3a4830-266c-4b32-ab22-833ba62a1806",
@@ -128,6 +137,17 @@
                     "processors": "",
                     "groups": "KBM",
                     "action": "BlockAbility",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "70392c83-c4cc-46c9-b3c2-d0684946a4c8",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM",
+                    "action": "MeleeAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
