@@ -73,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
             float total = timeElapsed / duration;
             transform.position = easingMode.Evaluate(startPosition, forceDirection, total);
             
-            // finish the loop early if player is already at position; in cases where lerp value is too high.
+            // finish the loop early if _player is already at position; in cases where lerp value is too high.
             if (Vector3.Distance(transform.position, startPosition + forceDirection) < 0.1f)
                 break;
            

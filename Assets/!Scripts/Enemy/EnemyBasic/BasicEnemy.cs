@@ -4,17 +4,10 @@ using UnityEngine;
 
 public class BasicEnemy : MonoBehaviour
 {
-    [SerializeField] Transform player;
-    [SerializeField] float speed;
-     // Start is called before the first frame update
-    void Start()
-    {
-        player = FindObjectOfType<PlayerMovement>().transform;
-    }
+    [SerializeField] float _speed;
 
-    // Update is called once per frame
     void FixedUpdate()
     {
-        transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, GameManager.Instance.PlayerPosition, _speed * Time.deltaTime);
     }
 }
