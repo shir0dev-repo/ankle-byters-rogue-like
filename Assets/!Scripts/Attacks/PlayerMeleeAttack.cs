@@ -1,23 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(PlayerInputHandler))]
 public class PlayerMeleeAttack : MonoBehaviour
 {
-    private float timeBtwnAttack;
-    public float startTimeBtwnAttack;
+    [SerializeField] float _fireCooldown = 0.3f;
+    [SerializeField] private int _damage = 2;
+    
+    private const string _MELEE_ATTACK_ACTION_NAME = "MeleeAttack";
+    private InputAction _meleeAttack;
+    private PlayerInputHandler _playerInputHandler;
+
+    private float _nextFireTime;
 
     public Transform attackPos;
     public float attackRange;
     public LayerMask enemyToAttack;
-    public int damage;
 
-    private const string _MELEE_ATTACK_ACTION_NAME = "MeleeAttack";
-    private InputAction _meleeAttack;
-    private PlayerInputHandler _playerInputHandler;
 
     private void Awake()
     {
@@ -26,22 +25,24 @@ public class PlayerMeleeAttack : MonoBehaviour
     }
     private void Update()
     {
-        if(timeBtwnAttack <= 0)
+        if (_meleeAttack.ReadValue<float>() > 0.5f && Time.time >= _nextFireTime)
         {
-            if(Input.GetMouseButton(0))
-            {
-                Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPos.position, attackRange, enemyToAttack);
-                for (int i = 0; i < enemiesToDamage.Length; i++)
-                {
-                    Destroy(enemiesToDamage[i].gameObject);
-                    //Fix for damage instead of destroy
-                }
-            }
-            timeBtwnAttack = startTimeBtwnAttack;
+            Attack();
+            _nextFireTime = Time.time + _fireCooldown;
         }
-        else
+    }
+    private void Attack()
+    {
+        Collider2D[] enemiesInAttackRange = Physics2D.OverlapCircleAll(attackPos.position, attackRange, enemyToAttack);
+
+        foreach (Collider2D enemyCollider in enemiesInAttackRange)
         {
-            timeBtwnAttack -= Time.deltaTime;
+            Health enemyHealth = enemyCollider.GetComponent<Health>();
+
+            if (enemyHealth != null)
+            {
+                enemyHealth.TakeDamage(_damage);
+            }
         }
     }
     private void OnDrawGizmosSelected()
