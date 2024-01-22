@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,23 +16,19 @@ public class PlayerMovement : MonoBehaviour
     private Camera _mainCam;
     [Space, SerializeField] private bool _useDebugging;
 
-    public bool CanMove { get; set; }
-
     private void Awake()
     {
         _mainCam = Camera.main;
 
         _playerInputHandler = GetComponent<PlayerInputHandler>();
         _moveAction = _playerInputHandler.PlayerActions.FindAction(_MOVE_ACTION_NAME);
-        CanMove = true;
     }
 
     private void FixedUpdate()
     {
         HandleRotation();
-        
         // able to move && move action is in progress
-        if (CanMove && _moveAction.ReadValue<Vector2>().sqrMagnitude > 0.1f)
+        if (_moveAction.ReadValue<Vector2>().sqrMagnitude > 0.1f)
             HandleMovement();
     }
 
@@ -43,18 +40,47 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleRotation()
     {
-        //float angle = Mathf.Atan2(_direction.x, _direction.y) * Mathf.Rad2Deg * -1f;
-        //Quaternion targetRotation = Quaternion.Euler(angle * Vector3.forward);
-        //
-        //transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, _rotationSpeed * Time.fixedDeltaTime);
+        Vector3 mousePos = Mouse.current.position.value;
+        mousePos.z = -_mainCam.transform.position.z; 
+        Vector3 transformScreenPosition = _mainCam.WorldToScreenPoint(transform.position);
 
-        Vector3 lookDir = transform.position - _mainCam.ScreenToWorldPoint(Mouse.current.position.value);
-        
-        if (lookDir != Vector3.zero)
+        mousePos.x -= transformScreenPosition.x;
+        mousePos.y -= transformScreenPosition.y;
+
+        float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0, 0, angle - 90.0f);
+    }
+
+    public void ApplyForce(Vector3 forceDirection, bool interruptMovement, float duration, VectorEasingMode easingMode)
+    {
+        if (forceDirection.sqrMagnitude < 0.1f) return;
+
+        if (interruptMovement)
+            _moveAction.Disable();
+
+        StartCoroutine(ApplyForceCoroutine(forceDirection, duration, easingMode));
+    }
+
+
+    private IEnumerator ApplyForceCoroutine(Vector3 forceDirection, float duration, VectorEasingMode easingMode)
+    {
+        Vector3 startPosition = transform.position;
+        float timeElapsed = 0.0f;
+
+        while (timeElapsed <= duration)
         {
-            Quaternion lookRotation = Quaternion.LookRotation(lookDir, Vector3.forward);
-            transform.rotation = Quaternion.Euler(0, 0, lookRotation.eulerAngles.z);
+            timeElapsed += Time.deltaTime;
+            float total = timeElapsed / duration;
+            transform.position = easingMode.Evaluate(startPosition, forceDirection, total);
+            
+            // finish the loop early if player is already at position; in cases where lerp value is too high.
+            if (Vector3.Distance(transform.position, startPosition + forceDirection) < 0.1f)
+                break;
+           
+            yield return new WaitForEndOfFrame();
         }
+
+        _moveAction.Enable();
     }
 
     private void OnDrawGizmosSelected()
@@ -62,6 +88,8 @@ public class PlayerMovement : MonoBehaviour
         if (!Application.isPlaying) return;
         if (!_useDebugging) return;
 
-        Debug.DrawLine(transform.position, _mainCam.ScreenToWorldPoint(Mouse.current.position.value), Color.red);
+        Vector3 mousePos = Mouse.current.position.value;
+        mousePos.z = -_mainCam.transform.position.z;
+        Debug.DrawLine(transform.position, _mainCam.ScreenToWorldPoint(mousePos), Color.red);
     }
 }

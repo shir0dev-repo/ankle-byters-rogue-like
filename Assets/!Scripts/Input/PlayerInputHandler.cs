@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 [DisallowMultipleComponent]
 public class PlayerInputHandler : MonoBehaviour
@@ -20,7 +17,6 @@ public class PlayerInputHandler : MonoBehaviour
     {
         _playerInputActionsAsset ??= new PlayerInputActionsAsset();
     }
-
     private void OnEnable()
     {
         PlayerActions.Enable();

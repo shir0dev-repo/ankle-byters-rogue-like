@@ -7,25 +7,25 @@ using UnityEngine.InputSystem;
 public class PlayerRangedAttack : MonoBehaviour
 {
     [SerializeField] GameObject _projectilePrefab;
-    [SerializeField] float fireCooldown = 0.5f; // Adjust the cooldown time as needed
+    [SerializeField] float _fireCooldown = 0.5f; // Adjust the cooldown time as needed
 
-    private float nextFireTime;
-    private const string _RANGEDATTACKS_ACTION_NAME = "RangedAttack";
+    private float _nextFireTime;
+    private const string _RANGED_ATTACKS_ACTION_NAME = "RangedAttack";
     private InputAction _rangedAttack;
     private PlayerInputHandler _playerInputHandler;
 
     private void Awake()
     {
         _playerInputHandler = GetComponent<PlayerInputHandler>();
-        _rangedAttack = _playerInputHandler.PlayerActions.FindAction(_RANGEDATTACKS_ACTION_NAME);
+        _rangedAttack = _playerInputHandler.PlayerActions.FindAction(_RANGED_ATTACKS_ACTION_NAME);
     }
 
     private void FixedUpdate()
     {
-        if (_rangedAttack.ReadValue<float>() > 0.5f && Time.time >= nextFireTime)
+        if (_rangedAttack.ReadValue<float>() > 0.5f && Time.time >= _nextFireTime)
         {
             Instantiate(_projectilePrefab, transform.position, transform.rotation);
-            nextFireTime = Time.time + fireCooldown;
+            _nextFireTime = Time.time + _fireCooldown;
         }
     }
     //private void Update()
