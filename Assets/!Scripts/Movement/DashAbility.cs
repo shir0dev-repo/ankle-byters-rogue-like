@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,9 +11,10 @@ public class DashAbility : MonoBehaviour
     [Space]
     [SerializeField] private float _dashDistance = 5.0f;
     [SerializeField] private float _dashDuration = 0.5f;
+    [SerializeField] private float _dashCooldown = 0.75f;
 
+    private float _cooldownRemaining = 0f;
     private Camera _mainCam;
-    private bool _isDashing = false;
 
 
     private void Awake()
@@ -32,6 +31,12 @@ public class DashAbility : MonoBehaviour
         _dashAction.started += ExecuteDash;
     }
 
+    private void Update()
+    {
+        if (_cooldownRemaining > 0f)
+            _cooldownRemaining -= Time.deltaTime;
+    }
+
     private void OnDisable()
     {
         _dashAction.started -= ExecuteDash;
@@ -39,11 +44,10 @@ public class DashAbility : MonoBehaviour
 
     private void ExecuteDash(InputAction.CallbackContext obj)
     {
-        // dash not ready
-        if (_isDashing) return;
+        if (_cooldownRemaining > 0f) return;
 
-        _isDashing = true;
-        _playerMovement.ApplyForce(GetDashDirection(), true, _dashDuration, VectorEasingMode.EaseOutExpo, () => _isDashing = false);
+        _playerMovement.ApplyForce(GetDashDirection(), true, _dashDuration, VectorEasingMode.EaseOutExpo);
+        _cooldownRemaining = _dashCooldown;
     }
 
     private Vector3 GetDashDirection()

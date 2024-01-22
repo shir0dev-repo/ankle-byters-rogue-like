@@ -1,5 +1,3 @@
-// Taken from Tarodev's youtube video about Unity Architecture: https://www.youtube.com/watch?v=tE1qH8OxO2Y.
-
 using UnityEngine;
 
 /// <summary>

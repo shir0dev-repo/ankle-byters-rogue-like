@@ -16,22 +16,19 @@ public class PlayerMovement : MonoBehaviour
     private Camera _mainCam;
     [Space, SerializeField] private bool _useDebugging;
 
-    public bool CanMove { get; set; }
-
     private void Awake()
     {
         _mainCam = Camera.main;
 
         _playerInputHandler = GetComponent<PlayerInputHandler>();
         _moveAction = _playerInputHandler.PlayerActions.FindAction(_MOVE_ACTION_NAME);
-        CanMove = true;
     }
 
     private void FixedUpdate()
     {
         HandleRotation();
         // able to move && move action is in progress
-        if (CanMove && _moveAction.ReadValue<Vector2>().sqrMagnitude > 0.1f)
+        if (_moveAction.ReadValue<Vector2>().sqrMagnitude > 0.1f)
             HandleMovement();
     }
 
@@ -54,18 +51,18 @@ public class PlayerMovement : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, angle - 90.0f);
     }
 
-    public void ApplyForce(Vector3 forceDirection, bool interruptMovement, float duration, VectorEasingMode easingMode, Action callback = null)
+    public void ApplyForce(Vector3 forceDirection, bool interruptMovement, float duration, VectorEasingMode easingMode)
     {
         if (forceDirection.sqrMagnitude < 0.1f) return;
 
         if (interruptMovement)
-            CanMove = false;
+            _moveAction.Disable();
 
-        StartCoroutine(ApplyForceCoroutine(forceDirection, duration, interruptMovement, easingMode, callback));
+        StartCoroutine(ApplyForceCoroutine(forceDirection, duration, easingMode));
     }
 
 
-    private IEnumerator ApplyForceCoroutine(Vector3 forceDirection, float duration, bool interruptMovement, VectorEasingMode easingMode, System.Action callback = null)
+    private IEnumerator ApplyForceCoroutine(Vector3 forceDirection, float duration, VectorEasingMode easingMode)
     {
         Vector3 startPosition = transform.position;
         float timeElapsed = 0.0f;
@@ -74,14 +71,16 @@ public class PlayerMovement : MonoBehaviour
         {
             timeElapsed += Time.deltaTime;
             float total = timeElapsed / duration;
-            transform.position = easingMode.Get(startPosition, forceDirection, total);
+            transform.position = easingMode.Evaluate(startPosition, forceDirection, total);
+            
+            // finish the loop early if player is already at position; in cases where lerp value is too high.
+            if (Vector3.Distance(transform.position, startPosition + forceDirection) < 0.1f)
+                break;
+           
             yield return new WaitForEndOfFrame();
         }
 
-        callback?.Invoke();
-
-        if (interruptMovement && !CanMove)
-            CanMove = true;
+        _moveAction.Enable();
     }
 
     private void OnDrawGizmosSelected()
@@ -92,10 +91,5 @@ public class PlayerMovement : MonoBehaviour
         Vector3 mousePos = Mouse.current.position.value;
         mousePos.z = -_mainCam.transform.position.z;
         Debug.DrawLine(transform.position, _mainCam.ScreenToWorldPoint(mousePos), Color.red);
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        Debug.Log("hello");
     }
 }
