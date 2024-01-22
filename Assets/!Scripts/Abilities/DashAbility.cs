@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(PlayerInputHandler))]
 public class DashAbility : MonoBehaviour
 {
     private const string _DASH_ACTION_NAME = "DashAbility";
