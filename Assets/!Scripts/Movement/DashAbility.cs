@@ -53,9 +53,8 @@ public class DashAbility : MonoBehaviour
 
         // offset mousepos by camera's z-position to stay at z = 0
         mousePosPX.z = -_mainCam.transform.position.z;
-        Vector3 dashDir = (_mainCam.ScreenToWorldPoint(mousePosPX) - transform.position).normalized * _dashDistance;
-        Debug.Log(transform.position + dashDir);
+
         // dash direction with correct magnitude
-        return dashDir;
+        return (_mainCam.ScreenToWorldPoint(mousePosPX) - transform.position).normalized * _dashDistance;
     }
 }
