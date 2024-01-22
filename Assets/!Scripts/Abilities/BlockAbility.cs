@@ -1,18 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class BlockAbility : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private const string _BLOCK_ABILITY_NAME = "BlockAbility";
+    private PlayerInputHandler _playerInputHandler;
+    private InputAction _blockAction;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField] private float _blockAngleDegrees = 90.0f;
+    [SerializeField] private float _blockCooldown = 1.0f;
+
 }
