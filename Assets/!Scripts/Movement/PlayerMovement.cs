@@ -30,7 +30,6 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         HandleRotation();
-        
         // able to move && move action is in progress
         if (CanMove && _moveAction.ReadValue<Vector2>().sqrMagnitude > 0.1f)
             HandleMovement();
@@ -44,31 +43,29 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleRotation()
     {
-        //float angle = Mathf.Atan2(_direction.x, _direction.y) * Mathf.Rad2Deg * -1f;
-        //Quaternion targetRotation = Quaternion.Euler(angle * Vector3.forward);
-        //
-        //transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, _rotationSpeed * Time.fixedDeltaTime);
+        Vector3 mousePos = Mouse.current.position.value;
+        mousePos.z = -_mainCam.transform.position.z; 
+        Vector3 transformScreenPosition = _mainCam.WorldToScreenPoint(transform.position);
 
-        Vector3 lookDir = transform.position - _mainCam.ScreenToWorldPoint(Mouse.current.position.value);
-        
-        if (lookDir != Vector3.zero)
-        {
-            Quaternion lookRotation = Quaternion.LookRotation(lookDir, Vector3.forward);
-            transform.rotation = Quaternion.Euler(0, 0, lookRotation.eulerAngles.z);
-        }
+        mousePos.x -= transformScreenPosition.x;
+        mousePos.y -= transformScreenPosition.y;
+
+        float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0, 0, angle - 90.0f);
     }
 
-    public void ApplyForce(Vector3 forceDirection, bool interruptMovement, float duration, Func<Vector3, float, Vector3> positionDelegate)
+    public void ApplyForce(Vector3 forceDirection, bool interruptMovement, float duration, VectorEasingMode easingMode, Action callback = null)
     {
         if (forceDirection.sqrMagnitude < 0.1f) return;
 
         if (interruptMovement)
             CanMove = false;
 
-        StartCoroutine(ApplyForceCoroutine(forceDirection, duration, interruptMovement, positionDelegate));
+        StartCoroutine(ApplyForceCoroutine(forceDirection, duration, interruptMovement, easingMode, callback));
     }
 
-    private IEnumerator ApplyForceCoroutine(Vector3 forceDirection, float duration, bool interruptMovement, Func<Vector3, float, Vector3> positionDelegate)
+
+    private IEnumerator ApplyForceCoroutine(Vector3 forceDirection, float duration, bool interruptMovement, VectorEasingMode easingMode, System.Action callback = null)
     {
         Vector3 startPosition = transform.position;
         float timeElapsed = 0.0f;
@@ -77,14 +74,20 @@ public class PlayerMovement : MonoBehaviour
         {
             timeElapsed += Time.deltaTime;
             float total = timeElapsed / duration;
-            transform.position = startPosition + positionDelegate(forceDirection, total);
+            transform.position = easingMode.Get(startPosition, forceDirection, total);
 
+            Debug.Log(Vector3.Distance(transform.position, forceDirection));
+            if (Vector3.Distance(transform.position, forceDirection) < 0.5f)
+                break;
             yield return new WaitForEndOfFrame();
         }
+        callback?.Invoke();
 
         yield return null;
         if (interruptMovement && !CanMove)
             CanMove = true;
+
+        
     }
 
     private void OnDrawGizmosSelected()
@@ -92,6 +95,13 @@ public class PlayerMovement : MonoBehaviour
         if (!Application.isPlaying) return;
         if (!_useDebugging) return;
 
-        Debug.DrawLine(transform.position, _mainCam.ScreenToWorldPoint(Mouse.current.position.value), Color.red);
+        Vector3 mousePos = Mouse.current.position.value;
+        mousePos.z = -_mainCam.transform.position.z;
+        Debug.DrawLine(transform.position, _mainCam.ScreenToWorldPoint(mousePos), Color.red);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("hello");
     }
 }

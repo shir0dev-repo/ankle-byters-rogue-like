@@ -42,7 +42,8 @@ public class DashAbility : MonoBehaviour
         // dash not ready
         if (_isDashing) return;
 
-        _playerMovement.ApplyForce(GetDashDirection(), true, _dashDuration, InterpolateDashDirection);
+        _isDashing = true;
+        _playerMovement.ApplyForce(GetDashDirection(), true, _dashDuration, VectorEasingMode.EaseOutExpo, () => _isDashing = false);
     }
 
     private Vector3 GetDashDirection()
@@ -54,41 +55,6 @@ public class DashAbility : MonoBehaviour
         mousePosPX.z = -_mainCam.transform.position.z;
 
         // dash direction with correct magnitude
-        return (_mainCam.ScreenToWorldPoint(mousePosPX) - transform.position).normalized * _dashDistance;
-    }
-
-    private Vector3 InterpolateDashDirection(Vector3 dashDirection, float elapsedTime)
-    {
-        float total = elapsedTime / _dashDuration;
-        float easeExpo = total == 1 ? 1 : 1 - Mathf.Pow(2.0f, -10.0f * total);
-
-        return Vector3.Lerp(Vector3.zero, dashDirection, easeExpo);
-    }
-
-    private IEnumerator DashCoroutine(Vector3 dashDirection)
-    {
-        _isDashing = true;
-        _playerMovement.CanMove = false;
-        Vector3 startingPosition = transform.position;
-        float timeElapsed = 0.0f;
-
-        while (timeElapsed < _dashDuration)
-        {
-            timeElapsed += Time.deltaTime;
-
-            float total = timeElapsed / _dashDuration;
-            float easeExpo = total == 1 ? 1 : 1 - Mathf.Pow(2.0f, -10.0f * total);
-
-            // get position this frame:
-            // - take starting position and add a percentage of end position * multiplied by any interpolation.
-            transform.position = startingPosition + Vector3.Lerp(Vector3.zero, dashDirection, easeExpo);
-
-            yield return new WaitForEndOfFrame();
-        }
-
-        yield return null;
-
-        _playerMovement.CanMove = true;
-        _isDashing = false;
+        return (_mainCam.ScreenToWorldPoint(mousePosPX) - transform.position) * _dashDistance;
     }
 }
