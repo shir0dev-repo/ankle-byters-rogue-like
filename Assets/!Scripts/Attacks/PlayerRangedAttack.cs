@@ -7,32 +7,42 @@ using UnityEngine.InputSystem;
 public class PlayerRangedAttack : MonoBehaviour
 {
     [SerializeField] GameObject _projectilePrefab;
-    [SerializeField] float fireCooldown = 0.5f; // Adjust the cooldown time as needed
+    [SerializeField] float _fireCooldown = 0.5f; // Adjust the cooldown time as needed
 
-    private float nextFireTime;
-    private const string _RANGEDATTACKS_ACTION_NAME = "RangedAttack";
+    private float _nextFireTime;
+    private const string _RANGED_ATTACK_ACTION_NAME = "RangedAttack";
     private InputAction _rangedAttack;
     private PlayerInputHandler _playerInputHandler;
 
     private void Awake()
     {
         _playerInputHandler = GetComponent<PlayerInputHandler>();
-        _rangedAttack = _playerInputHandler.PlayerActions.FindAction(_RANGEDATTACKS_ACTION_NAME);
+        _rangedAttack = _playerInputHandler.PlayerActions.FindAction(_RANGED_ATTACK_ACTION_NAME);
+    }
+
+    private void OnEnable()
+    {
+        _rangedAttack.started += FireProjectile;
+    }
+
+    private void OnDisable()
+    {
+        _rangedAttack.started -= FireProjectile;
+    }
+
+    private void FireProjectile(InputAction.CallbackContext obj)
+    {
+        // attack not ready
+        if (_nextFireTime > 0) return;
+
+        Instantiate(_projectilePrefab, transform.position, transform.rotation);
+        _nextFireTime = _fireCooldown;
     }
 
     private void FixedUpdate()
     {
-        if (_rangedAttack.ReadValue<float>() > 0.5f && Time.time >= nextFireTime)
-        {
-            Instantiate(_projectilePrefab, transform.position, transform.rotation);
-            nextFireTime = Time.time + fireCooldown;
-        }
+        // decrement timer if necessary
+        if (_nextFireTime > 0)
+            _nextFireTime -= Time.fixedDeltaTime;
     }
-    //private void Update()
-    //{
-    //    if (Input.GetMouseButtonDown(1))
-    //    {
-    //        Instantiate(_projectilePrefab, transform.position, transform.rotation);
-    //    }
-    //}
 }

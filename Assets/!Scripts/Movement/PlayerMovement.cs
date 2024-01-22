@@ -75,19 +75,13 @@ public class PlayerMovement : MonoBehaviour
             timeElapsed += Time.deltaTime;
             float total = timeElapsed / duration;
             transform.position = easingMode.Get(startPosition, forceDirection, total);
-
-            Debug.Log(Vector3.Distance(transform.position, forceDirection));
-            if (Vector3.Distance(transform.position, forceDirection) < 0.5f)
-                break;
             yield return new WaitForEndOfFrame();
         }
+
         callback?.Invoke();
 
-        yield return null;
         if (interruptMovement && !CanMove)
             CanMove = true;
-
-        
     }
 
     private void OnDrawGizmosSelected()
