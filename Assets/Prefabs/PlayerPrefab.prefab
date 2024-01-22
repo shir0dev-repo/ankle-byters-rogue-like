@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8663944704482886460}
   - component: {fileID: 3513054677863654798}
   - component: {fileID: 5343712692880755131}
+  - component: {fileID: 8023652916106344681}
   - component: {fileID: 9077444808894784943}
   - component: {fileID: 6472614956592963129}
   m_Layer: 6
@@ -104,10 +105,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe801dd9417af074dbe6c890540466c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dashCurve: 0
+  _dashCurve: 8
   _dashDistance: 5
   _dashDuration: 0.5
   _dashCooldown: 0.75
+--- !u!114 &8023652916106344681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391261372506745937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2baf44040df339c438503050fd21dda7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _blockObjectPrefab: {fileID: 9039555523574470557, guid: 504ef76089e0eef428e43cdc7f483107, type: 3}
+  _blockAngleDegrees: 90
+  _blockDistance: 1
+  _blockLifetime: 1
+  _blockCooldown: 1
 --- !u!61 &9077444808894784943
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -140,7 +158,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.15}
+  m_Offset: {x: 0, y: -0.04}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -151,7 +169,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.9}
+  m_Size: {x: 0.9, y: 0.5}
   m_EdgeRadius: 0
 --- !u!50 &6472614956592963129
 Rigidbody2D:
