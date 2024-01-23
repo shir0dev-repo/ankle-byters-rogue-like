@@ -1,11 +1,15 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 
 [RequireComponent(typeof(PlayerInputHandler))]
+[RequireComponent(typeof(PlayerMovement))]
 public class DashAbility : MonoBehaviour
 {
     private const string _DASH_ACTION_NAME = "DashAbility";
     private InputAction _dashAction;
+
+    private KeyControl _shiftKey;
     private PlayerInputHandler _playerInputHandler;
     private PlayerMovement _playerMovement;
 
@@ -15,16 +19,15 @@ public class DashAbility : MonoBehaviour
     [SerializeField] private float _dashCooldown = 0.75f;
 
     private float _cooldownRemaining = 0f;
-    private Camera _mainCam;
-
 
     private void Awake()
     {
         _playerMovement = GetComponent<PlayerMovement>();
-        _mainCam = Camera.main;
 
         _playerInputHandler = GetComponent<PlayerInputHandler>();
         _dashAction = _playerInputHandler.PlayerActions.FindAction(_DASH_ACTION_NAME);
+
+        _shiftKey = Keyboard.current.leftShiftKey;
     }
 
     private void OnEnable()
@@ -47,7 +50,11 @@ public class DashAbility : MonoBehaviour
     {
         if (_cooldownRemaining > 0f) return;
 
-        _playerMovement.ApplyForce(transform.DirectionToMouseWorldSpace(normalized: true) * _dashDistance, _dashDuration, _dashCurve);
+        if (_shiftKey.isPressed)
+            _playerMovement.ApplyForce(transform.DirectionToMouseWorldSpace(true) * _dashDistance, _dashDuration, _dashCurve);
+        else
+            _playerMovement.ApplyForce(_playerMovement.MoveDirection * _dashDistance, _dashDuration, _dashCurve);
+        
         _cooldownRemaining = _dashCooldown;
     }
 }

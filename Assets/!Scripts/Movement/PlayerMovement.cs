@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -11,11 +10,17 @@ public class PlayerMovement : MonoBehaviour
     private PlayerInputHandler _playerInputHandler;
 
     [SerializeField] private float _moveSpeed = 8.0f;
+    [Space, SerializeField] private bool _useDebugging;
 
-    private Vector3 _direction = Vector3.zero;
+    private Vector2 _inputDirection = Vector2.zero;
+    private Vector3 _positionLastFrame = Vector3.zero;
+
+    public Vector3 MoveDirection
+    {
+        get { return (transform.position - _positionLastFrame).normalized; }
+    }
 
     private Camera _mainCam;
-    [Space, SerializeField] private bool _useDebugging;
 
     private void Awake()
     {
@@ -28,21 +33,22 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         HandleRotation();
-        // able to move && move action is in progress
-        if (_moveAction.ReadValue<Vector2>().sqrMagnitude > 0.1f)
-            HandleMovement();
+        HandleMovement();
     }
 
     private void HandleMovement()
     {
-        _direction = _moveAction.ReadValue<Vector2>().normalized;
-        transform.position += _moveSpeed * Time.fixedDeltaTime * _direction;
+        if (!_moveAction.IsPressed()) return;
+
+        _inputDirection = _moveAction.ReadValue<Vector2>().normalized;
+        _positionLastFrame = transform.position;
+        transform.position += _moveSpeed * Time.fixedDeltaTime * (Vector3)_inputDirection;
     }
 
     private void HandleRotation()
     {
         Vector3 mousePos = Mouse.current.position.value;
-        mousePos.z = -_mainCam.transform.position.z; 
+        mousePos.z = -_mainCam.transform.position.z;
         Vector3 transformScreenPosition = _mainCam.WorldToScreenPoint(transform.position);
 
         mousePos.x -= transformScreenPosition.x;
@@ -53,15 +59,13 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void ApplyForce(Vector3 forceDirection, float duration, VectorEasingMode easingMode)
-    {
-        if (forceDirection.sqrMagnitude < 0.1f) return;
-
-        StartCoroutine(ApplyForceCoroutine(forceDirection, duration, easingMode));
-    }
+        => StartCoroutine(ApplyForceCoroutine(forceDirection, duration, easingMode));
 
 
     private IEnumerator ApplyForceCoroutine(Vector3 forceDirection, float duration, VectorEasingMode easingMode)
     {
+        if (forceDirection.sqrMagnitude < 0.1f) yield return null;
+
         _moveAction.Disable();
 
         Vector3 startPosition = transform.position;
@@ -72,17 +76,18 @@ public class PlayerMovement : MonoBehaviour
             timeElapsed += Time.deltaTime;
             float total = timeElapsed / duration;
             transform.position = easingMode.Evaluate(startPosition, forceDirection, total);
-            
+
             // finish the loop early if player is already at position; in cases where duration is longer than asymptotic value of curve.
             if (Vector3.Distance(transform.position, startPosition + forceDirection) < 0.1f)
                 break;
-           
+
             yield return new WaitForEndOfFrame();
         }
 
         _moveAction.Enable();
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
         if (!Application.isPlaying) return;
@@ -93,3 +98,4 @@ public class PlayerMovement : MonoBehaviour
         Debug.DrawLine(transform.position, _mainCam.ScreenToWorldPoint(mousePos), Color.red);
     }
 }
+#endif
