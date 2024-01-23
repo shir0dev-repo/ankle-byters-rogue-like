@@ -37,6 +37,15 @@ public partial class @PlayerInputActionsAsset: IInputActionCollection2, IDisposa
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""MeleeAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""8419764c-97e7-46e8-af25-7a508e252866"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""RangedAttack"",
                     ""type"": ""Button"",
                     ""id"": ""bc3a4830-266c-4b32-ab22-833ba62a1806"",
@@ -152,6 +161,17 @@ public partial class @PlayerInputActionsAsset: IInputActionCollection2, IDisposa
                     ""action"": ""BlockAbility"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""70392c83-c4cc-46c9-b3c2-d0684946a4c8"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM"",
+                    ""action"": ""MeleeAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -178,6 +198,7 @@ public partial class @PlayerInputActionsAsset: IInputActionCollection2, IDisposa
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
+        m_Player_MeleeAttack = m_Player.FindAction("MeleeAttack", throwIfNotFound: true);
         m_Player_RangedAttack = m_Player.FindAction("RangedAttack", throwIfNotFound: true);
         m_Player_DashAbility = m_Player.FindAction("DashAbility", throwIfNotFound: true);
         m_Player_BlockAbility = m_Player.FindAction("BlockAbility", throwIfNotFound: true);
@@ -243,6 +264,7 @@ public partial class @PlayerInputActionsAsset: IInputActionCollection2, IDisposa
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
+    private readonly InputAction m_Player_MeleeAttack;
     private readonly InputAction m_Player_RangedAttack;
     private readonly InputAction m_Player_DashAbility;
     private readonly InputAction m_Player_BlockAbility;
@@ -251,6 +273,7 @@ public partial class @PlayerInputActionsAsset: IInputActionCollection2, IDisposa
         private @PlayerInputActionsAsset m_Wrapper;
         public PlayerActions(@PlayerInputActionsAsset wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
+        public InputAction @MeleeAttack => m_Wrapper.m_Player_MeleeAttack;
         public InputAction @RangedAttack => m_Wrapper.m_Player_RangedAttack;
         public InputAction @DashAbility => m_Wrapper.m_Player_DashAbility;
         public InputAction @BlockAbility => m_Wrapper.m_Player_BlockAbility;
@@ -266,6 +289,9 @@ public partial class @PlayerInputActionsAsset: IInputActionCollection2, IDisposa
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
+            @MeleeAttack.started += instance.OnMeleeAttack;
+            @MeleeAttack.performed += instance.OnMeleeAttack;
+            @MeleeAttack.canceled += instance.OnMeleeAttack;
             @RangedAttack.started += instance.OnRangedAttack;
             @RangedAttack.performed += instance.OnRangedAttack;
             @RangedAttack.canceled += instance.OnRangedAttack;
@@ -282,6 +308,9 @@ public partial class @PlayerInputActionsAsset: IInputActionCollection2, IDisposa
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
+            @MeleeAttack.started -= instance.OnMeleeAttack;
+            @MeleeAttack.performed -= instance.OnMeleeAttack;
+            @MeleeAttack.canceled -= instance.OnMeleeAttack;
             @RangedAttack.started -= instance.OnRangedAttack;
             @RangedAttack.performed -= instance.OnRangedAttack;
             @RangedAttack.canceled -= instance.OnRangedAttack;
@@ -320,6 +349,7 @@ public partial class @PlayerInputActionsAsset: IInputActionCollection2, IDisposa
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
+        void OnMeleeAttack(InputAction.CallbackContext context);
         void OnRangedAttack(InputAction.CallbackContext context);
         void OnDashAbility(InputAction.CallbackContext context);
         void OnBlockAbility(InputAction.CallbackContext context);

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 283100908046824469}
   - component: {fileID: 8893907405628569873}
   - component: {fileID: 7860632028396510292}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EnemyParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,7 +62,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddd72260a74bbda4c9da704053ccf1d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 0}
   _speed: 2
 --- !u!114 &283100908046824469
 MonoBehaviour:
@@ -152,7 +151,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4046894635984625559}
   - component: {fileID: 5028369791570093483}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
