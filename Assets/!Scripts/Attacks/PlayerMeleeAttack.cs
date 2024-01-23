@@ -6,7 +6,7 @@ public class PlayerMeleeAttack : MonoBehaviour
 {
     [SerializeField] float _fireCooldown = 0.3f;
     [SerializeField] private int _damage = 2;
-    
+
     private const string _MELEE_ATTACK_ACTION_NAME = "MeleeAttack";
     private InputAction _meleeAttack;
     private PlayerInputHandler _playerInputHandler;
