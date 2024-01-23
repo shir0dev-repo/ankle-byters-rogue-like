@@ -62,7 +62,6 @@ public class BlockObject : MonoBehaviour
         for (int i = 0; i < _colliderPointCount; i++)
         {
             points[i] = currentDirection * _radius;
-            Debug.DrawLine(transform.position, currentDirection, Color.yellow, 3f);
             currentDirection = Quaternion.Euler(0, 0, angleIncrement) * currentDirection;
         }
 

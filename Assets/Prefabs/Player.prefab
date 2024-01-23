@@ -175,7 +175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _blockObjectPrefab: {fileID: 9039555523574470557, guid: 504ef76089e0eef428e43cdc7f483107, type: 3}
   _blockAngleDegrees: 90
-  _blockDistance: 0.5
+  _blockDistance: 1
   _blockLifetime: 1
   _blockCooldown: 1
 --- !u!61 &3324525846811067766
