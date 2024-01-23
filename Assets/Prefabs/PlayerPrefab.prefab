@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8582984613514568616}
   - component: {fileID: 8663944704482886460}
   - component: {fileID: 3513054677863654798}
+  - component: {fileID: -1945460860211951059}
   - component: {fileID: 5343712692880755131}
   - component: {fileID: 8023652916106344681}
   - component: {fileID: 9077444808894784943}
@@ -93,6 +94,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _projectilePrefab: {fileID: 3248226580217940092, guid: c53a207d0409bbe4faaa212feb800485, type: 3}
   _fireCooldown: 0.5
+--- !u!114 &-1945460860211951059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391261372506745937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3536889caf43d9c459c7f4cd8cd601e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackPos: {fileID: 6702034092102943419}
+  _attackRange: 0.5
+  _fireCooldown: 0.3
+  _damage: 2
+  _attackLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &5343712692880755131
 MonoBehaviour:
   m_ObjectHideFlags: 0
