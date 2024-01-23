@@ -10,7 +10,7 @@ public static class MouseUtils
     /// </summary>
     /// <param name="transform">The origin transform.</param>
     /// <returns>The vector from transform to cursor in world space.</returns>
-    public static Vector3 DirectionToMouseWorldSpace(this Transform transform, bool normalized = false)
+    public static Vector3 DirectionToMouseWorldSpace(this Transform transform, bool normalized = true)
     {
         Camera mainCamera = Camera.main;
         
@@ -22,7 +22,8 @@ public static class MouseUtils
 
         Vector3 direction = mainCamera.ScreenToWorldPoint(mousePositionScreen) - transform.position;
 
-        if (normalized) direction.Normalize();
+        if (normalized)
+            direction.Normalize();
 
         return direction;
     }

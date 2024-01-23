@@ -50,7 +50,7 @@ public class DashAbility : MonoBehaviour
     {
         if (_cooldownRemaining > 0f) return;
 
-        if (_shiftKey.isPressed)
+        if (_shiftKey.isPressed || _playerMovement.MoveDirection == Vector3.zero)
             _playerMovement.ApplyForce(transform.DirectionToMouseWorldSpace(true) * _dashDistance, _dashDuration, _dashCurve);
         else
             _playerMovement.ApplyForce(_playerMovement.MoveDirection * _dashDistance, _dashDuration, _dashCurve);

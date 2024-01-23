@@ -17,7 +17,10 @@ public class PlayerMovement : MonoBehaviour
 
     public Vector3 MoveDirection
     {
-        get { return (transform.position - _positionLastFrame).normalized; }
+        get 
+        {
+            return _inputDirection.normalized;
+        }
     }
 
     private Camera _mainCam;
@@ -38,7 +41,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleMovement()
     {
-        if (!_moveAction.IsPressed()) return;
+        _inputDirection = _moveAction.ReadValue<Vector2>().normalized;
+
+        if (_inputDirection == Vector2.zero) return;
 
         _inputDirection = _moveAction.ReadValue<Vector2>().normalized;
         _positionLastFrame = transform.position;
@@ -95,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 mousePos = Mouse.current.position.value;
         mousePos.z = -_mainCam.transform.position.z;
-        Debug.DrawLine(transform.position, _mainCam.ScreenToWorldPoint(mousePos), Color.red);
+        Debug.DrawLine(transform.position, transform.DirectionToMouseWorldSpace(), Color.red);
     }
 }
 #endif
