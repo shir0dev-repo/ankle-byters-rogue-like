@@ -1,12 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-
 public class InsanityManager : Singleton<InsanityManager>
 {
-    [SerializeField] private int _currentInsanity = 0;
+    [SerializeField, ReadOnly] private int _currentInsanity = 0;
     [SerializeField] private int _maxInsanity = 100;
 
     [SerializeField] private int _insanityIncrement;
