@@ -121,7 +121,7 @@ public static class VectorEasing
     }
     private static float EaseInCirc(float time)
     {
-        return 1 - Mathf.Sqrt(1 - time * time);
+        return 1 - Mathf.Sqrt(1 - (time * time));
         
     }
     private static float EaseOutCirc(float time)
