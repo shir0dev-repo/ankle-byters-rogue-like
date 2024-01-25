@@ -34,16 +34,17 @@ public class TimeTickManager : Singleton<TimeTickManager>
     private float _tickTimer;
     TimeTickSystem _system;
 
-    public int GetTick() => _system.GetTick();
+    public int GetTick() => _system == null ? 0 : _system.GetTick();
 
-    protected override void Awake()
+    public void Create()
     {
-        base.Awake();
-        _system = new TimeTickSystem();
+        _system ??= new TimeTickSystem();
     }
 
     private void Update()
     {
+        if (_system == null) return;
+
         _tickTimer += Time.deltaTime;
 
         if (_tickTimer >= TimeTickSystem.TICK_TIMER_MAX)

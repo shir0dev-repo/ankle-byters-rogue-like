@@ -8,6 +8,6 @@ public class BasicEnemy : MonoBehaviour
 
     void FixedUpdate()
     {
-        transform.position = Vector3.MoveTowards(transform.position, GameManager.Instance.PlayerPosition, _speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, GameManager.Instance.PlayerManager.GetPlayerPosition(), _speed * Time.deltaTime);
     }
 }

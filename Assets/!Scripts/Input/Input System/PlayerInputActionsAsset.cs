@@ -195,7 +195,7 @@ public partial class @PlayerInputActionsAsset: IInputActionCollection2, IDisposa
         }
     ]
 }");
-        // Player
+        // _player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_MeleeAttack = m_Player.FindAction("MeleeAttack", throwIfNotFound: true);
@@ -260,7 +260,7 @@ public partial class @PlayerInputActionsAsset: IInputActionCollection2, IDisposa
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // Player
+    // _player
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;

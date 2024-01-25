@@ -1,23 +1,22 @@
 using UnityEngine;
 
-public class GameManager : Singleton<GameManager>
+public class GameManager : PersistentSingleton<GameManager>
 {
     [SerializeField] private GameObject _playerPrefab;
     
-    private Transform _playerTransform;
-
-    public Vector3 PlayerPosition => _playerTransform.position;
+    public InsanityManager InsanityManager { get; private set; }
+    public TimeTickManager TimeTickManager { get; private set; }
+    public PlayerManager PlayerManager { get; private set; }
 
     protected override void Awake()
     {
         base.Awake();
         
-        _playerTransform = Instantiate(_playerPrefab, Vector3.zero, Quaternion.identity).transform;
-        _playerTransform.gameObject.name = "Player";
-    }
+        PlayerManager = gameObject.AddComponent<PlayerManager>();
+        TimeTickManager = gameObject.AddComponent<TimeTickManager>();
+        InsanityManager = gameObject.AddComponent<InsanityManager>();
 
-    public void ResetLevel()
-    {
-
+        PlayerManager.SpawnPlayer(Vector3.zero);
+        TimeTickManager.Create();
     }
 }

@@ -8,7 +8,7 @@ public class InsanityManager : Singleton<InsanityManager>
     [SerializeField] private int _insanityIncrement;
     [SerializeField] private bool _incrementOverTime = false;
 
-    public Action<int> OnInsanityChanged;
+    public static Action<int> OnInsanityChanged;
 
     private void OnEnable()
     {
@@ -42,10 +42,5 @@ public class InsanityManager : Singleton<InsanityManager>
     {
         _currentInsanity = amount;
         OnInsanityChanged?.Invoke(_currentInsanity);
-    }
-
-    private void OnLevelWasLoaded(int level)
-    {
-        _currentInsanity = 0;
     }
 }
