@@ -20,7 +20,7 @@ public class InsanityManager : Singleton<InsanityManager>
         TimeTickSystem.OnTick_5 -= AddInsanityRecursive;
     }
 
-    private void AddInsanityRecursive(object sender, TimeTickSystem.OnTickChangedArgs e)
+    private void AddInsanityRecursive(object sender, TimeTickSystem.OnTickArgs e)
     {
         if (_incrementOverTime == false) return;
 
@@ -42,5 +42,10 @@ public class InsanityManager : Singleton<InsanityManager>
     {
         _currentInsanity = amount;
         OnInsanityChanged?.Invoke(_currentInsanity);
+    }
+
+    private void OnLevelWasLoaded(int level)
+    {
+        _currentInsanity = 0;
     }
 }

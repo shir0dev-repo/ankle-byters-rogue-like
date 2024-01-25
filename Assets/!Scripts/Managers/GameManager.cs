@@ -15,4 +15,9 @@ public class GameManager : Singleton<GameManager>
         _playerTransform = Instantiate(_playerPrefab, Vector3.zero, Quaternion.identity).transform;
         _playerTransform.gameObject.name = "Player";
     }
+
+    public void ResetLevel()
+    {
+
+    }
 }
