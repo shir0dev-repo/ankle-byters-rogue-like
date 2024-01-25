@@ -16,5 +16,9 @@ public class PlayerManager : Singleton<PlayerManager>
         _player.position = position;
     }
 
-    public Vector3 GetPlayerPosition() { return _player.position; }
+    public Vector3 GetPlayerPosition()
+    {
+        if (_player == null) return Vector3.zero;
+        return _player.position;
+    }
 }
