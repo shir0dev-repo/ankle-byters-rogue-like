@@ -8,7 +8,7 @@ public class InsanityManager : Singleton<InsanityManager>
     [SerializeField] private int _insanityIncrement;
     [SerializeField] private bool _incrementOverTime = false;
 
-    public Action<int> OnInsanityChanged;
+    public static Action<int> OnInsanityChanged;
 
     private void OnEnable()
     {
@@ -20,7 +20,7 @@ public class InsanityManager : Singleton<InsanityManager>
         TimeTickSystem.OnTick_5 -= AddInsanityRecursive;
     }
 
-    private void AddInsanityRecursive(object sender, TimeTickSystem.OnTickChangedArgs e)
+    private void AddInsanityRecursive(object sender, TimeTickSystem.OnTickArgs e)
     {
         if (_incrementOverTime == false) return;
 

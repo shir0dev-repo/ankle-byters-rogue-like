@@ -850,7 +850,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1543122713
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -863,10 +863,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40be506814ac5c348873e770c7241883, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxTime: 5
-  player: {fileID: 0}
-  youDiedText: {fileID: 166097714}
-  timerImage: {fileID: 313206817}
+  _currentInsanity: 0
+  _maxInsanity: 100
+  _insanityIncrement: 5
+  _incrementOverTime: 1
 --- !u!4 &1543122714
 Transform:
   m_ObjectHideFlags: 0
