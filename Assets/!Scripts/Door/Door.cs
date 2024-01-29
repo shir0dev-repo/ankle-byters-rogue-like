@@ -1,3 +1,4 @@
+using System;
 using UnityEditor.Overlays;
 using UnityEngine;
 
@@ -13,7 +14,11 @@ public class Door : MonoBehaviour
         
         Vector3 directionFromCamera = (transform.position - cameraPos).normalized;
 
-        return Vector3.Scale((Vector3)CameraManager.ScreenExtents, directionFromCamera) * 2f;
+        directionFromCamera.x = MathF.Round(directionFromCamera.x * CameraManager.ScreenExtents.x * 2, 2);
+        directionFromCamera.y = MathF.Round(directionFromCamera.y * CameraManager.ScreenExtents.y * 2, 2);
+
+
+        return directionFromCamera;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
