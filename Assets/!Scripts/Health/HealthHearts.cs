@@ -30,8 +30,6 @@ public class HealthHearts : MonoBehaviour
                 break;
         }
     }
-
-
 }
 
 public enum HeartStatus

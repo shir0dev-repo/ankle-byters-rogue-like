@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
 
@@ -9,11 +10,32 @@ public class HealthHeartSystem : MonoBehaviour
     public Health health;
     List<HealthHearts> hearts = new List<HealthHearts>();
 
+    private void OnEnable()
+    {
+        if (health != null)
+        {
+            health.OnHealthChanged += UpdateHearts;
+            Debug.Log("Subscribed to OnHealthChanged event.");
+        }
+        else
+        {
+            Debug.LogWarning("Health component is not assigned.");
+        }
+    }
     private void Start()
     {
         DrawHearts();
     }
-
+    private void UpdateHearts(int currentHealth)
+    {
+        Debug.Log("Updating hearts...");
+        DrawHearts();
+    }
+    private void OnDisable()
+    {
+        health.OnHealthChanged -= UpdateHearts;
+        Debug.Log("Unsubscribed from OnHealthChanged event.");
+    }
     public void DrawHearts()
     {
         ClearHearts();
