@@ -3,23 +3,34 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(PlayerInputHandler))]
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : Movement
 {
     private const string _MOVE_ACTION_NAME = "Move";
     private InputAction _moveAction;
     private PlayerInputHandler _playerInputHandler;
 
-    [SerializeField] private float _moveSpeed = 8.0f;
-    [Space, SerializeField] private bool _useDebugging;
+    [SerializeField] private bool _useDebugging;
 
     private Vector2 _inputDirection = Vector2.zero;
-    private Vector3 _positionLastFrame = Vector3.zero;
 
-    public Vector3 MoveDirection
+    public override Vector3 MoveDirection
     {
         get 
         {
             return _inputDirection.normalized;
+        }
+    }
+
+    public override bool CanMove
+    {
+        get {  return _canMove; }
+        protected set
+        {
+            if (value)
+                _moveAction.Enable();
+            else
+                _moveAction.Disable();
+            _canMove = value;
         }
     }
 
@@ -33,24 +44,17 @@ public class PlayerMovement : MonoBehaviour
         _moveAction = _playerInputHandler.PlayerActions.FindAction(_MOVE_ACTION_NAME);
     }
 
-    private void FixedUpdate()
-    {
-        HandleRotation();
-        HandleMovement();
-    }
-
-    private void HandleMovement()
+    protected override void HandleMovement()
     {
         _inputDirection = _moveAction.ReadValue<Vector2>().normalized;
 
         if (_inputDirection == Vector2.zero) return;
 
         _inputDirection = _moveAction.ReadValue<Vector2>().normalized;
-        _positionLastFrame = transform.position;
         transform.position += _moveSpeed * Time.fixedDeltaTime * (Vector3)_inputDirection;
     }
 
-    private void HandleRotation()
+    protected override void HandleRotation()
     {
         Vector3 mousePos = Mouse.current.position.value;
         mousePos.z = -_mainCam.transform.position.z;
@@ -63,15 +67,11 @@ public class PlayerMovement : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, angle - 90.0f);
     }
 
-    public void ApplyForce(Vector3 forceDirection, float duration, VectorEasingMode easingMode)
-        => StartCoroutine(ApplyForceCoroutine(forceDirection, duration, easingMode));
-
-
-    private IEnumerator ApplyForceCoroutine(Vector3 forceDirection, float duration, VectorEasingMode easingMode)
+    protected override IEnumerator ApplyForceCoroutine(Vector3 forceDirection, float duration, VectorEasingMode easingMode)
     {
         if (forceDirection.sqrMagnitude < 0.1f) yield return null;
 
-        _moveAction.Disable();
+        CanMove = false;
 
         Vector3 startPosition = transform.position;
         float timeElapsed = 0.0f;
@@ -89,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
-        _moveAction.Enable();
+        CanMove = true;
     }
 
 #if UNITY_EDITOR
@@ -100,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 mousePos = Mouse.current.position.value;
         mousePos.z = -_mainCam.transform.position.z;
-        Debug.DrawLine(transform.position, transform.DirectionToMouseWorldSpace(), Color.red);
+        Debug.DrawLine(transform.position, _mainCam.ScreenToWorldPoint(mousePos), Color.red);
     }
 }
 #endif

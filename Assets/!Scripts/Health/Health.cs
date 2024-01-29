@@ -32,6 +32,7 @@ public class Health : MonoBehaviour, IDamageable
     public void Die()
     {
         Debug.Log("Goodbye cruel world.");
+
         if (_destroyOnDeath)
             Destroy(gameObject);
     }
