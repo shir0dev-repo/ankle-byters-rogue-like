@@ -23,4 +23,9 @@ public class PlayerManager : Singleton<PlayerManager>
         if (_player == null) return Vector3.zero;
         return _player.position;
     }
+
+    private void SetPlayerPositionInRoom(Door roomDoor)
+    {
+
+    }
 }
