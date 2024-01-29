@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 10
+  _destroyOnDeath: 1
 --- !u!114 &3870084745401679229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,7 +79,7 @@ MonoBehaviour:
   _targetLayermask:
     serializedVersion: 2
     m_Bits: 64
-  _damage: 6
+  _damage: 1
 --- !u!58 &8893907405628569873
 CircleCollider2D:
   m_ObjectHideFlags: 0

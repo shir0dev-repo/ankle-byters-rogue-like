@@ -4,7 +4,7 @@ using UnityEngine;
 public class Health : MonoBehaviour, IDamageable
 {
     [SerializeField] private int _maxHealth;
-
+    [SerializeField] private bool _destroyOnDeath = true;
     public int MaxHealth => _maxHealth;
     public int CurrentHealth { get; private set; }
 
@@ -23,6 +23,8 @@ public class Health : MonoBehaviour, IDamageable
         Debug.Log($"{gameObject.name} took {damage} damage!");
         CurrentHealth -= damage;
 
+        OnHealthChanged?.Invoke(CurrentHealth);
+
         if (CurrentHealth <= 0)
             Die();
     }
@@ -30,6 +32,8 @@ public class Health : MonoBehaviour, IDamageable
     public void Die()
     {
         Debug.Log("Goodbye cruel world.");
-        gameObject.SetActive(false);
+
+        if (_destroyOnDeath)
+            Destroy(gameObject);
     }
 }
