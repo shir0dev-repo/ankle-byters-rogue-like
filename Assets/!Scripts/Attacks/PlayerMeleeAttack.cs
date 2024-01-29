@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,6 +7,8 @@ public class PlayerMeleeAttack : MonoBehaviour
 {
     [SerializeField] float _fireCooldown = 0.3f;
     [SerializeField] private int _damage = 2;
+    [SerializeField] GameObject meleePrefab;
+    [SerializeField] float spawnDistance = 1f;
 
     private const string _MELEE_ATTACK_ACTION_NAME = "MeleeAttack";
     private InputAction _meleeAttack;
@@ -44,6 +47,15 @@ public class PlayerMeleeAttack : MonoBehaviour
                 enemyHealth.TakeDamage(_damage);
             }
         }
+        StartCoroutine(SpawnMeleePrefab());
+    }
+    private IEnumerator SpawnMeleePrefab()
+    {
+        Vector3 spawnPosition = transform.position + transform.up * spawnDistance;
+        GameObject meleeInstance = Instantiate(meleePrefab, spawnPosition, Quaternion.identity);
+
+        yield return new WaitForSeconds(0.1f);
+        Destroy(meleeInstance);
     }
     private void OnDrawGizmosSelected()
     {

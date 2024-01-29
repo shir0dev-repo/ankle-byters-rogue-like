@@ -128,6 +128,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fireCooldown: 0.3
   _damage: 2
+  meleePrefab: {fileID: 5253270366236191422, guid: 5f46d9a6c8ffad24aa47040c90846a15, type: 3}
+  spawnDistance: 1
   attackPos: {fileID: 8473070690705915679}
   attackRange: 0.5
   enemyToAttack:
