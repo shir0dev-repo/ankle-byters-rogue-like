@@ -158,7 +158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe801dd9417af074dbe6c890540466c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dashCurve: 10
+  _dashCurve: 8
   _dashDistance: 5
   _dashDuration: 0.5
   _dashCooldown: 0.75

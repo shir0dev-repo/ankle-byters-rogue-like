@@ -100,7 +100,7 @@ public class PlayerMovement : Movement
 
         Vector3 mousePos = Mouse.current.position.value;
         mousePos.z = -_mainCam.transform.position.z;
-        Debug.DrawLine(transform.position, transform.DirectionToMouseWorldSpace(), Color.red);
+        Debug.DrawLine(transform.position, _mainCam.ScreenToWorldPoint(mousePos), Color.red);
     }
 }
 #endif
