@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 10
+  _destroyOnDeath: 1
 --- !u!114 &3870084745401679229
 MonoBehaviour:
   m_ObjectHideFlags: 0

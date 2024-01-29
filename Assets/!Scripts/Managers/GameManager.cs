@@ -8,6 +8,8 @@ public class GameManager : PersistentSingleton<GameManager>
     public TimeTickManager TimeTickManager { get; private set; }
     public PlayerManager PlayerManager { get; private set; }
 
+    public GameObject Player { get; private set; }
+
     protected override void Awake()
     {
         base.Awake();
@@ -16,7 +18,7 @@ public class GameManager : PersistentSingleton<GameManager>
         TimeTickManager = gameObject.AddComponent<TimeTickManager>();
         InsanityManager = gameObject.AddComponent<InsanityManager>();
 
-        PlayerManager.SpawnPlayer(Vector3.zero);
+        Player = PlayerManager.SpawnPlayer(Vector3.zero);
         TimeTickManager.Create();
     }
 }
