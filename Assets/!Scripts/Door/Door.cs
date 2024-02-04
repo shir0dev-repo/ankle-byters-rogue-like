@@ -7,6 +7,8 @@ public class Door : MonoBehaviour
     //instead of storing the player, use a layermask for it
     [SerializeField] private LayerMask _playerLayermask;
 
+    public bool IsLocked { get; set; }
+
     public Vector3 GetAdjacentRoom()
     {
         Vector3 cameraPos = Camera.main.transform.position;
@@ -23,7 +25,7 @@ public class Door : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!_playerLayermask.IsLayer(collision.gameObject.layer)) return;
+        if (IsLocked || !_playerLayermask.IsLayer(collision.gameObject.layer)) return;
         
         GameManager.Instance.CameraManager.EnterRoom(this);
     }
