@@ -6,9 +6,23 @@ public class Door : MonoBehaviour
 {
     //instead of storing the player, use a layermask for it
     [SerializeField] private LayerMask _playerLayermask;
+    [SerializeField] GameObject door1;
+    [SerializeField] GameObject door2;
 
     public bool IsLocked { get; set; }
+    public bool playerPassedThrough = false;
 
+    private void Update()
+    {
+        if (door1 != null && playerPassedThrough)
+        {
+            LockDoor();
+        }
+        if (door2 != null && playerPassedThrough)
+        {
+            LockDoor();
+        }
+    }
     public Vector3 GetAdjacentRoom()
     {
         Vector3 cameraPos = Camera.main.transform.position;
@@ -28,5 +42,11 @@ public class Door : MonoBehaviour
         if (IsLocked || !_playerLayermask.IsLayer(collision.gameObject.layer)) return;
         
         GameManager.Instance.CameraManager.EnterRoom(this);
+
+        playerPassedThrough = true;
+    }
+    public void LockDoor()
+    {
+        IsLocked = true;
     }
 }

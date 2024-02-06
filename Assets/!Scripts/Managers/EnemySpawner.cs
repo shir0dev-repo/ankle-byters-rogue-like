@@ -5,11 +5,13 @@ public class EnemySpawner : MonoBehaviour
     public GameObject enemyPrefab;
     public GameObject bossPrefab;
     [SerializeField] GameObject winImage;
-    
+    [SerializeField] GameObject door;
+
     bool winImageSpawned = false;
+    int numEnemies = 5; 
 
     float minX = -26f;
-    float maxX = -9f;
+    float maxX = -12f;
     float minY = 0f;
     float maxY = 5f;
 
@@ -18,14 +20,12 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < 5; i++)
-        {
-            Vector3 randomPosition = new Vector3(Random.Range(minX, maxX), Random.Range(minY, maxY), 0f);
-            Instantiate(enemyPrefab, randomPosition, Quaternion.identity);
-        }
-        bossInstance = Instantiate(bossPrefab, new Vector3(-36f, 0f, 0f), Quaternion.identity);
+        SpawnEnemies();
 
-        bossHealth = bossInstance.GetComponent<Health>();
+        if (door != null)
+        {
+            door.SetActive(false);
+        }
     }
 
     private void Update()
@@ -36,9 +36,34 @@ public class EnemySpawner : MonoBehaviour
             if (winImage != null)
             {
                 winImage.SetActive(true);
-                
                 Debug.Log("You win!");
                 winImageSpawned = true;
+            }
+        }
+    }
+
+    void SpawnEnemies()
+    {
+        for (int i = 0; i < numEnemies; i++)
+        {
+            Vector3 randomPosition = new Vector3(Random.Range(minX, maxX), Random.Range(minY, maxY), 0f);
+            Instantiate(enemyPrefab, randomPosition, Quaternion.identity);
+        }
+        bossInstance = Instantiate(bossPrefab, new Vector3(-36f, 0f, 0f), Quaternion.identity);
+        bossHealth = bossInstance.GetComponent<Health>();
+    }
+
+    // Method to be called when a mini enemy is defeated
+    public void EnemyDefeated()
+    {
+        numEnemies--;
+        if (numEnemies <= 0)
+        {
+            Debug.Log("All mini enemies defeated!");
+            // Activate the door
+            if (door != null)
+            {
+                door.SetActive(true);
             }
         }
     }
