@@ -6023,6 +6023,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Image
       objectReference: {fileID: 0}
+    - target: {fileID: 3150509082475022605, guid: 0a9d6ca233a2b0c4ead64ffc7d477bd6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4793108915098959511, guid: 0a9d6ca233a2b0c4ead64ffc7d477bd6, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -6085,11 +6089,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4793108915098959511, guid: 0a9d6ca233a2b0c4ead64ffc7d477bd6, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -1518.9844
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4793108915098959511, guid: 0a9d6ca233a2b0c4ead64ffc7d477bd6, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -4.080063
+      value: -3.3095002
       objectReference: {fileID: 0}
     - target: {fileID: 4793108915098959511, guid: 0a9d6ca233a2b0c4ead64ffc7d477bd6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

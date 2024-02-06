@@ -36,7 +36,7 @@ public class EnemySpawner : MonoBehaviour
             if (winImage != null)
             {
                 winImage.SetActive(true);
-                Instantiate(winImage, new Vector3(-1518f, -4f, 0f), Quaternion.identity);
+                
                 Debug.Log("You win!");
                 winImageSpawned = true;
             }
