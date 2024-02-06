@@ -64,6 +64,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 2
+  _seekRange: 4
 --- !u!114 &283100908046824469
 MonoBehaviour:
   m_ObjectHideFlags: 0
