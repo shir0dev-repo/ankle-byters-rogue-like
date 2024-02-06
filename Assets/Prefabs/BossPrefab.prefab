@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8893907405628569873}
   - component: {fileID: 7860632028396510292}
   m_Layer: 7
-  m_Name: EnemyParent
+  m_Name: BossPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7435b70ff6df452468655bc56de8bf4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 10
+  _maxHealth: 20
   _destroyOnDeath: 1
 --- !u!114 &3870084745401679229
 MonoBehaviour:
@@ -64,6 +64,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 2
+  _seekRange: 4
 --- !u!114 &283100908046824469
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,7 +217,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
