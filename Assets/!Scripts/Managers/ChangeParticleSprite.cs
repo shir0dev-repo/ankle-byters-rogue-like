@@ -36,19 +36,19 @@ public class ChangeParticleSystem : MonoBehaviour
             enemySpawner.SpawnEnemies();
             enemySpawner.SpawnEnemies();
             enemiesSpawned = true;
-            Debug.Log("Spawning Enemies");
+            Debug.LogWarning("Spawning Enemies");
 
             ActivateParticleSystem(particleSystem2);
             ActivateParticleSystem(particleSystem3);
             ActivateParticleSystem(particleSystem4);
-            DeactivateParticleSystem(particleSystem1);
+            //DeactivateParticleSystem(particleSystem1);
         }
         if (currentInsanity >= 60 && currentInsanity < 100)
         {
             ActivateParticleSystem(particleSystem2);
             ActivateParticleSystem(particleSystem3);
             ActivateParticleSystem(particleSystem4);
-            DeactivateParticleSystem(particleSystem1);
+            //DeactivateParticleSystem(particleSystem1);
         }
         if (currentInsanity < 60)
         {
