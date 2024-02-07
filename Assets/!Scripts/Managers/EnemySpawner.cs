@@ -32,7 +32,7 @@ public class EnemySpawner : MonoBehaviour
     {
         CheckWinCondition();
     }
-    private void CheckWinCondition()
+    public void CheckWinCondition()
     {
         if (bossHealth != null && bossHealth.CurrentHealth <= 0 && !winImageSpawned)
         {

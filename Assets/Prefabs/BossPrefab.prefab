@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5386318885355925800}
+  - component: {fileID: 5961426043014120486}
   - component: {fileID: 6450479678835394032}
-  - component: {fileID: 3870084745401679229}
   - component: {fileID: 283100908046824469}
   - component: {fileID: 8893907405628569873}
   - component: {fileID: 7860632028396510292}
@@ -37,6 +37,21 @@ Transform:
   - {fileID: 4046894635984625559}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5961426043014120486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817236994952152450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b935002db5205b24bbec26e60940d3c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 7102543446062241837, guid: a0444663fea7c594facb4489a8f2982e, type: 3}
+  seekDistance: 10
+  enemySpawner: {fileID: 0}
 --- !u!114 &6450479678835394032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51,20 +66,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 20
   _destroyOnDeath: 1
---- !u!114 &3870084745401679229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1817236994952152450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddd72260a74bbda4c9da704053ccf1d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _speed: 2
-  _seekRange: 10
 --- !u!114 &283100908046824469
 MonoBehaviour:
   m_ObjectHideFlags: 0
