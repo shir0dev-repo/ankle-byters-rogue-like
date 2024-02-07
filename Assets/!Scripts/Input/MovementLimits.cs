@@ -16,12 +16,10 @@ public class MovementLimits : MonoBehaviour
             Debug.LogWarning("Main camera reference is null!");
             return;
         }
-        Vector3 minViewportBounds = _mainCamera.ViewportToWorldPoint(new Vector3(0, 0, _mainCamera.nearClipPlane));
-        Vector3 maxViewportBounds = _mainCamera.ViewportToWorldPoint(new Vector3(1, 1, _mainCamera.nearClipPlane));
 
         Vector3 clampedPosition = transform.position;
-        clampedPosition.x = Mathf.Clamp(clampedPosition.x, minViewportBounds.x, maxViewportBounds.x);
-        clampedPosition.y = Mathf.Clamp(clampedPosition.y, minViewportBounds.y, maxViewportBounds.y);
+        clampedPosition.x = Mathf.Clamp(clampedPosition.x, _mainCamera.ScreenToWorldPoint(Vector3.zero).x, _mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0)).x);
+        clampedPosition.y = Mathf.Clamp(clampedPosition.y, _mainCamera.ScreenToWorldPoint(Vector3.zero).y, _mainCamera.ScreenToWorldPoint(new Vector3(0, Screen.height, 0)).y);
         transform.position = clampedPosition;
     }
 }

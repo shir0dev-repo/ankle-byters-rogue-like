@@ -10,21 +10,14 @@ public class BasicEnemy : MonoBehaviour
     void Start()
     {
         enemySpawner = FindObjectOfType<EnemySpawner>();
-        if (enemySpawner == null)
-        {
-            Debug.LogError("EnemySpawner script not found in the scene!");
-        }
     }
 
     void FixedUpdate()
     {
         Vector3 playerPosition = GameManager.Instance.PlayerManager.GetPlayerPosition();
         float distanceToPlayer = Vector3.Distance(transform.position, playerPosition);
+        transform.position = Vector3.MoveTowards(transform.position, playerPosition, _speed * Time.deltaTime);
 
-        if (distanceToPlayer <= _seekRange)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, playerPosition, _speed * Time.deltaTime);
-        }
     }
 
     void OnDestroy()

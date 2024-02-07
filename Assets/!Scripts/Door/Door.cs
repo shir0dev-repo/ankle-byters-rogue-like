@@ -1,5 +1,4 @@
 using System;
-using UnityEditor.Overlays;
 using UnityEngine;
 
 public class Door : MonoBehaviour
@@ -12,22 +11,27 @@ public class Door : MonoBehaviour
     public bool IsLocked { get; set; }
     public bool playerPassedThrough = false;
 
+    public EnemySpawner enemySpawner;
+    private bool enemiesSpawned = false;
+    private bool bossSpawned = false;
+
     private void Update()
     {
         if (door1 != null && playerPassedThrough)
         {
-            LockDoor();
-        }
-        if (door2 != null && playerPassedThrough)
-        {
-            LockDoor();
+            if (!enemiesSpawned)
+            {
+                LockDoor();
+                enemySpawner.SpawnEnemies();
+                enemiesSpawned = true;
+            }
         }
     }
     public Vector3 GetAdjacentRoom()
     {
         Vector3 cameraPos = Camera.main.transform.position;
         cameraPos.z = 0;
-        
+
         Vector3 directionFromCamera = (transform.position - cameraPos).normalized;
 
         directionFromCamera.x = MathF.Round(directionFromCamera.x * CameraManager.ScreenExtents.x * 2, 2);
@@ -40,7 +44,7 @@ public class Door : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (IsLocked || !_playerLayermask.IsLayer(collision.gameObject.layer)) return;
-        
+
         GameManager.Instance.CameraManager.EnterRoom(this);
 
         playerPassedThrough = true;
