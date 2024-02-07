@@ -10179,7 +10179,8 @@ MonoBehaviour:
   enemyPrefab: {fileID: 1817236994952152450, guid: 8a95dc1070d488c4aa1f8eca4a93649b, type: 3}
   bossPrefab: {fileID: 1817236994952152450, guid: e71b200aa89a5e8489b361960e76a7f8, type: 3}
   winImage: {fileID: 56156123}
-  door: {fileID: 289542022}
+  door1: {fileID: 1588285928}
+  door2: {fileID: 289542022}
 --- !u!4 &180306831
 Transform:
   m_ObjectHideFlags: 0
@@ -20425,8 +20426,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 23494600530282639, guid: c2fd56a4915fbc84c8f790e25597df66, type: 3}
+      propertyPath: m_Name
+      value: door2
+      objectReference: {fileID: 0}
+    - target: {fileID: 23494600530282639, guid: c2fd56a4915fbc84c8f790e25597df66, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 23494600530282639, guid: c2fd56a4915fbc84c8f790e25597df66, type: 3}
+      propertyPath: m_TagString
+      value: Door2
       objectReference: {fileID: 0}
     - target: {fileID: 2088580594075721216, guid: c2fd56a4915fbc84c8f790e25597df66, type: 3}
       propertyPath: door1
@@ -20436,6 +20445,10 @@ PrefabInstance:
       propertyPath: door2
       value: 
       objectReference: {fileID: 289542022}
+    - target: {fileID: 2088580594075721216, guid: c2fd56a4915fbc84c8f790e25597df66, type: 3}
+      propertyPath: enemySpawner
+      value: 
+      objectReference: {fileID: 180306830}
     - target: {fileID: 2829337960441127287, guid: c2fd56a4915fbc84c8f790e25597df66, type: 3}
       propertyPath: m_LocalPosition.x
       value: -17.78
@@ -20667,6 +20680,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 23494600530282639, guid: c2fd56a4915fbc84c8f790e25597df66, type: 3}
+      propertyPath: m_Name
+      value: door1
+      objectReference: {fileID: 0}
+    - target: {fileID: 23494600530282639, guid: c2fd56a4915fbc84c8f790e25597df66, type: 3}
+      propertyPath: m_TagString
+      value: Door1
+      objectReference: {fileID: 0}
     - target: {fileID: 2088580594075721216, guid: c2fd56a4915fbc84c8f790e25597df66, type: 3}
       propertyPath: door1
       value: 
@@ -20675,6 +20696,10 @@ PrefabInstance:
       propertyPath: door2
       value: 
       objectReference: {fileID: 289542022}
+    - target: {fileID: 2088580594075721216, guid: c2fd56a4915fbc84c8f790e25597df66, type: 3}
+      propertyPath: enemySpawner
+      value: 
+      objectReference: {fileID: 180306830}
     - target: {fileID: 2829337960441127287, guid: c2fd56a4915fbc84c8f790e25597df66, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
