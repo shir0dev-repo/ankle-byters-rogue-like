@@ -15312,6 +15312,7 @@ MonoBehaviour:
   particleSystem4: {fileID: 1109041696}
   playerTransform: {fileID: 7102543446062241837, guid: a0444663fea7c594facb4489a8f2982e, type: 3}
   followSpeed: 5
+  enemySpawner: {fileID: 180306830}
 --- !u!1 &594918725
 GameObject:
   m_ObjectHideFlags: 0

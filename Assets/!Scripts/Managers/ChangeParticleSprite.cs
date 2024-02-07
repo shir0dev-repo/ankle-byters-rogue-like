@@ -9,6 +9,9 @@ public class ChangeParticleSystem : MonoBehaviour
     public Transform playerTransform;
     public float followSpeed = 5f;
 
+    public EnemySpawner enemySpawner;
+    private bool enemiesSpawned = false;
+
     private void OnEnable()
     {
         InsanityManager.OnInsanityChanged += UpdateParticleSystems;
@@ -28,8 +31,21 @@ public class ChangeParticleSystem : MonoBehaviour
 
     private void UpdateParticleSystems(int currentInsanity)
     {
-        if (currentInsanity >= 60 && currentInsanity <= 100)
+        Debug.Log("Insanity level: " + currentInsanity);
+        if (currentInsanity >= 60 && currentInsanity < 100)
         {
+            ActivateParticleSystem(particleSystem2);
+            ActivateParticleSystem(particleSystem3);
+            ActivateParticleSystem(particleSystem4);
+            DeactivateParticleSystem(particleSystem1);
+        }
+        else if (currentInsanity >= 100 && !enemiesSpawned)
+        {
+            enemySpawner.SpawnEnemies();
+            enemySpawner.SpawnEnemies();
+            enemiesSpawned = true;
+            Debug.Log("Spawning Enemies");
+
             ActivateParticleSystem(particleSystem2);
             ActivateParticleSystem(particleSystem3);
             ActivateParticleSystem(particleSystem4);
