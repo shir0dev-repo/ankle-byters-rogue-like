@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7860632028396510292}
   m_Layer: 7
   m_Name: BossPrefab
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -51,7 +51,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 7102543446062241837, guid: a0444663fea7c594facb4489a8f2982e, type: 3}
   seekDistance: 10
-  enemySpawner: {fileID: 0}
 --- !u!114 &6450479678835394032
 MonoBehaviour:
   m_ObjectHideFlags: 0

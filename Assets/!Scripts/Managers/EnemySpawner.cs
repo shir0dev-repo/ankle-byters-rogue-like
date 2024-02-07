@@ -4,12 +4,13 @@ public class EnemySpawner : MonoBehaviour
 {
     public GameObject enemyPrefab;
     public GameObject bossPrefab;
-    [SerializeField] GameObject winImage;
+    //[SerializeField] GameObject winImage;
     [SerializeField] GameObject door1;
     [SerializeField] GameObject door2;
 
-    bool winImageSpawned = false;
-    bool bossSpawned = false;
+    //bool winImageSpawned = false;
+    public bool bossSpawned = false;
+    public bool bossDestroyed = false;
     int numEnemies = 0;
     int maxEnemies = 5;
 
@@ -19,6 +20,7 @@ public class EnemySpawner : MonoBehaviour
     float maxY = 5f;
 
     GameObject bossInstance;
+    public WinCheckCond WinCheckCond;
     Health bossHealth;
 
     private void Start()
@@ -31,17 +33,18 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
-        CheckWinCondition();
+        //CheckWinCondition();
     }
-    public void CheckWinCondition()
-    {
-        if (bossHealth != null && bossHealth.CurrentHealth <= 0 && !winImageSpawned)
-        {
-            winImage.SetActive(true);
-            Debug.Log("You win!");
-            winImageSpawned = true;
-        }
-    }
+    //public void CheckWinCondition()
+    //{
+    //    Debug.LogWarning("Checking win condition!");
+    //    if (bossDestroyed && !winImageSpawned)
+    //    {
+    //        winImage.SetActive(true);
+    //        Debug.Log("You win!");
+    //        winImageSpawned = true;
+    //    }
+    //}
 
     public void SpawnEnemies()
     {
@@ -60,6 +63,7 @@ public class EnemySpawner : MonoBehaviour
             bossInstance = Instantiate(bossPrefab, new Vector3(-36f, 0f, 0f), Quaternion.identity);
             bossHealth = bossInstance.GetComponent<Health>();
             bossSpawned = true;
+            WinCheckCond.boss = bossInstance;
         }
     }
 
