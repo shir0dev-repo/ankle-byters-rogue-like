@@ -28,18 +28,11 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    private void Update()
+    public void OnBossKilled()
     {
-        CheckWinCondition();
-    }
-    public void CheckWinCondition()
-    {
-        if (bossHealth != null && bossHealth.CurrentHealth <= 0 && !winImageSpawned)
-        {
-            winImage.SetActive(true);
-            Debug.Log("You win!");
-            winImageSpawned = true;
-        }
+        winImage.SetActive(true);
+        Debug.Log("You win!");
+        winImageSpawned = true;
     }
 
     public void SpawnEnemies()
@@ -50,12 +43,14 @@ public class EnemySpawner : MonoBehaviour
             Instantiate(enemyPrefab, randomPosition, Quaternion.identity);
         }
     }
+
     public void SpawnBoss()
     {
         if (!bossSpawned)
         {
             bossInstance = Instantiate(bossPrefab, new Vector3(-36f, 0f, 0f), Quaternion.identity);
             bossHealth = bossInstance.GetComponent<Health>();
+            bossHealth.OnDeath += OnBossKilled;
             bossSpawned = true;
         }
     }

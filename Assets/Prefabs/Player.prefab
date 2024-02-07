@@ -40,8 +40,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7102543446062241837}
-  - component: {fileID: 1380345867270346519}
   - component: {fileID: 6144987223423654695}
+  - component: {fileID: 1380345867270346519}
   - component: {fileID: 6177250601096842878}
   - component: {fileID: 1752388452056444429}
   - component: {fileID: 4352762155562399251}
@@ -50,7 +50,6 @@ GameObject:
   - component: {fileID: -8316294380343324547}
   - component: {fileID: 3324525846811067766}
   - component: {fileID: 8199073077806412568}
-  - component: {fileID: -1880710042122578028}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -75,6 +74,18 @@ Transform:
   - {fileID: 8473070690705915679}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6144987223423654695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 830659353465347653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90bbcd638534250418d3a8a2ac0393a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1380345867270346519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,18 +100,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 10
   _destroyOnDeath: 1
---- !u!114 &6144987223423654695
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 830659353465347653}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90bbcd638534250418d3a8a2ac0393a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6177250601096842878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,27 +267,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &-1880710042122578028
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 830659353465347653}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3536889caf43d9c459c7f4cd8cd601e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _fireCooldown: 0.3
-  _damage: 2
-  meleePrefab: {fileID: 0}
-  spawnDistance: 1
-  attackPos: {fileID: 0}
-  attackRange: 0
-  enemyToAttack:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!1 &2647573189678927069
 GameObject:
   m_ObjectHideFlags: 0

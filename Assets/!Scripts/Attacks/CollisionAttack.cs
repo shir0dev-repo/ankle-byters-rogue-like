@@ -7,6 +7,7 @@ public class CollisionAttack : MonoBehaviour
 {
     [SerializeField] private LayerMask _targetLayermask;
     [SerializeField, Min(1)] private int _damage = 1;
+    [SerializeField] private bool _destroyOnImpact = false;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -17,5 +18,8 @@ public class CollisionAttack : MonoBehaviour
         if (!collision.gameObject.TryGetComponent(out Health healthComp)) return;
 
         healthComp.TakeDamage(_damage);
+
+        if (_destroyOnImpact)
+            Destroy(gameObject);
     }
 }

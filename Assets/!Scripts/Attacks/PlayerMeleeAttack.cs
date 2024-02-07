@@ -59,6 +59,7 @@ public class PlayerMeleeAttack : MonoBehaviour
     }
     private void OnDrawGizmosSelected()
     {
+        if (!Application.isPlaying || attackPos == null) return;
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(attackPos.position, attackRange);
     }

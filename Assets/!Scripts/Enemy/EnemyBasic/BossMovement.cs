@@ -48,7 +48,7 @@ public class BossMovement : MonoBehaviour
     {
         if (enemySpawner != null)
         {
-            enemySpawner.CheckWinCondition();
+            enemySpawner.OnBossKilled();
         }
     }
 }

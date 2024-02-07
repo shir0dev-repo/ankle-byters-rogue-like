@@ -20512,7 +20512,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5178274492125013826, guid: 79d55ae0fda4d094084a0274ebda3af6, type: 3}
       propertyPath: speed
-      value: 9
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5178274492125013826, guid: 79d55ae0fda4d094084a0274ebda3af6, type: 3}
       propertyPath: player
@@ -20520,7 +20520,7 @@ PrefabInstance:
       objectReference: {fileID: 7102543446062241837, guid: a0444663fea7c594facb4489a8f2982e, type: 3}
     - target: {fileID: 5178274492125013826, guid: 79d55ae0fda4d094084a0274ebda3af6, type: 3}
       propertyPath: stoppingDistance
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8568480943189007888, guid: 79d55ae0fda4d094084a0274ebda3af6, type: 3}
       propertyPath: m_Name

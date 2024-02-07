@@ -65,6 +65,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   _damage: 2
+  _destroyOnImpact: 1
 --- !u!212 &6471682421704177457
 SpriteRenderer:
   m_ObjectHideFlags: 0
