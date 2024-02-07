@@ -10,7 +10,8 @@ public class EnemySpawner : MonoBehaviour
 
     bool winImageSpawned = false;
     bool bossSpawned = false;
-    int numEnemies = 5;
+    int numEnemies = 0;
+    int maxEnemies = 5;
 
     float minX = -26f;
     float maxX = -12f;
@@ -44,12 +45,14 @@ public class EnemySpawner : MonoBehaviour
 
     public void SpawnEnemies()
     {
-        for (int i = 0; i < numEnemies; i++)
+        for (int i = 0; i < maxEnemies; i++)
         {
+            numEnemies++;
             Vector3 randomPosition = new Vector3(Random.Range(minX, maxX), Random.Range(minY, maxY), 0f);
             Instantiate(enemyPrefab, randomPosition, Quaternion.identity);
         }
     }
+
     public void SpawnBoss()
     {
         if (!bossSpawned)
