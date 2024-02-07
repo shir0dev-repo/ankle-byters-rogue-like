@@ -1,14 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BossMovement : MonoBehaviour
 {
     public Transform player;
-    [SerializeField] public float seekDistance = 10f; 
-    private float speed = 5;
 
-    public EnemySpawner enemySpawner;
+    [SerializeField] public float seekDistance = 10f;
+
+    private float speed = 5;
 
     private void Start()
     {
@@ -44,6 +42,7 @@ public class BossMovement : MonoBehaviour
             }
         }
     }
+
     void OnDestroy()
     {
         if (enemySpawner != null)
