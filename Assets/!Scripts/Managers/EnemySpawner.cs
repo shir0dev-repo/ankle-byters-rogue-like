@@ -31,9 +31,11 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    private void Update()
+    public void OnBossKilled()
     {
-        //CheckWinCondition();
+        winImage.SetActive(true);
+        Debug.Log("You win!");
+        winImageSpawned = true;
     }
     //public void CheckWinCondition()
     //{
@@ -62,6 +64,7 @@ public class EnemySpawner : MonoBehaviour
         {
             bossInstance = Instantiate(bossPrefab, new Vector3(-36f, 0f, 0f), Quaternion.identity);
             bossHealth = bossInstance.GetComponent<Health>();
+            bossHealth.OnDeath += OnBossKilled;
             bossSpawned = true;
             WinCheckCond.boss = bossInstance;
         }

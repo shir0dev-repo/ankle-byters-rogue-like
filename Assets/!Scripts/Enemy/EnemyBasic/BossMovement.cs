@@ -45,6 +45,9 @@ public class BossMovement : MonoBehaviour
 
     void OnDestroy()
     {
-        
+        if (enemySpawner != null)
+        {
+            enemySpawner.OnBossKilled();
+        }
     }
 }
