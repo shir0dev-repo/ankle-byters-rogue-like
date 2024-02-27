@@ -17,14 +17,11 @@ public class Door : MonoBehaviour
 
     private void Update()
     {
-        if (door1 != null && playerPassedThrough)
+        if (door1 != null && playerPassedThrough && !enemiesSpawned)
         {
-            if (!enemiesSpawned)
-            {
-                LockDoor();
-                enemySpawner.SpawnEnemies();
-                enemiesSpawned = true;
-            }
+            LockDoor();
+            enemySpawner.SpawnEnemies();
+            enemiesSpawned = true;
         }
     }
     public Vector3 GetAdjacentRoom()
