@@ -3,6 +3,8 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     public GameObject enemyPrefab;
+    public GameObject enemyPrefab2;
+
     public GameObject bossPrefab;
     //[SerializeField] GameObject winImage;
     [SerializeField] GameObject door1;
@@ -19,6 +21,8 @@ public class EnemySpawner : MonoBehaviour
     float minY = 0f;
     float maxY = 5f;
 
+    float minDistanceToPlayer = 5f;
+
     GameObject bossInstance;
     public WinCheckCond WinCheckCond;
     Health bossHealth;
@@ -33,9 +37,9 @@ public class EnemySpawner : MonoBehaviour
 
     public void OnBossKilled()
     {
-        winImage.SetActive(true);
-        Debug.Log("You win!");
-        winImageSpawned = true;
+        //winImage.SetActive(true);
+        //Debug.Log("You win!");
+        //winImageSpawned = true;
     }
     //public void CheckWinCondition()
     //{
@@ -53,9 +57,31 @@ public class EnemySpawner : MonoBehaviour
         for (int i = 0; i < maxEnemies; i++)
         {
             numEnemies++;
-            Vector3 randomPosition = new Vector3(Random.Range(minX, maxX), Random.Range(minY, maxY), 0f);
-            Instantiate(enemyPrefab, randomPosition, Quaternion.identity);
+            GameObject prefabToSpawn;
+
+            if (Random.Range(0, 2) == 0)
+            {
+                prefabToSpawn = enemyPrefab;
+            }
+            else
+            {
+                prefabToSpawn = enemyPrefab2;
+            }
+
+            Vector3 randomPosition = GetRandomPosition();
+            Instantiate(prefabToSpawn, randomPosition, Quaternion.identity);
         }
+    }
+    private Vector3 GetRandomPosition()
+    {
+        Vector3 randomPosition;
+        Vector3 playerPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
+        do
+        {
+            randomPosition = new Vector3(Random.Range(minX, maxX), Random.Range(minY, maxY), 0f);
+        } while (Vector3.Distance(randomPosition, playerPosition) < minDistanceToPlayer);
+
+        return randomPosition;
     }
 
     public void SpawnBoss()
@@ -73,6 +99,7 @@ public class EnemySpawner : MonoBehaviour
     // Method to be called when a mini enemy is defeated
     public void EnemyDefeated()
     {
+        Debug.Log("An enemy was defeated!");
         numEnemies--;
         if (numEnemies <= 0)
         {

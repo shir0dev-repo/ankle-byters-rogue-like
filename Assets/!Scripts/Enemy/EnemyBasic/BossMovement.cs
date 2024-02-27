@@ -6,6 +6,8 @@ public class BossMovement : MonoBehaviour
 
     [SerializeField] public float seekDistance = 10f;
 
+    public EnemySpawner enemySpawner;
+
     private float speed = 5;
 
     private void Start()

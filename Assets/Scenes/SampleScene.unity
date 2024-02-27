@@ -354,7 +354,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -135, y: 178}
+  m_AnchoredPosition: {x: -276.50006, y: 246}
   m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &135033999
@@ -392,7 +392,7 @@ MonoBehaviour:
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 100, y: 100}
-  m_Spacing: {x: -58.4, y: 0}
+  m_Spacing: {x: -45, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
 --- !u!114 &135034001
@@ -10257,6 +10257,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 1817236994952152450, guid: 8a95dc1070d488c4aa1f8eca4a93649b, type: 3}
+  enemyPrefab2: {fileID: 1817236994952152450, guid: 77ebbf7b20545b94186686c441d76c5d, type: 3}
   bossPrefab: {fileID: 1817236994952152450, guid: e71b200aa89a5e8489b361960e76a7f8, type: 3}
   door1: {fileID: 1588285928}
   door2: {fileID: 289542022}
