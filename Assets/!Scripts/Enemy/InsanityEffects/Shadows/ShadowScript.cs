@@ -28,7 +28,7 @@ public class ShadowScript : MonoBehaviour
             float rotationAmount = Mathf.Clamp(angleDifference, -rotationStep, rotationStep);
 
             transform.Rotate(Vector3.forward, rotationAmount);
-            if (isDrifting && ((player.transform.position - transform.position).magnitude < 2 && (player.transform.position - transform.position).magnitude > 0.75))
+            if (isDrifting && ((player.transform.position - transform.position).magnitude < 2 && (player.transform.position - transform.position).magnitude > 1.05))
             {
                 transform.position = Vector3.MoveTowards(transform.position, player.transform.position, 0.2f * Time.deltaTime);
             }

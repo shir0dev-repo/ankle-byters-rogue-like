@@ -53,8 +53,9 @@ public class ShadowManager : MonoBehaviour
         {
             while(lookerRatio < stage)
             {
-                shadowLooking.Add(shadowPassive[0]);
-                shadowPassive.RemoveAt(0);
+                int randomPassive = Random.Range(0, shadowPassive.Count);
+                shadowLooking.Add(shadowPassive[randomPassive]);
+                shadowPassive.RemoveAt(randomPassive);
                 lookerRatio = ((shadowLooking.Count / (float)(shadowLooking.Count + shadowPassive.Count)) * 10);
             }
         }
@@ -62,8 +63,9 @@ public class ShadowManager : MonoBehaviour
         {
             while (lookerRatio > stage)
             {
-                shadowPassive.Add(shadowLooking[0]);
-                shadowLooking.RemoveAt(0);
+                int randomLooker = Random.Range(0, shadowLooking.Count);
+                shadowPassive.Add(shadowLooking[randomLooker]);
+                shadowLooking.RemoveAt(randomLooker);
                 lookerRatio = ((shadowLooking.Count / (float)(shadowLooking.Count + shadowPassive.Count)) * 10);
             }
         }
@@ -79,16 +81,6 @@ public class ShadowManager : MonoBehaviour
         foreach (GameObject passive in shadowPassive)
         {
             passive.GetComponent<ShadowScript>().MakePassive();
-        }
-    }
-
-    void SpawnShadows()
-    {
-        Vector3 testSpawn = new Vector3(-8f, -3f);
-        for (int i = 0; i < 10; i++)
-        {
-            shadowPassive.Add(Instantiate(shadowPrefab, testSpawn, Quaternion.identity, transform));
-            testSpawn = new Vector3(testSpawn.x + 1.5f, -3f);
         }
     }
 
