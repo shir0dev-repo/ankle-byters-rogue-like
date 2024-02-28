@@ -16,6 +16,8 @@ public class ShadowManager : MonoBehaviour
         InsanityManager.OnInsanityChanged += ShadowBehaviour;
         //SpawnShadows();
         SpawnShadowCluster();
+        SpawnShadowCluster(3);
+        SpawnShadowCluster(8);
     }
 
     // Update is called once per frame
@@ -97,15 +99,29 @@ public class ShadowManager : MonoBehaviour
             Debug.LogWarning("Cluster Size shouldn't be zero");
             return;
         }
-        Vector3 randomSpawn = new Vector3(Random.Range(-7.0f, 7.0f), Random.Range(-3.0f, 3.0f));
-        shadowPassive.Add(Instantiate(shadowPrefab, randomSpawn, Quaternion.identity, transform));
         float spawnAngles = 360 / (cluserSize - 1);
+        Vector3 randomSpawn = new Vector3(Random.Range(-7.0f, 7.0f), Random.Range(-3.0f, 3.0f));
+        // Makes a cluster of 3 shadows not just a straight line
+        if (cluserSize == 3)
+        {
+            spawnAngles = 360 / cluserSize;
+            for (int i = 0; i < cluserSize; i++)
+            {
+                float spawnRad = (spawnAngles * i) * Mathf.Deg2Rad;
+                float newX = Mathf.Cos(spawnRad);
+                float newY = Mathf.Sin(spawnRad);
+                Vector3 circleSpawn = new Vector3((newX + randomSpawn.x) + Random.Range(-0.5f, 0.5f), (newY + randomSpawn.y) + Random.Range(-0.5f, 0.5f));
+                shadowPassive.Add(Instantiate(shadowPrefab, circleSpawn, Quaternion.identity, transform));
+            }
+            return;
+        }
+        shadowPassive.Add(Instantiate(shadowPrefab, randomSpawn, Quaternion.identity, transform));
         for(int i = 0; i < cluserSize -1; i++)
         {
             float spawnRad = (spawnAngles * i) * Mathf.Deg2Rad;
             float newX = Mathf.Cos(spawnRad);
             float newY = Mathf.Sin(spawnRad);
-            Vector3 circleSpawn = new Vector3(newX + randomSpawn.x, newY + randomSpawn.y);
+            Vector3 circleSpawn = new Vector3((newX + randomSpawn.x) + Random.Range(-0.5f, 0.5f), (newY + randomSpawn.y) + Random.Range(-0.5f, 0.5f));
             shadowPassive.Add(Instantiate(shadowPrefab, circleSpawn, Quaternion.identity, transform));
         }
 
