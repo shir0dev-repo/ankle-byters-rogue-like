@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DungeonMaster2D;
 using UnityEngine;
 
+[SelectionBase]
 public class Room : MonoBehaviour
 {
     private const float _ROOM_SCALE_X = 17.98f;
@@ -10,30 +12,37 @@ public class Room : MonoBehaviour
     public bool Visible { get; private set; }
     public Node Node { get; private set; }
 
+    private void OnEnable()
+    {
+        FloorManager.OnRoomInteractedWith += HandleRoomInteraction;
+    }
+
+    private void OnDisable()
+    {
+        FloorManager.OnRoomInteractedWith -= HandleRoomInteraction;
+    }
+
     public void Init(Node node, Node startingNode)
     {
         Node = node;
         Visible = false;
 
-        transform.localScale = new Vector3(_ROOM_SCALE_X, _ROOM_SCALE_Y, 1);
+
         Vector3 pos = node - startingNode;
         pos.x *= _ROOM_SCALE_X;
         pos.y *= _ROOM_SCALE_Y;
         pos.z = 0f;
-        if (node != startingNode)
-            GetComponent<MeshRenderer>().material.color = node.NodeType switch
-            {
-                NodeType.Basic => Color.white,
-                NodeType.Boss => Color.red,
-                NodeType.Treasure => Color.yellow,
-                NodeType.Sanctuary => Color.green,
-                NodeType.SanctuaryOld => Color.blue,
-                NodeType.Secret => new Color(0.3f, 0.3f, 0.3f, 1),
-                _ => Color.white
-            };
-        else
-            GetComponent<MeshRenderer>().material.color = Color.cyan;
 
         transform.position = pos;
+    }
+
+    public void HandleRoomInteraction(object sender, RoomArgs args)
+    {
+        if (args.Room != this) return;
+
+        if (args.InteractionType.Contains(RoomInteractionType.Entered))
+            Debug.Log("Room entered! " + Node.ToString());
+        if (args.InteractionType.Contains(RoomInteractionType.Cleared))
+            Debug.Log("Room cleared! " + Node.ToString());
     }
 }

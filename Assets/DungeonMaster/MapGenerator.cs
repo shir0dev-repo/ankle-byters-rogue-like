@@ -8,10 +8,10 @@ namespace DungeonMaster2D
 {
     public static class MapGenerator
     {
-        public static Dungeon2D Generate2D(DungeonGeneratorData data)
+        public static Dungeon2D Generate2D(DungeonGeneratorData data, out Random random)
         {
             // initialize seeded random
-            Random random = new Random(data.GetSeed());
+            random = new Random(data.GetSeed());
 
             // generate new dungeon
             Dungeon2D dungeon = Generate2DInitial(data, random, out int roomCount);
