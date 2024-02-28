@@ -76,11 +76,11 @@ public class ShadowManager : MonoBehaviour
     {
         foreach (GameObject looker in shadowLooking)
         {
-            looker.GetComponent<ShadowScript>().MakeLooker();
+            looker.GetComponentInChildren<ShadowScript>().MakeLooker();
         }
         foreach (GameObject passive in shadowPassive)
         {
-            passive.GetComponent<ShadowScript>().MakePassive();
+            passive.GetComponentInChildren<ShadowScript>().MakePassive();
         }
     }
 
