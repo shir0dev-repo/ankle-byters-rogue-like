@@ -59,7 +59,9 @@ public class FloorManager : Singleton<FloorManager>
     private GameObject InitializeRoom(Node node, System.Random random)
     {
         EntranceRoomDictionary dict = _entrancePrefabDictionaries.FirstOrDefault(e => e.Entrances == node.Entrances);
+
         GameObject go;
+
         if ((int)node.Entrances == 15)
             dict = _entrancePrefabDictionaries[0];
 

@@ -94,6 +94,7 @@ MonoBehaviour:
   - Entrances: 8
     ValidRoomPrefabs:
     - {fileID: 9103710361395222466, guid: 06967f1426b298a4497141e9cbe2c0fc, type: 3}
+    - {fileID: 5194724117372198879, guid: a0c66f282bb4ae34483efc34b41751f0, type: 3}
   _startingRoomPrefab: {fileID: 0}
   _dungeon:
     _nodes: []
