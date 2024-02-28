@@ -6,6 +6,7 @@ public class ShadowScript : MonoBehaviour
 {
     // Start is called before the first frame update
     public bool isLooking;
+    public bool isDrifting;
     [SerializeField] float lookSpeed;
     GameObject player;
     void Start()
@@ -27,19 +28,32 @@ public class ShadowScript : MonoBehaviour
             float rotationAmount = Mathf.Clamp(angleDifference, -rotationStep, rotationStep);
 
             transform.Rotate(Vector3.forward, rotationAmount);
-
+            if (isDrifting && ((player.transform.position - transform.position).magnitude < 2 && (player.transform.position - transform.position).magnitude > 0.75))
+            {
+                transform.position = Vector3.MoveTowards(transform.position, player.transform.position, 0.2f * Time.deltaTime);
+            }
         }
     }
 
     public void MakeLooker()
     {
         if (!isLooking)
+        {
             isLooking=true;
+            isDrifting = Random.Range(0, 10) == 0;
+            //if (isDrifting)
+            //{
+            //    Debug.Log("Drifter!");
+            //}
+        }
     }
     
     public void MakePassive()
     {
         if (isLooking)
+        {
             isLooking = false;
+            isDrifting = false;
+        }
     }
 }
