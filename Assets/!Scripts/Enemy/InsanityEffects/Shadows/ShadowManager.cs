@@ -13,7 +13,7 @@ public class ShadowManager : MonoBehaviour
     int _insanityStage;
     void Start()
     {
-        InsanityManager.OnInsanityChanged += ShadowBehaviour;
+        InsanityManager.OnInsanityChanged += CurrentInsanityStage;
         //SpawnShadows();
         SpawnShadowCluster();
         SpawnShadowCluster(3);
@@ -26,7 +26,7 @@ public class ShadowManager : MonoBehaviour
         
     }
 
-    void ShadowBehaviour(int insanity)
+    void CurrentInsanityStage(int insanity)
     {
         //10 Insanity 'stages' for every 10 percent of the insanity filled 10 percent of the shadows will begin looking at the player
         int insanityStage = insanity / 10;
@@ -69,10 +69,10 @@ public class ShadowManager : MonoBehaviour
                 lookerRatio = ((shadowLooking.Count / (float)(shadowLooking.Count + shadowPassive.Count)) * 10);
             }
         }
-        UpdateLookers();
+        SetLookerState();
     }
 
-    void UpdateLookers()
+    void SetLookerState()
     {
         foreach (GameObject looker in shadowLooking)
         {
@@ -93,6 +93,7 @@ public class ShadowManager : MonoBehaviour
         }
         float spawnAngles = 360 / (cluserSize - 1);
         Vector3 randomSpawn = new Vector3(Random.Range(-7.0f, 7.0f), Random.Range(-3.0f, 3.0f));
+        // Quaternion.Euler(0, 0, Random.Range(0, 359)) * vector3.up // How to rotate vector randomly, comment for now will add later
         // Makes a cluster of 3 shadows not just a straight line
         if (cluserSize == 3)
         {

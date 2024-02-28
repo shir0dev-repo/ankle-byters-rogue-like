@@ -12,7 +12,7 @@ public class ShadowScript : MonoBehaviour
     void Start()
     {
         isLooking = false;
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameManager.Instance.Player;
     }
 
     // Update is called once per frame
