@@ -23,7 +23,7 @@ public class ShadowScript : MonoBehaviour
             float targetAngle = Mathf.Atan2(toPlayer.y, toPlayer.x) * Mathf.Rad2Deg + 90f;
 
             float angleDifference = Mathf.DeltaAngle(targetAngle, transform.eulerAngles.z);
-            float rotationStep = lookSpeed * Time.deltaTime;
+            float rotationStep = (lookSpeed * Time.deltaTime) /* / Mathf.Abs(angleDifference/100)*/;//Commented section was me messing with increasing the turn speed if greater the angle difference between them and the player
             float rotationAmount = Mathf.Clamp(angleDifference, -rotationStep, rotationStep);
 
             transform.Rotate(Vector3.forward, rotationAmount);
