@@ -48,6 +48,12 @@ public class FloorManager : Singleton<FloorManager>
             Room = CurrentRoom,
             InteractionType = RoomInteractionType.Entered | RoomInteractionType.Cleared
         });
+
+        OnRoomInteractedWith?.Invoke(this, new()
+        {
+            Room = _nodeRoomDictionary[_dungeon.ValidNodes[^1]],
+            InteractionType = RoomInteractionType.Entered | RoomInteractionType.Cleared
+        });
     }
 
     private GameObject InitializeRoom(Node node, System.Random random)

@@ -11,6 +11,7 @@ public class Room : MonoBehaviour
     private const float _ROOM_SCALE_Y = 10.0f;
     public bool Visible { get; private set; }
     public Node Node { get; private set; }
+    private Dictionary<Vector3, Door> _directionalEntranceDictionary = new();
 
     private void OnEnable()
     {
@@ -27,13 +28,40 @@ public class Room : MonoBehaviour
         Node = node;
         Visible = false;
 
-
         Vector3 pos = node - startingNode;
         pos.x *= _ROOM_SCALE_X;
         pos.y *= _ROOM_SCALE_Y;
         pos.z = 0f;
 
         transform.position = pos;
+        GetDoors();
+        LockRoom();
+    }
+
+    public void LockRoom()
+    {
+        foreach (Door door in _directionalEntranceDictionary.Values)
+        {
+            door.Lock();
+        }
+    }
+    public void UnlockRoom()
+    {
+        foreach (Door door in _directionalEntranceDictionary.Values)
+        {
+            door.Unlock();
+        }
+    }
+    private void GetDoors()
+    {
+        BoxCollider2D[] doorColliders = gameObject.GetComponentsInChildren<BoxCollider2D>();
+        foreach (BoxCollider2D doorCollider in doorColliders)
+        {
+            Vector3 key = doorCollider.transform.position;
+            _directionalEntranceDictionary.TryAdd(key, doorCollider.gameObject.AddComponent<Door>());
+        }
+
+        Debug.Log(Node.ToString() + " entrances: " + _directionalEntranceDictionary.Count);
     }
 
     public void HandleRoomInteraction(object sender, RoomArgs args)
@@ -43,6 +71,9 @@ public class Room : MonoBehaviour
         if (args.InteractionType.Contains(RoomInteractionType.Entered))
             Debug.Log("Room entered! " + Node.ToString());
         if (args.InteractionType.Contains(RoomInteractionType.Cleared))
+        {
             Debug.Log("Room cleared! " + Node.ToString());
+            UnlockRoom();
+        }
     }
 }
