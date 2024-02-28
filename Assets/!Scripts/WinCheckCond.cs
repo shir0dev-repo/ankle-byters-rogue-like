@@ -17,7 +17,7 @@ public class WinCheckCond : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("Before update");
+        //Debug.Log("Before update");
         if (boss == null && enemySpawner.bossSpawned)
         {
             winImage.SetActive(true);

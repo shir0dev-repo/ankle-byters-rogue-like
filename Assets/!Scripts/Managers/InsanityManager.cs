@@ -5,8 +5,8 @@ public class InsanityManager : Singleton<InsanityManager>
     [SerializeField, ReadOnly] private int _currentInsanity = 0;
     [SerializeField] private int _maxInsanity = 100;
 
-    [SerializeField] private int _insanityIncrement;
-    [SerializeField] private bool _incrementOverTime = false;
+    [SerializeField] private int _insanityIncrement = 1;
+    [SerializeField] private bool _incrementOverTime = true;
 
     public static Action<int> OnInsanityChanged;
 
