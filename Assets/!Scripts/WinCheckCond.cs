@@ -17,13 +17,11 @@ public class WinCheckCond : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("Before update");
         if (boss == null && enemySpawner.bossSpawned)
         {
             winImage.SetActive(true);
-                Debug.Log("The PREFABBBBBBB");
-                Debug.Log(boss);
-
+            Debug.Log("The PREFABBBBBBB");
+            Debug.Log(boss);
         }
     }
 }

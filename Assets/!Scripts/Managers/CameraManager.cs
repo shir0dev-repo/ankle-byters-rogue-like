@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class CameraManager : MonoBehaviour
@@ -7,7 +8,10 @@ public class CameraManager : MonoBehaviour
     public static Vector2 ScreenExtents;
 
     private Camera _mainCamera;
-    private Vector3 _currentRoomCenter;
+    private void OnEnable()
+    {
+        FloorManager.OnRoomInteractedWith += MoveToRoom;
+    }
 
     private void Awake()
     {
@@ -20,15 +24,13 @@ public class CameraManager : MonoBehaviour
         };
     }
 
-    public void EnterRoom(Door door)
+    private void MoveToRoom(object sender, RoomArgs e)
     {
-        _currentRoomCenter += door.GetAdjacentRoom();
-        Debug.Log(_currentRoomCenter);
-        _mainCamera.transform.position = new Vector3()
+        if (e.InteractionType.Contains(RoomInteractionType.Entered))
         {
-            x = _currentRoomCenter.x,
-            y = _currentRoomCenter.y,
-            z = _CAMERA_Z_PLANE
-        };
+            Vector3 camPos = e.Room.gameObject.transform.position;
+            camPos.z = transform.position.z;
+            transform.position = camPos;
+        }
     }
 }
