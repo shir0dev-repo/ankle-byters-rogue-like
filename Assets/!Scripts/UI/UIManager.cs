@@ -11,14 +11,25 @@ public class UIManager : MonoBehaviour
     public Button ResumeButton;
     public Button TitleScreenButton;
     public GameObject MenuUI;
+    public Slider musicSliderPaused;
     public Slider musicSlider;
+    public Slider sfxSliderPaused;
     public Slider sfxSlider;
 
+    public void MusicVolumePaused()
+    {
+        AudioManager.Instance.MusicVoulume(musicSliderPaused.value);
+        Debug.Log(musicSliderPaused.value);
+    }
     public void MusicVolume()
     {
         AudioManager.Instance.MusicVoulume(musicSlider.value);
+        Debug.Log(musicSlider.value);
     }
-
+    public void SfxVolumePaused()
+    {
+        AudioManager.Instance.SfxVolume(sfxSliderPaused.value);
+    }
     public void SfxVolume()
     {
         AudioManager.Instance.SfxVolume(sfxSlider.value);
@@ -40,7 +51,7 @@ public class UIManager : MonoBehaviour
 
     public void TitleScreen()
     {
-        SceneManager.LoadScene("Title");
+        SceneManager.LoadScene("TitleScene");
         MenuUI.SetActive(false);
         Time.timeScale = 1f;
         IsPaused = false;

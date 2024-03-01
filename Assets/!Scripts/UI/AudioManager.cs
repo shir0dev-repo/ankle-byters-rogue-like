@@ -7,8 +7,21 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
+
     public Sound[] musicSounds, sfxSounds;
     public AudioSource musicSource, sfxSource;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {
@@ -48,7 +61,8 @@ public class AudioManager : MonoBehaviour
 
     public void MusicVoulume(float volume)
     {
-        sfxSource.volume = volume;
+        float clampedVolume = Mathf.Clamp(volume, 0f, 0.2f); // I clamped the music between 0 and 0.2 because its too loud lol
+        musicSource.volume = clampedVolume;
     }
 
     public void SfxVolume(float volume)
