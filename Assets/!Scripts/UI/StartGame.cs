@@ -13,10 +13,17 @@ public class StartGame : MonoBehaviour
     public Button startButton;
     public Button SettingsButton;
     public GameObject SettingsUI;
+    public GameObject PauseButtonPanel;
+
+    private void Start()
+    {
+        PauseButtonPanel.SetActive(false);
+    }
 
     public void LoadGameScene()
     {
         SceneManager.LoadScene("GameScene");
+        PauseButtonPanel.SetActive(true);
     }
 
     public void Settings()
