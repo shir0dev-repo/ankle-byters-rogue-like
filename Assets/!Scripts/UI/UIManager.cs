@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
     public Slider musicSlider;
     public Slider sfxSliderPaused;
     public Slider sfxSlider;
+    public GameObject PauseButtonPanel;
 
     public void MusicVolumePaused()
     {
@@ -53,6 +54,7 @@ public class UIManager : MonoBehaviour
     {
         SceneManager.LoadScene("TitleScene");
         MenuUI.SetActive(false);
+        PauseButtonPanel.SetActive(false);
         Time.timeScale = 1f;
         IsPaused = false;
     }
