@@ -67,6 +67,7 @@ MonoBehaviour:
   - Entrances: 3
     ValidRoomPrefabs:
     - {fileID: 7544536465661483445, guid: 7bb7aaf87a35f5b4ab75f94a78680c41, type: 3}
+    - {fileID: 2763507309901162619, guid: c49d7bd2dee0a314388e6b99940f14d2, type: 3}
   - Entrances: 5
     ValidRoomPrefabs:
     - {fileID: 4923959259622191827, guid: a2e779cffc4a3164f9569c00532a4179, type: 3}
