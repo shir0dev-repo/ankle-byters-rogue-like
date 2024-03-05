@@ -1,6 +1,8 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour
+public class EnemySpawner : Singleton<EnemySpawner>
 {
     public GameObject enemyPrefab;
     public GameObject enemyPrefab2;
@@ -27,11 +29,29 @@ public class EnemySpawner : MonoBehaviour
     public WinCheckCond WinCheckCond;
     Health bossHealth;
 
-    private void Start()
+    private (Room room, List<BasicEnemy> enemies) _currentRoomEnemies;
+    private bool _inCombat = false;
+
+    public (Room room, List<BasicEnemy> enemies) CurrentRoomEnemies => _currentRoomEnemies;
+    public bool InCombat => _inCombat;
+
+    protected override void Awake()
     {
-        if (door2 != null)
+        base.Awake();
+
+        _currentRoomEnemies.enemies = new List<BasicEnemy>();
+    }
+
+    private void Update()
+    {
+        if (_inCombat && _currentRoomEnemies.enemies.Count < 1)
         {
-            door2.SetActive(false);
+            _currentRoomEnemies.room.Clear();
+            _currentRoomEnemies.room = null;
+
+            _currentRoomEnemies.enemies.Clear();
+
+            _inCombat = false;
         }
     }
 
@@ -41,37 +61,26 @@ public class EnemySpawner : MonoBehaviour
         //Debug.Log("You win!");
         //winImageSpawned = true;
     }
-    //public void CheckWinCondition()
-    //{
-    //    Debug.LogWarning("Checking win condition!");
-    //    if (bossDestroyed && !winImageSpawned)
-    //    {
-    //        winImage.SetActive(true);
-    //        Debug.Log("You win!");
-    //        winImageSpawned = true;
-    //    }
-    //}
 
-    public void SpawnEnemies()
+    public bool SpawnEnemies(Room room)
     {
-        for (int i = 0; i < maxEnemies; i++)
+        if (_currentRoomEnemies.enemies == null) _currentRoomEnemies = new();
+        if (_currentRoomEnemies.enemies.Count > 0) return false;
+
+        _currentRoomEnemies.room = room;
+        _currentRoomEnemies.enemies = new List<BasicEnemy>();
+
+        var spawnPositions = room.GetEnemySpawnPositions();
+
+        foreach (var s in spawnPositions)
         {
-            numEnemies++;
-            GameObject prefabToSpawn;
-
-            if (Random.Range(0, 2) == 0)
-            {
-                prefabToSpawn = enemyPrefab;
-            }
-            else
-            {
-                prefabToSpawn = enemyPrefab2;
-            }
-
-            Vector3 randomPosition = GetRandomPosition();
-            Instantiate(prefabToSpawn, randomPosition, Quaternion.identity);
+            _currentRoomEnemies.enemies.Add(Instantiate(enemyPrefab, s.position, Quaternion.identity).GetComponent<BasicEnemy>());
         }
+
+        _inCombat = _currentRoomEnemies.enemies.Count > 0;
+        return _inCombat;
     }
+
     private Vector3 GetRandomPosition()
     {
         Vector3 randomPosition;

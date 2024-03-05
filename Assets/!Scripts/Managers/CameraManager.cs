@@ -10,7 +10,12 @@ public class CameraManager : MonoBehaviour
     private Camera _mainCamera;
     private void OnEnable()
     {
-        FloorManager.OnRoomInteractedWith += MoveToRoom;
+        FloorManager.OnRoomEntered += MoveToRoom;
+    }
+
+    private void OnDisable()
+    {
+        FloorManager.OnRoomEntered -= MoveToRoom;
     }
 
     private void Awake()
@@ -24,13 +29,10 @@ public class CameraManager : MonoBehaviour
         };
     }
 
-    private void MoveToRoom(object sender, RoomArgs e)
+    private void MoveToRoom(Room room, Door door)
     {
-        if (e.InteractionType.Contains(RoomInteractionType.Entered))
-        {
-            Vector3 camPos = e.Room.gameObject.transform.position;
-            camPos.z = transform.position.z;
-            transform.position = camPos;
-        }
+        Vector3 camPos = room.transform.position;
+        camPos.z = transform.position.z;
+        transform.position = camPos;
     }
 }

@@ -7,73 +7,123 @@ using UnityEngine;
 [SelectionBase]
 public class Room : MonoBehaviour
 {
-    private const float _ROOM_SCALE_X = 17.98f;
-    private const float _ROOM_SCALE_Y = 10.0f;
+    public const float ROOM_SCALE_X = 17.98f;
+    public const float ROOM_SCALE_Y = 10.0f;
+
+    [SerializeField] private bool _isLocked;
+    private Dictionary<Door, Vector3> _doorRoomPositionDictionary = new();
+
     public bool Visible { get; private set; }
+    public bool Cleared { get; private set; }
     public Node Node { get; private set; }
-    private Dictionary<Vector3, Door> _directionalEntranceDictionary = new();
-
-    private void OnEnable()
-    {
-        FloorManager.OnRoomInteractedWith += HandleRoomInteraction;
-    }
-
-    private void OnDisable()
-    {
-        FloorManager.OnRoomInteractedWith -= HandleRoomInteraction;
-    }
+    public Dictionary<Door, Vector3> DoorRoomPositionDictionary { get { return _doorRoomPositionDictionary; } }
 
     public void Init(Node node, Node startingNode)
     {
-        Node = node;
         Visible = false;
+        Cleared = false;
+        Node = node;
 
-        Vector3 pos = node - startingNode;
-        pos.x *= _ROOM_SCALE_X;
-        pos.y *= _ROOM_SCALE_Y;
-        pos.z = 0f;
+        transform.position = GetScaledPosition(startingNode);
 
-        transform.position = pos;
         GetDoors();
         LockRoom();
     }
 
-    public void LockRoom()
-    {
-        foreach (Door door in _directionalEntranceDictionary.Values)
-        {
-            door.Lock();
-        }
-    }
-    public void UnlockRoom()
-    {
-        foreach (Door door in _directionalEntranceDictionary.Values)
-        {
-            door.Unlock();
-        }
-    }
     private void GetDoors()
     {
         BoxCollider2D[] doorColliders = gameObject.GetComponentsInChildren<BoxCollider2D>();
         foreach (BoxCollider2D doorCollider in doorColliders)
         {
-            Vector3 key = doorCollider.transform.position;
-            _directionalEntranceDictionary.TryAdd(key, doorCollider.gameObject.AddComponent<Door>());
-        }
+            Door key = doorCollider.gameObject.AddComponent<Door>();
 
-        Debug.Log(Node.ToString() + " entrances: " + _directionalEntranceDictionary.Count);
+            Vector3 doorDirection = (doorCollider.transform.position - transform.position).normalized;
+            doorDirection.x *= ROOM_SCALE_X;
+            doorDirection.y *= ROOM_SCALE_Y;
+
+            Vector3 correspondingRoomPosition = transform.position + doorDirection;
+
+            _doorRoomPositionDictionary.TryAdd(key, correspondingRoomPosition);
+        }
     }
 
-    public void HandleRoomInteraction(object sender, RoomArgs args)
+    private Vector3 GetScaledPosition(Node startingNode)
     {
-        if (args.Room != this) return;
+        Vector3 pos = Node - startingNode;
+        pos.x *= ROOM_SCALE_X;
+        pos.y *= ROOM_SCALE_Y;
 
-        if (args.InteractionType.Contains(RoomInteractionType.Entered))
-            Debug.Log("Room entered! " + Node.ToString());
-        if (args.InteractionType.Contains(RoomInteractionType.Cleared))
+        return pos;
+    }
+
+    public Transform[] GetEnemySpawnPositions()
+    {
+        foreach (Transform child in transform)
         {
-            Debug.Log("Room cleared! " + Node.ToString());
-            UnlockRoom();
+            if (child.name.Contains("Spawns"))
+            {
+                return child.GetComponentsInChildren<Transform>();
+            }
         }
+
+        return Array.Empty<Transform>();
+    }
+
+    [ContextMenu("LockRoom")]
+    public void LockRoom()
+    {
+        if (_isLocked) return;
+
+        foreach (Door door in _doorRoomPositionDictionary.Keys)
+        {
+            door.Lock();
+        }
+
+        _isLocked = true;
+    }
+
+    [ContextMenu("UnlockRoom")]
+    public void UnlockRoom()
+    {
+        if (!_isLocked) return;
+
+        foreach (Door door in _doorRoomPositionDictionary.Keys)
+        {
+            door.Unlock();
+        }
+        _isLocked = false;
+    }
+
+    public void Enter(Door door)
+    {
+        // broadcast entered room message
+        FloorManager.OnRoomEntered?.Invoke(this, door);
+
+        if (Cleared == false)
+        {
+            // spawn enemies
+            if (EnemySpawner.Instance.SpawnEnemies(this))
+            {
+                // lock doors
+                LockRoom();
+            }
+            else
+            {
+                Cleared = true;
+                UnlockRoom();
+            }
+
+        }
+    }
+
+    public void Clear()
+    {
+        FloorManager.OnRoomCleared?.Invoke(this);
+        Cleared = true;
+        UnlockRoom();
+    }
+    public override string ToString()
+    {
+        return "Room: " + Node.ToString();
     }
 }

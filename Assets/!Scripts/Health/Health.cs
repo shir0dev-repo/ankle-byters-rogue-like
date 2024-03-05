@@ -20,7 +20,6 @@ public class Health : MonoBehaviour, IDamageable
     {
         if (damage <= 0) return;
 
-        Debug.Log($"{gameObject.name} took {damage} damage!");
         CurrentHealth -= damage;
 
         OnHealthChanged?.Invoke(CurrentHealth);
@@ -31,7 +30,6 @@ public class Health : MonoBehaviour, IDamageable
 
     public void Die()
     {
-        Debug.Log("Goodbye cruel world.");
         OnDeath?.Invoke();
 
         if (_destroyOnDeath)

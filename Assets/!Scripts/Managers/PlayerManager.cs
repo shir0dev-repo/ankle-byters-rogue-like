@@ -5,7 +5,25 @@ using UnityEngine;
 public class PlayerManager : Singleton<PlayerManager>
 {
     [SerializeField] private GameObject _playerPrefab;
-    [SerializeField, ReadOnly] private Transform _player;
+    [SerializeField] private Transform _player;
+    public LayerMask PlayerLayer { get; private set; }
+
+    private void OnEnable()
+    {
+        FloorManager.OnRoomEntered += SetPlayerPosition;
+    }
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        PlayerLayer = LayerMask.NameToLayer("Player");
+    }
+
+    private void OnDisable()
+    {
+        FloorManager.OnRoomEntered -= SetPlayerPosition;
+    }
 
     public GameObject SpawnPlayer(Vector3 position)
     {
@@ -24,8 +42,23 @@ public class PlayerManager : Singleton<PlayerManager>
         return _player.position;
     }
 
-    private void SetPlayerPositionInRoom(Door roomDoor)
+    private void SetPlayerPosition(Room room, Door door)
     {
+        Debug.Log("setting player pos");
 
+        // entered room
+        Vector3 enteredRoomPos = room.transform.position;
+        Vector3 playerPos = enteredRoomPos;
+
+        Vector2 playerBounds = _player.GetComponent<Collider2D>().bounds.extents * 2f;
+        Vector3 doorDirection = (room.transform.position - door.transform.position).normalized;
+        float scaleX = (Room.ROOM_SCALE_X / 2f - playerBounds.x) * 0.8f;
+        float scaleY = (Room.ROOM_SCALE_Y / 2f - playerBounds.y) * 0.8f;
+
+        playerPos.x -= scaleX * doorDirection.x;
+        playerPos.y -= scaleY * doorDirection.y;
+
+
+        _player.position = playerPos;
     }
 }
