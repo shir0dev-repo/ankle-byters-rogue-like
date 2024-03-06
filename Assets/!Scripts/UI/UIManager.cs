@@ -16,6 +16,7 @@ public class UIManager : Singleton<UIManager>
     public Slider sfxSliderPaused;
     public Slider sfxSlider;
     public GameObject PauseButtonPanel;
+    public GameObject GameOverPanel;
 
     private void Start()
     {
@@ -65,6 +66,7 @@ public class UIManager : Singleton<UIManager>
         SceneManager.LoadScene("TitleScene");
         MenuUI.SetActive(false);
         PauseButtonPanel.SetActive(false);
+        GameOverPanel.SetActive(false);
         Time.timeScale = 1f;
         IsPaused = false;
     }
@@ -73,5 +75,7 @@ public class UIManager : Singleton<UIManager>
     {
         Debug.Log("Game ober :(");
         SceneManager.LoadScene("GameOver");
+        PauseButtonPanel.SetActive(false);
+        GameOverPanel.SetActive(true);
     }
 }
