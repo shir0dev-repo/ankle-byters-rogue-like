@@ -55,8 +55,6 @@ public class PlayerManager : Singleton<PlayerManager>
 
     private void SetPlayerPosition(Room room, Door door)
     {
-        Debug.Log("setting player pos");
-
         // entered room
         Vector3 enteredRoomPos = room.transform.position;
         Vector3 playerPos = enteredRoomPos;

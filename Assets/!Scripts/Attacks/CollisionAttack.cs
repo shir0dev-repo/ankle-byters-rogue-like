@@ -9,13 +9,13 @@ public class CollisionAttack : MonoBehaviour
     [SerializeField, Min(1)] private int _damage = 1;
     [SerializeField] private bool _destroyOnImpact = false;
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         // game object is not target layermask
-        if (!_targetLayermask.IsLayer(collision.gameObject.layer)) return;
+        if (!_targetLayermask.IsLayer(other.gameObject.layer)) return;
 
         // target does not have HP component
-        if (!collision.gameObject.TryGetComponent(out Health healthComp)) return;
+        if (!other.gameObject.TryGetComponent(out Health healthComp)) return;
 
         healthComp.TakeDamage(_damage);
 

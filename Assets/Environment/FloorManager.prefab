@@ -103,7 +103,7 @@ MonoBehaviour:
   - Entrances: 8
     ValidRoomPrefabs:
     - {fileID: 9103710361395222466, guid: 06967f1426b298a4497141e9cbe2c0fc, type: 3}
-
+    - {fileID: 5765157820529926117, guid: b9e1d1fa014a8f84daa428450533b9ce, type: 3}
   _dungeon:
     _nodes:
     - m_position: {x: 0, y: 0}
