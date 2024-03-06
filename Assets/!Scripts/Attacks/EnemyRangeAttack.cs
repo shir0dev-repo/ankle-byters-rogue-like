@@ -8,20 +8,25 @@ public class EnemyRangeAttack : MonoBehaviour
     [SerializeField] float _minFireCooldown = 1f;
     [SerializeField] float _maxFireCooldown = 3f;
 
-    private float _nextFireTime;
+    private float _cooldownRemaining;
+    private float _currentCooldown;
 
     private void Start()
     {
-        _nextFireTime = Time.time + Random.Range(_minFireCooldown, _maxFireCooldown);
+        _cooldownRemaining = Random.Range(_minFireCooldown, _maxFireCooldown);
+        _currentCooldown = _cooldownRemaining;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        if (Time.time >= _nextFireTime)
+        _currentCooldown -= Time.deltaTime;
+
+        if (_currentCooldown <= 0)
         {
             FireProjectile();
 
-            _nextFireTime = Time.time + Random.Range(_minFireCooldown, _maxFireCooldown);
+            _cooldownRemaining = Random.Range(_minFireCooldown, _maxFireCooldown);
+            _currentCooldown = _cooldownRemaining;
         }
     }
 
@@ -30,4 +35,4 @@ public class EnemyRangeAttack : MonoBehaviour
         Instantiate(_projectilePrefab, transform.position, Quaternion.identity);
     }
 
-}   
+}
