@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _generatorData:
     UseRandomSeed: 1
-    CurrentSeed: -8333
+    CurrentSeed: 0
     TargetRoomCount: 12
   _entrancePrefabDictionaries:
   - Entrances: -1
