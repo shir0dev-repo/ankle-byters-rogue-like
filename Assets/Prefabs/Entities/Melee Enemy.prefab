@@ -10,13 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 5386318885355925800}
   - component: {fileID: 6450479678835394032}
-  - component: {fileID: -1173246994395405592}
-  - component: {fileID: 1422357637289637879}
+  - component: {fileID: 3870084745401679229}
   - component: {fileID: 283100908046824469}
   - component: {fileID: 8893907405628569873}
   - component: {fileID: 7860632028396510292}
   m_Layer: 7
-  m_Name: Enemy2
+  m_Name: Melee Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,7 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 10
   _destroyOnDeath: 1
---- !u!114 &-1173246994395405592
+--- !u!114 &3870084745401679229
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -64,22 +63,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddd72260a74bbda4c9da704053ccf1d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 0.5
---- !u!114 &1422357637289637879
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1817236994952152450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d7a104c084078b4aa00cd1cfe44988c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _projectilePrefab: {fileID: 3248226580217940092, guid: a4bbb038fec631a439602b29b14ffeb9, type: 3}
-  _minFireCooldown: 1
-  _maxFireCooldown: 3
+  _speed: 2
 --- !u!114 &283100908046824469
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,7 +110,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -170,7 +154,7 @@ GameObject:
   - component: {fileID: 4046894635984625559}
   - component: {fileID: 5028369791570093483}
   m_Layer: 7
-  m_Name: Enemy
+  m_Name: GFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -229,11 +213,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1355398423
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.79896736, g: 0, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

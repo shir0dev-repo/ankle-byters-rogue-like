@@ -5,7 +5,7 @@ public class TimeTickSystem
 {
     public const float TICK_TIMER_MAX = 0.2f;
     private int _tick;
-    
+
     public class OnTickArgs : EventArgs
     {
         public int CurrentTick;
@@ -35,6 +35,13 @@ public class TimeTickManager : Singleton<TimeTickManager>
     TimeTickSystem _system;
 
     public int GetTick() => _system == null ? 0 : _system.GetTick();
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        Create();
+    }
 
     public void Create()
     {

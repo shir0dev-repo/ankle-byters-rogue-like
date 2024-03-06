@@ -3,15 +3,13 @@ using UnityEngine;
 public class EnemyProjectile : MonoBehaviour
 {
     [SerializeField] private float _speed = 10f;
-    [SerializeField] private float _lifetime = 5f; 
+    [SerializeField] private float _lifetime = 5f;
 
-    public Transform playerTransform;
     private Vector3 directionToPlayer;
 
-    private void Start()
+    private void Awake()
     {
-        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        directionToPlayer = (playerTransform.position - transform.position).normalized;
+        directionToPlayer = (PlayerManager.Instance.GetPlayerPosition() - transform.position).normalized;
 
         Destroy(gameObject, _lifetime);
     }
@@ -26,7 +24,7 @@ public class EnemyProjectile : MonoBehaviour
         transform.Translate(directionToPlayer * _speed * Time.deltaTime);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         Destroy(gameObject);
     }

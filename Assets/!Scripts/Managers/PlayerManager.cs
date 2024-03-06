@@ -24,7 +24,6 @@ public class PlayerManager : Singleton<PlayerManager>
         PlayerHealth = _player.GetComponent<Health>();
         PlayerHealth.OnDeath += BroadcastPlayerDeath;
 
-
         PlayerLayer = LayerMask.NameToLayer("Player");
     }
 
@@ -41,12 +40,13 @@ public class PlayerManager : Singleton<PlayerManager>
         _player = Instantiate(_playerPrefab).transform;
         _player.position = position;
 
-        
         return _player.gameObject;
     }
 
     private void BroadcastPlayerDeath()
     {
+        Debug.Log("sdawada");
+
         OnPlayerDeath?.Invoke();
     }
     public Vector3 GetPlayerPosition()
@@ -57,8 +57,6 @@ public class PlayerManager : Singleton<PlayerManager>
 
     private void SetPlayerPosition(Room room, Door door)
     {
-        Debug.Log("setting player pos");
-
         // entered room
         Vector3 enteredRoomPos = room.transform.position;
         Vector3 playerPos = enteredRoomPos;

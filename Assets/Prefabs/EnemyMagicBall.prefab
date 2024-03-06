@@ -66,6 +66,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
+  _lifetime: 5
   playerTransform: {fileID: 7102543446062241837, guid: a0444663fea7c594facb4489a8f2982e, type: 3}
 --- !u!212 &6471682421704177457
 SpriteRenderer:
@@ -105,9 +106,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -1355398423
+  m_SortingLayer: 1
+  m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.78113204, g: 0.1459095, b: 0.7448525, a: 1}
   m_FlipX: 0

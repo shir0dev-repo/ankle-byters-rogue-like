@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class EnemySpawner : Singleton<EnemySpawner>
 {
-    public GameObject enemyPrefab;
-    public GameObject enemyPrefab2;
+    [SerializeField] private List<GameObject> _spawnableEnemies = new();
 
     public GameObject bossPrefab;
     //[SerializeField] GameObject winImage;
@@ -67,6 +66,13 @@ public class EnemySpawner : Singleton<EnemySpawner>
         if (_currentRoomEnemies.enemies == null) _currentRoomEnemies = new();
         if (_currentRoomEnemies.enemies.Count > 0) return false;
 
+        if (room.Node.NodeType == DungeonMaster2D.NodeType.Boss)
+        {
+            SpawnBoss();
+            return true;
+        }
+
+
         _currentRoomEnemies.room = room;
         _currentRoomEnemies.enemies = new List<BasicEnemy>();
 
@@ -74,11 +80,16 @@ public class EnemySpawner : Singleton<EnemySpawner>
 
         foreach (var s in spawnPositions)
         {
-            _currentRoomEnemies.enemies.Add(Instantiate(enemyPrefab, s.position, Quaternion.identity).GetComponent<BasicEnemy>());
+            _currentRoomEnemies.enemies.Add(Instantiate(GetRandomEnemy(), s.position, Quaternion.identity).GetComponent<BasicEnemy>());
         }
 
         _inCombat = _currentRoomEnemies.enemies.Count > 0;
         return _inCombat;
+    }
+
+    private GameObject GetRandomEnemy()
+    {
+        return _spawnableEnemies[Random.Range(0, _spawnableEnemies.Count)];
     }
 
     private Vector3 GetRandomPosition()

@@ -5,12 +5,15 @@ using System.Linq;
 using DungeonMaster2D;
 using UnityEngine;
 
+using Random = UnityEngine.Random;
+
 public class FloorManager : Singleton<FloorManager>
 {
     public static Action<Room, Door> OnRoomEntered;
     public static Action<Room> OnRoomCleared;
     public static Action<Door> OnDoorCollision;
 
+    [SerializeField] private Material _fogMaterial;
     [SerializeField] private DungeonGeneratorData _generatorData;
     [SerializeField] private EntranceRoomDictionary[] _entrancePrefabDictionaries;
     [SerializeField] private Dungeon2D _dungeon;
@@ -25,6 +28,12 @@ public class FloorManager : Singleton<FloorManager>
     {
         OnDoorCollision += EnterRoom;
         OnRoomCleared += ClearRoom;
+        InsanityManager.OnInsanityChanged += SetFogValue;
+    }
+
+    private void SetFogValue(int newInsanity)
+    {
+        _fogMaterial.SetFloat("_Opacity", Mathf.Lerp(0.15f, 0.6f, newInsanity / 100f));
     }
 
     protected override void Awake()
@@ -47,8 +56,10 @@ public class FloorManager : Singleton<FloorManager>
     [ContextMenu("Generate")]
     public void GenerateDungeon()
     {
+        _fogMaterial.SetFloat("_Opacity", 0.15f);
         foreach (Room room in _nodeRoomDictionary.Values)
             Destroy(room.gameObject);
+
         _nodeRoomDictionary.Clear();
 
         _generatorData.GetRandomSeed();
