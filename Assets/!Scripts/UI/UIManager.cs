@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour
+public class UIManager : Singleton<UIManager>
 {
     public static bool IsPaused = false;
     public Button PauseButton;
@@ -16,6 +16,16 @@ public class UIManager : MonoBehaviour
     public Slider sfxSliderPaused;
     public Slider sfxSlider;
     public GameObject PauseButtonPanel;
+
+    private void OnEnable()
+    {
+        PlayerManager.OnPlayerDeath += GameOver;
+    }
+
+    private void OnDisable()
+    {
+        PlayerManager.OnPlayerDeath -= GameOver;
+    }
 
     public void MusicVolumePaused()
     {
@@ -57,5 +67,10 @@ public class UIManager : MonoBehaviour
         PauseButtonPanel.SetActive(false);
         Time.timeScale = 1f;
         IsPaused = false;
+    }
+
+    private void GameOver()
+    {
+
     }
 }

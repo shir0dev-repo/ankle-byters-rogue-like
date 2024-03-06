@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,9 @@ public class PlayerManager : Singleton<PlayerManager>
     [SerializeField] private GameObject _playerPrefab;
     [SerializeField] private Transform _player;
     public LayerMask PlayerLayer { get; private set; }
+
+    public static Action OnPlayerDeath;
+    public Health PlayerHealth { get; private set; }
 
     private void OnEnable()
     {
@@ -33,9 +37,16 @@ public class PlayerManager : Singleton<PlayerManager>
         _player = Instantiate(_playerPrefab).transform;
         _player.position = position;
 
+        PlayerHealth = _player.GetComponent<Health>();
+        PlayerHealth.OnDeath += BroadcastPlayerDeath;
+
         return _player.gameObject;
     }
 
+    private void BroadcastPlayerDeath()
+    {
+        OnPlayerDeath?.Invoke();
+    }
     public Vector3 GetPlayerPosition()
     {
         if (_player == null) return Vector3.zero;

@@ -19,6 +19,7 @@ public class FloorManager : Singleton<FloorManager>
 
     public Action OnMapGenerated { get; set; }
     public Room CurrentRoom { get; private set; }
+    public Room[] Rooms => _nodeRoomDictionary.Values.ToArray();
 
     private void OnEnable()
     {
