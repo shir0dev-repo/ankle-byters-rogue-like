@@ -1133,6 +1133,10 @@ PrefabInstance:
       propertyPath: _fogMaterial
       value: 
       objectReference: {fileID: 2100000, guid: 0065e79e9a166484d92b3f339677c4c7, type: 2}
+    - target: {fileID: 7541115249595048160, guid: 276240b5264b16842af221f4c13b9e6a, type: 3}
+      propertyPath: _generatorData.TargetRoomCount
+      value: 26
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
