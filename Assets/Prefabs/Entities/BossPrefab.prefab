@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 1817236994952152450}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -51,6 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 7102543446062241837, guid: a0444663fea7c594facb4489a8f2982e, type: 3}
   seekDistance: 10
+  enemySpawner: {fileID: 0}
 --- !u!114 &6450479678835394032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81,6 +82,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _damage: 2
+  _destroyOnImpact: 0
 --- !u!58 &8893907405628569873
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -110,12 +112,12 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.13628268, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.781651
 --- !u!50 &7860632028396510292
 Rigidbody2D:
   serializedVersion: 4
@@ -168,13 +170,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4072121496882869640}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5386318885355925800}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!212 &5028369791570093483
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -216,7 +218,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 09f6d37fe24a0fa4b8f7723653b3fe73, type: 3}
   m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
