@@ -71,6 +71,6 @@ public class UIManager : Singleton<UIManager>
 
     private void GameOver()
     {
-
+        Debug.Log("gameobjer");
     }
 }

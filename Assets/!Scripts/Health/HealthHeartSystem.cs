@@ -7,15 +7,12 @@ public class HealthHeartSystem : MonoBehaviour
     public Health health;
     List<HealthHearts> hearts = new List<HealthHearts>();
 
-    private void OnEnable()
-    {
-        GameManager.Instance.Player.TryGetComponent(out health);
-
-        health.OnHealthChanged += UpdateHearts;
-    }
     private void Start()
     {
         DrawHearts();
+        health = PlayerManager.Instance.PlayerHealth;
+
+        health.OnHealthChanged += UpdateHearts;
     }
     private void UpdateHearts(int currentHealth)
     {
