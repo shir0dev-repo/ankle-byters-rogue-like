@@ -66,47 +66,51 @@ public static class VectorEasing
             _ => time
         };
 
+        RaycastHit2D hit = Physics2D.Raycast(startPosition, endPosition - endPosition);
+        if (hit)
+            endPosition = hit.point;
+
         return startPosition + Vector3.Lerp(Vector3.zero, endPosition, lerp);
     }
     private static float EaseInSine(float time)
     {
         return 1 - Mathf.Cos((time * Mathf.PI) / 2f);
-        
+
     }
     private static float EaseOutSine(float time)
     {
         return Mathf.Sin((time * Mathf.PI) / 2f);
-        
+
     }
     private static float EaseInOutSine(float time)
     {
         return -(Mathf.Cos(time * Mathf.PI) - 1) / 2f;
-        
+
     }
     private static float EaseInCubic(float time)
     {
         return Mathf.Pow(time, 3);
-        
+
     }
     private static float EaseOutCubic(float time)
     {
         return 1 - Mathf.Pow(1 - time, 3);
-        
+
     }
     private static float EaseInOutCubic(float time)
     {
         return time < 0.5f ? 4 * Mathf.Pow(time, 3) : 1.0f - Mathf.Pow(-2.0f * time + 2.0f, 3.0f) / 2.0f;
-        
+
     }
     private static float EaseInExpo(float time)
     {
         return time == 0 ? 0 : Mathf.Pow(2.0f, 10.0f * time - 10.0f);
-        
+
     }
     private static float EaseOutExpo(float time)
     {
         return time == 1 ? 1 : 1.0f - Mathf.Pow(2.0f, -10.0f * time);
-        
+
     }
     private static float EaseInOutExpo(float time)
     {
@@ -117,17 +121,17 @@ public static class VectorEasing
             0 => 0,
             _ => 1,
         };
-        
+
     }
     private static float EaseInCirc(float time)
     {
         return 1 - Mathf.Sqrt(1 - (time * time));
-        
+
     }
     private static float EaseOutCirc(float time)
     {
         return Mathf.Sqrt(1 - Mathf.Pow(time - 1, 2));
-        
+
     }
     private static float EaseInOutCirc(float time)
     {
@@ -144,7 +148,7 @@ public static class VectorEasing
         const float c1 = 1.70158f;
         const float c3 = c1 + 1.0f;
         return c3 * Mathf.Pow(time, 3.0f) - c1 * time * time;
-        
+
     }
     private static float EaseOutBack(float time)
     {

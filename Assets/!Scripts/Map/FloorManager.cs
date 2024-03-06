@@ -7,20 +7,41 @@ using UnityEngine;
 
 public class FloorManager : Singleton<FloorManager>
 {
+    public static Action<Room, Door> OnRoomEntered;
+    public static Action<Room> OnRoomCleared;
+    public static Action<Door> OnDoorCollision;
+
     [SerializeField] private DungeonGeneratorData _generatorData;
     [SerializeField] private EntranceRoomDictionary[] _entrancePrefabDictionaries;
-    [SerializeField] private GameObject _startingRoomPrefab;
     [SerializeField] private Dungeon2D _dungeon;
 
     private readonly Dictionary<Node, Room> _nodeRoomDictionary = new();
 
-    public static event EventHandler<RoomArgs> OnRoomInteractedWith;
     public Action OnMapGenerated { get; set; }
     public Room CurrentRoom { get; private set; }
+    public Room[] Rooms => _nodeRoomDictionary.Values.ToArray();
+
+    private void OnEnable()
+    {
+        OnDoorCollision += EnterRoom;
+        OnRoomCleared += ClearRoom;
+    }
 
     protected override void Awake()
     {
+        base.Awake();
         GenerateDungeon();
+    }
+
+    private void Start()
+    {
+        _nodeRoomDictionary[_dungeon.StartingNode].UnlockRoom();
+    }
+
+    private void OnDisable()
+    {
+        OnDoorCollision -= EnterRoom;
+        OnRoomCleared -= ClearRoom;
     }
 
     [ContextMenu("Generate")]
@@ -42,18 +63,20 @@ public class FloorManager : Singleton<FloorManager>
         CurrentRoom = _nodeRoomDictionary[_dungeon.StartingNode];
 
         OnMapGenerated?.Invoke();
+    }
 
-        OnRoomInteractedWith?.Invoke(this, new()
-        {
-            Room = CurrentRoom,
-            InteractionType = RoomInteractionType.Entered | RoomInteractionType.Cleared
-        });
+    [ContextMenu("Lock Dungeon")]
+    public void LockDungeon()
+    {
+        foreach (Room room in _nodeRoomDictionary.Values)
+            room.LockRoom();
+    }
 
-        OnRoomInteractedWith?.Invoke(this, new()
-        {
-            Room = _nodeRoomDictionary[_dungeon.ValidNodes[^1]],
-            InteractionType = RoomInteractionType.Entered | RoomInteractionType.Cleared
-        });
+    [ContextMenu("Unlock Dungeon")]
+    public void UnlockDungeon()
+    {
+        foreach (Room room in _nodeRoomDictionary.Values)
+            room.UnlockRoom();
     }
 
     private GameObject InitializeRoom(Node node, System.Random random)
@@ -82,5 +105,28 @@ public class FloorManager : Singleton<FloorManager>
         _nodeRoomDictionary.Add(node, r);
 
         return go;
+    }
+
+    private void EnterRoom(Door door)
+    {
+        if (!CurrentRoom.DoorRoomPositionDictionary.Keys.Contains(door)) return;
+        Vector3 enteredRoomPosition = CurrentRoom.DoorRoomPositionDictionary[door];
+
+        Room enteredRoom = _nodeRoomDictionary.Values.FirstOrDefault(r => r.transform.position == enteredRoomPosition);
+
+        if (enteredRoom == null)
+            throw new InvalidOperationException("Entered room does not exist!");
+
+        enteredRoom.Enter(door);
+        CurrentRoom = enteredRoom;
+
+
+        if (CurrentRoom.Cleared)
+            ClearRoom(CurrentRoom);
+    }
+
+    private void ClearRoom(Room room)
+    {
+        room.UnlockRoom();
     }
 }
