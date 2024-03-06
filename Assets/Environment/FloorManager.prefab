@@ -79,12 +79,15 @@ MonoBehaviour:
   - Entrances: 6
     ValidRoomPrefabs:
     - {fileID: 4008754069464309407, guid: 214e52e1bd3ba7e46ab5c34685d9d772, type: 3}
+    - {fileID: 6836925884780121674, guid: 236241a40b664bb408cdde29ac6edb83, type: 3}
   - Entrances: 10
     ValidRoomPrefabs:
     - {fileID: 4954349497285103818, guid: 569721200dda5034e950af3e6f582980, type: 3}
+    - {fileID: 4883125445667304002, guid: 177e00e9d30faf84bb245d25b24278b7, type: 3}
   - Entrances: 12
     ValidRoomPrefabs:
     - {fileID: 8002601822637273538, guid: a55283f192b4972439adb6829a9aa928, type: 3}
+    - {fileID: 1695724989144781082, guid: b8b111ac9626241489394f9c139cde72, type: 3}
   - Entrances: 1
     ValidRoomPrefabs:
     - {fileID: 4415013670519122569, guid: e486f1d7dde00aa44906015656703a18, type: 3}
@@ -97,7 +100,6 @@ MonoBehaviour:
   - Entrances: 8
     ValidRoomPrefabs:
     - {fileID: 9103710361395222466, guid: 06967f1426b298a4497141e9cbe2c0fc, type: 3}
-    - {fileID: 5194724117372198879, guid: a0c66f282bb4ae34483efc34b41751f0, type: 3}
   _startingRoomPrefab: {fileID: 0}
   _dungeon:
     _nodes:
