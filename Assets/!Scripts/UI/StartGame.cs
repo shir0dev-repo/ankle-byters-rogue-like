@@ -22,7 +22,7 @@ public class StartGame : MonoBehaviour
 
     public void LoadGameScene()
     {
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("RoomImplTest");
         PauseButtonPanel.SetActive(true);
     }
 

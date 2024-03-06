@@ -21,6 +21,10 @@ public class PlayerManager : Singleton<PlayerManager>
     {
         base.Awake();
 
+        PlayerHealth = _player.GetComponent<Health>();
+        PlayerHealth.OnDeath += BroadcastPlayerDeath;
+
+
         PlayerLayer = LayerMask.NameToLayer("Player");
     }
 
@@ -37,9 +41,7 @@ public class PlayerManager : Singleton<PlayerManager>
         _player = Instantiate(_playerPrefab).transform;
         _player.position = position;
 
-        PlayerHealth = _player.GetComponent<Health>();
-        PlayerHealth.OnDeath += BroadcastPlayerDeath;
-
+        
         return _player.gameObject;
     }
 
