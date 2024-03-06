@@ -33,8 +33,6 @@ public class ChangeParticleSystem : MonoBehaviour
     {
         if (currentInsanity >= 100 && !enemiesSpawned)
         {
-            enemySpawner.SpawnEnemies();
-            enemySpawner.SpawnEnemies();
             enemiesSpawned = true;
             Debug.LogWarning("Spawning Enemies");
 

@@ -6,10 +6,16 @@ public class RoomArgs : EventArgs
 {
   public Room Room;
   public RoomInteractionType InteractionType;
+  public Door EnteredDoor = null;
 }
 
 [Flags]
-public enum RoomInteractionType { Entered, Cleared }
+public enum RoomInteractionType
+{
+  None = 0,
+  Entered = 1,
+  Cleared = 2
+}
 
 public static class RoomInteractionUtils
 {

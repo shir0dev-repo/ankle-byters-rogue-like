@@ -6,16 +6,19 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : Movement
 {
     private const string _MOVE_ACTION_NAME = "Move";
+
+    [SerializeField] private bool _useDebugging = false;
+
     private InputAction _moveAction;
     private PlayerInputHandler _playerInputHandler;
-
-    [SerializeField] private bool _useDebugging;
-
+    private Rigidbody2D _rigidbody;
     private Vector2 _inputDirection = Vector2.zero;
+
+
 
     public override Vector3 MoveDirection
     {
-        get 
+        get
         {
             return _inputDirection.normalized;
         }
@@ -23,7 +26,7 @@ public class PlayerMovement : Movement
 
     public override bool CanMove
     {
-        get {  return _canMove; }
+        get { return _canMove; }
         protected set
         {
             if (value)
@@ -41,6 +44,7 @@ public class PlayerMovement : Movement
         _mainCam = Camera.main;
 
         _playerInputHandler = GetComponent<PlayerInputHandler>();
+        _rigidbody = GetComponent<Rigidbody2D>();
         _moveAction = _playerInputHandler.PlayerActions.FindAction(_MOVE_ACTION_NAME);
     }
 
@@ -51,7 +55,8 @@ public class PlayerMovement : Movement
         if (_inputDirection == Vector2.zero) return;
 
         _inputDirection = _moveAction.ReadValue<Vector2>().normalized;
-        transform.position += _moveSpeed * Time.fixedDeltaTime * (Vector3)_inputDirection;
+        _rigidbody.MovePosition(transform.position + _moveSpeed * Time.fixedDeltaTime * (Vector3)_inputDirection);
+        //transform.position += _moveSpeed * Time.fixedDeltaTime * (Vector3)_inputDirection;
     }
 
     protected override void HandleRotation()
@@ -80,7 +85,8 @@ public class PlayerMovement : Movement
         {
             timeElapsed += Time.deltaTime;
             float total = timeElapsed / duration;
-            transform.position = easingMode.Evaluate(startPosition, forceDirection, total);
+            _rigidbody.MovePosition(easingMode.Evaluate(startPosition, forceDirection, total));
+            //transform.position = easingMode.Evaluate(startPosition, forceDirection, total);
 
             // finish the loop early if player is already at position; in cases where duration is longer than asymptotic value of curve.
             if (Vector3.Distance(transform.position, startPosition + forceDirection) < 0.1f)
