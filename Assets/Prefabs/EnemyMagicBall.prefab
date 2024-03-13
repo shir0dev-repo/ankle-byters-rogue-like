@@ -67,7 +67,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 5
   _lifetime: 5
-  playerTransform: {fileID: 7102543446062241837, guid: a0444663fea7c594facb4489a8f2982e, type: 3}
 --- !u!212 &6471682421704177457
 SpriteRenderer:
   m_ObjectHideFlags: 0

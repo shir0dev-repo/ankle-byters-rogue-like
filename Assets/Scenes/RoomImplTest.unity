@@ -320,7 +320,7 @@ MonoBehaviour:
   _spawnableEnemies:
   - {fileID: 1817236994952152450, guid: 8a95dc1070d488c4aa1f8eca4a93649b, type: 3}
   - {fileID: 1817236994952152450, guid: 77ebbf7b20545b94186686c441d76c5d, type: 3}
-  bossPrefab: {fileID: 0}
+  bossPrefab: {fileID: 1817236994952152450, guid: e71b200aa89a5e8489b361960e76a7f8, type: 3}
   door1: {fileID: 0}
   door2: {fileID: 0}
   bossSpawned: 0

@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -29,9 +30,11 @@ public class EnemySpawner : Singleton<EnemySpawner>
     Health bossHealth;
 
     private (Room room, List<BasicEnemy> enemies) _currentRoomEnemies;
+    private (Room room, List<BossMovement> bosses) _currentRoomBosses;
     private bool _inCombat = false;
 
     public (Room room, List<BasicEnemy> enemies) CurrentRoomEnemies => _currentRoomEnemies;
+    public (Room room, List<BossMovement> boss) CurrentRoomBosses => _currentRoomBosses;
     public bool InCombat => _inCombat;
 
     protected override void Awake()
@@ -60,7 +63,17 @@ public class EnemySpawner : Singleton<EnemySpawner>
         //Debug.Log("You win!");
         //winImageSpawned = true;
     }
+    public bool SpawnBoss(Room room)
+    {
+        _currentRoomBosses.room = room;
 
+        Transform[] spawnPositions = room.GetEnemySpawnPositions();
+        
+        var spawnPOsition = spawnPositions[Random.Range(0, spawnPositions.Length)];
+        var bossInstance = Instantiate(bossPrefab, spawnPOsition.position, Quaternion.identity);
+        _currentRoomBosses.bosses.Add(bossInstance.GetComponent<BossMovement>());
+        return true;
+    }
     public bool SpawnEnemies(Room room)
     {
         if (_currentRoomEnemies.enemies == null) _currentRoomEnemies = new();
@@ -68,7 +81,7 @@ public class EnemySpawner : Singleton<EnemySpawner>
 
         if (room.Node.NodeType == DungeonMaster2D.NodeType.Boss)
         {
-            SpawnBoss();
+            SpawnBoss(room);
             return true;
         }
 
@@ -104,32 +117,20 @@ public class EnemySpawner : Singleton<EnemySpawner>
         return randomPosition;
     }
 
-    public void SpawnBoss()
-    {
-        if (!bossSpawned)
-        {
-            bossInstance = Instantiate(bossPrefab, new Vector3(-36f, 0f, 0f), Quaternion.identity);
-            bossHealth = bossInstance.GetComponent<Health>();
-            bossHealth.OnDeath += OnBossKilled;
-            bossSpawned = true;
-            WinCheckCond.boss = bossInstance;
-        }
-    }
-
     // Method to be called when a mini enemy is defeated
-    public void EnemyDefeated()
-    {
-        Debug.Log("An enemy was defeated!");
-        numEnemies--;
-        if (numEnemies <= 0)
-        {
-            Debug.Log("All mini enemies defeated!");
-            // Activate the door
-            if (door2 != null)
-            {
-                door2.SetActive(true);
-                SpawnBoss();
-            }
-        }
-    }
+    //public void EnemyDefeated()
+    //{
+    //    Debug.Log("An enemy was defeated!");
+    //    numEnemies--;
+    //    if (numEnemies <= 0)
+    //    {
+    //        Debug.Log("All mini enemies defeated!");
+    //        // Activate the door
+    //        if (door2 != null)
+    //        {
+    //            door2.SetActive(true);
+    //            SpawnBoss(room);
+    //        }
+    //    }
+    //}
 }
