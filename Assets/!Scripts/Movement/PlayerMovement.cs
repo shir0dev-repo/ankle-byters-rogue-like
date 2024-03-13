@@ -108,5 +108,5 @@ public class PlayerMovement : Movement
         mousePos.z = -_mainCam.transform.position.z;
         Debug.DrawLine(transform.position, _mainCam.ScreenToWorldPoint(mousePos), Color.red);
     }
-}
 #endif
+}
