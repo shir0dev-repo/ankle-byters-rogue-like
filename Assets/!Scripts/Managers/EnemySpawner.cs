@@ -8,15 +8,11 @@ public class EnemySpawner : Singleton<EnemySpawner>
     [SerializeField] private List<GameObject> _spawnableEnemies = new();
 
     public GameObject bossPrefab;
-    //[SerializeField] GameObject winImage;
     [SerializeField] GameObject door1;
     [SerializeField] GameObject door2;
 
-    //bool winImageSpawned = false;
     public bool bossSpawned = false;
     public bool bossDestroyed = false;
-    int numEnemies = 0;
-    int maxEnemies = 5;
 
     float minX = -26f;
     float maxX = -12f;
@@ -25,9 +21,7 @@ public class EnemySpawner : Singleton<EnemySpawner>
 
     float minDistanceToPlayer = 5f;
 
-    GameObject bossInstance;
     public WinCheckCond WinCheckCond;
-    Health bossHealth;
 
     private (Room room, List<BasicEnemy> enemies) _currentRoomEnemies;
     private (Room room, List<BossMovement> bosses) _currentRoomBosses;
@@ -68,7 +62,7 @@ public class EnemySpawner : Singleton<EnemySpawner>
         _currentRoomBosses.room = room;
 
         Transform[] spawnPositions = room.GetEnemySpawnPositions();
-        
+
         var spawnPOsition = spawnPositions[Random.Range(0, spawnPositions.Length)];
         var bossInstance = Instantiate(bossPrefab, spawnPOsition.position, Quaternion.identity);
         _currentRoomBosses.bosses.Add(bossInstance.GetComponent<BossMovement>());
@@ -116,21 +110,4 @@ public class EnemySpawner : Singleton<EnemySpawner>
 
         return randomPosition;
     }
-
-    // Method to be called when a mini enemy is defeated
-    //public void EnemyDefeated()
-    //{
-    //    Debug.Log("An enemy was defeated!");
-    //    numEnemies--;
-    //    if (numEnemies <= 0)
-    //    {
-    //        Debug.Log("All mini enemies defeated!");
-    //        // Activate the door
-    //        if (door2 != null)
-    //        {
-    //            door2.SetActive(true);
-    //            SpawnBoss(room);
-    //        }
-    //    }
-    //}
 }

@@ -63,7 +63,7 @@ public class UIManager : Singleton<UIManager>
 
     public void TitleScreen()
     {
-        SceneManager.LoadScene("TitleScene");
+        SceneManager.LoadScene(0);
         MenuUI.SetActive(false);
         PauseButtonPanel.SetActive(false);
         GameOverPanel.SetActive(false);
@@ -74,7 +74,7 @@ public class UIManager : Singleton<UIManager>
     private void GameOver()
     {
         Debug.Log("Game ober :(");
-        SceneManager.LoadScene("GameOver");
+        SceneManager.LoadScene(2);
         PauseButtonPanel.SetActive(false);
         GameOverPanel.SetActive(true);
     }

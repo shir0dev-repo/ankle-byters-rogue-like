@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using TMPro;
-using UnityEditor;
 
 
 public class StartGame : MonoBehaviour
@@ -20,9 +18,9 @@ public class StartGame : MonoBehaviour
         PauseButtonPanel.SetActive(false);
     }
 
-    public void LoadGameScene()
+    public void LoadScene(int index)
     {
-        SceneManager.LoadScene("RoomImplTest");
+        SceneManager.LoadScene(index);
         PauseButtonPanel.SetActive(true);
     }
 
@@ -30,8 +28,8 @@ public class StartGame : MonoBehaviour
     {
         if (SettingsClicked == false)
         {
-        SettingsUI.SetActive(true);
-        SettingsClicked = true;
+            SettingsUI.SetActive(true);
+            SettingsClicked = true;
         }
         else
         {
