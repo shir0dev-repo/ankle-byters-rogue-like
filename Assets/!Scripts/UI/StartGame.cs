@@ -8,8 +8,7 @@ using UnityEngine.UI;
 public class StartGame : MonoBehaviour
 {
     public static bool SettingsClicked = false;
-    public Button startButton;
-    public Button SettingsButton;
+
     public GameObject SettingsUI;
     public GameObject PauseButtonPanel;
 
@@ -20,7 +19,7 @@ public class StartGame : MonoBehaviour
 
     public void LoadScene(int index)
     {
-        SceneManager.LoadScene(index);
+        SceneLoader.Instance.LoadScene(index);
         PauseButtonPanel.SetActive(true);
     }
 

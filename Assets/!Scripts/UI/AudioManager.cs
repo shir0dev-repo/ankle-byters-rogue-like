@@ -4,23 +4,14 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class AudioManager : MonoBehaviour
+public class AudioManager : Singleton<AudioManager>
 {
-    public static AudioManager Instance;
-
     public Sound[] musicSounds, sfxSounds;
     public AudioSource musicSource, sfxSource;
 
-    private void Awake()
+    protected override void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        base.Awake();
     }
 
     private void Start()
@@ -59,14 +50,19 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void MusicVoulume(float volume)
+    public void SetVolumeMusic(float volume)
     {
-        float clampedVolume = Mathf.Clamp(volume, 0f, 0.2f); // I clamped the music between 0 and 0.2 because its too loud lol
+        float clampedVolume = RemapFrom01(0, 0.5f, volume); // I clamped the music between 0 and 0.2 because its too loud lol
         musicSource.volume = clampedVolume;
     }
 
-    public void SfxVolume(float volume)
+    public void SetVolumeSFX(float volume)
     {
         sfxSource.volume = volume;
+    }
+
+    private float RemapFrom01(float low, float high, float value)
+    {
+        return low + (high - low) * value;
     }
 }

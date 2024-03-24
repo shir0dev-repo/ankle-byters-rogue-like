@@ -265,10 +265,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 988415879}
-  - component: {fileID: 988415882}
-  - component: {fileID: 988415878}
   - component: {fileID: 988415880}
-  - component: {fileID: 988415881}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
@@ -276,20 +273,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &988415878
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 988415877}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33469393988568644a17bbede88e4058, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerPrefab: {fileID: 830659353465347653, guid: a0444663fea7c594facb4489a8f2982e, type: 3}
-  _player: {fileID: 1064170761}
 --- !u!4 &988415879
 Transform:
   m_ObjectHideFlags: 0
@@ -326,34 +309,6 @@ MonoBehaviour:
   bossSpawned: 0
   bossDestroyed: 0
   WinCheckCond: {fileID: 0}
---- !u!114 &988415881
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 988415877}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40be506814ac5c348873e770c7241883, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _currentInsanity: 0
-  _maxInsanity: 100
-  _insanityIncrement: 5
-  _incrementOverTime: 0
---- !u!114 &988415882
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 988415877}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 881a994575420a5498f9dfb43dc14c2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &999745861
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -411,11 +366,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0444663fea7c594facb4489a8f2982e, type: 3}
---- !u!4 &1064170761 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7102543446062241837, guid: a0444663fea7c594facb4489a8f2982e, type: 3}
-  m_PrefabInstance: {fileID: 999745861}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1150535390
 PrefabInstance:
   m_ObjectHideFlags: 0

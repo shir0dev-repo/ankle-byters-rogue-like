@@ -6,76 +6,35 @@ using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
-    public static bool IsPaused = false;
-    public Button PauseButton;
-    public Button ResumeButton;
-    public Button TitleScreenButton;
-    public GameObject MenuUI;
-    public Slider musicSliderPaused;
-    public Slider musicSlider;
-    public Slider sfxSliderPaused;
-    public Slider sfxSlider;
-    public GameObject PauseButtonPanel;
-    public GameObject GameOverPanel;
+    [SerializeField] private GameObject _titleCanvas;
+    [SerializeField] private GameObject _settingsCanvas;
+    [SerializeField] private GameObject _inGameSettingsObject;
+    [SerializeField] private GameObject _titleSettingsObject;
+    [SerializeField] private GameObject _gameOverCanvas;
 
-    private void Start()
+    public void SetUI(bool title, bool settings, bool gameOver)
     {
-        PlayerManager.OnPlayerDeath += GameOver;
+        DisplayTitleMenu(title);
+        DisplaySettingsMenu(settings);
+        DisplayGameOverMenu(gameOver);
     }
 
-    private void OnDisable()
+    public void DisplayTitleMenu(bool toggle)
     {
-        PlayerManager.OnPlayerDeath -= GameOver;
+        _titleCanvas.SetActive(toggle);
     }
 
-    public void MusicVolumePaused()
+    public void DisplaySettingsMenu(bool currentlyPaused)
     {
-        AudioManager.Instance.MusicVoulume(musicSliderPaused.value);
-        Debug.Log(musicSliderPaused.value);
-    }
-    public void MusicVolume()
-    {
-        AudioManager.Instance.MusicVoulume(musicSlider.value);
-        Debug.Log(musicSlider.value);
-    }
-    public void SfxVolumePaused()
-    {
-        AudioManager.Instance.SfxVolume(sfxSliderPaused.value);
-    }
-    public void SfxVolume()
-    {
-        AudioManager.Instance.SfxVolume(sfxSlider.value);
+        bool inGame = GameManager.Instance.InGame;
+        _inGameSettingsObject.SetActive(inGame);
+        _titleSettingsObject.SetActive(!inGame);
+
+        _settingsCanvas.SetActive(currentlyPaused);
     }
 
-    public void Resume()
+    public void DisplayGameOverMenu(bool toggle)
     {
-        MenuUI.SetActive(false);
-        Time.timeScale = 1f;
-        IsPaused = false;
-    }
-
-    public void Pause()
-    {
-        MenuUI.SetActive(true);
-        Time.timeScale = 0f;
-        IsPaused = true;
-    }
-
-    public void TitleScreen()
-    {
-        SceneManager.LoadScene(0);
-        MenuUI.SetActive(false);
-        PauseButtonPanel.SetActive(false);
-        GameOverPanel.SetActive(false);
-        Time.timeScale = 1f;
-        IsPaused = false;
-    }
-
-    private void GameOver()
-    {
-        Debug.Log("Game ober :(");
-        SceneManager.LoadScene(2);
-        PauseButtonPanel.SetActive(false);
-        GameOverPanel.SetActive(true);
+        _gameOverCanvas.SetActive(toggle);
     }
 }

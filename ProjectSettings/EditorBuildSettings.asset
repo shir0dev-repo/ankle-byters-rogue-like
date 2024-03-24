@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/TitleScene.unity
     guid: 91c96f0d8bffb374ea2b68dad25ee49c
   - enabled: 1
-    path: Assets/Scenes/RoomImplTest.unity
+    path: Assets/Scenes/PlayScene.unity
     guid: 0c162896dd5d28641bbb21c6f792e19c
   - enabled: 1
     path: Assets/Scenes/GameOver.unity

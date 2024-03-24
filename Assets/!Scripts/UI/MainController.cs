@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIController : PersistentSingleton<UIController>
+public class MainController : PersistentSingleton<MainController>
 {
     public UIManager UIManager { get; private set; }
 
@@ -13,11 +13,11 @@ public class UIController : PersistentSingleton<UIController>
     }
     void Start()
     {
-        
+
     }
 
     void Update()
     {
-        
+
     }
 }
