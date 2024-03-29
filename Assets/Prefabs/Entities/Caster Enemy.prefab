@@ -52,6 +52,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 10
   _destroyOnDeath: 1
+  damageFlash: {fileID: 0}
 --- !u!114 &-1173246994395405592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,6 +170,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4046894635984625559}
   - component: {fileID: 5028369791570093483}
+  - component: {fileID: 1628397294864881960}
   m_Layer: 7
   m_Name: GFX
   m_TagString: Untagged
@@ -243,3 +245,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1628397294864881960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4072121496882869640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a2b965d03cc0d34f90a7066166db2ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 6450479678835394032}
+  flashTime: 0.15

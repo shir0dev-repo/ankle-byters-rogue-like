@@ -7,6 +7,7 @@ public class Health : MonoBehaviour, IDamageable
     [SerializeField] private bool _destroyOnDeath = true;
     public int MaxHealth => _maxHealth;
     public int CurrentHealth { get; private set; }
+    public DamageFlash damageFlash;
 
     public Action<int> OnHealthChanged { get; set; }
     public Action OnDeath { get; set; }
@@ -23,6 +24,11 @@ public class Health : MonoBehaviour, IDamageable
         CurrentHealth -= damage;
 
         OnHealthChanged?.Invoke(CurrentHealth);
+        
+        if (damageFlash != null)
+        {
+            damageFlash.FlashStart();
+        }
 
         if (CurrentHealth <= 0)
             Die();
