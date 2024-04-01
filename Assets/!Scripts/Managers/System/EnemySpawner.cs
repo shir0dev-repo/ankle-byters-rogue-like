@@ -21,8 +21,6 @@ public class EnemySpawner : Singleton<EnemySpawner>
 
     float minDistanceToPlayer = 5f;
 
-    public WinCheckCond WinCheckCond;
-
     private (Room room, List<BasicEnemy> enemies) _currentRoomEnemies;
     private (Room room, List<BossMovement> bosses) _currentRoomBosses;
     private bool _inCombat = false;
