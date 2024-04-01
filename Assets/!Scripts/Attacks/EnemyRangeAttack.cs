@@ -32,7 +32,10 @@ public class EnemyRangeAttack : MonoBehaviour
 
     private void FireProjectile()
     {
-        Instantiate(_projectilePrefab, transform.position, Quaternion.identity);
+        if (PlayerManager.Instance == null) return;
+
+        Projectile p = Instantiate(_projectilePrefab, transform.position, Quaternion.identity).GetComponent<Projectile>();
+        p.Init(PlayerManager.Instance.GetPlayerPosition());
     }
 
 }

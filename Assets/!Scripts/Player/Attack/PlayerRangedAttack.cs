@@ -20,11 +20,15 @@ public class PlayerRangedAttack : MonoBehaviour
         _rangedAttack = _playerInputHandler.PlayerActions.FindAction(_RANGED_ATTACKS_ACTION_NAME);
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (_rangedAttack.ReadValue<float>() > 0.5f && Time.time >= _nextFireTime)
         {
-            Instantiate(_projectilePrefab, transform.position, transform.rotation);
+            Projectile p = Instantiate(_projectilePrefab, transform.position, Quaternion.identity).GetComponent<Projectile>();
+            Vector3 mousePos = Mouse.current.position.value;
+            mousePos.z = -Camera.main.transform.position.z;
+
+            p.Init(Camera.main.ScreenToWorldPoint(mousePos));
             _nextFireTime = Time.time + _fireCooldown;
         }
     }
