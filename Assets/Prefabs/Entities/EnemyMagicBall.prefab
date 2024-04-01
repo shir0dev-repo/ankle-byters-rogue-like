@@ -51,8 +51,8 @@ MonoBehaviour:
   _targetLayermask:
     serializedVersion: 2
     m_Bits: 64
-  _damage: 2
-  _destroyOnImpact: 1
+  _damage: 1
+  _destroyOnImpact: 0
 --- !u!114 &4050541407565781437
 MonoBehaviour:
   m_ObjectHideFlags: 0

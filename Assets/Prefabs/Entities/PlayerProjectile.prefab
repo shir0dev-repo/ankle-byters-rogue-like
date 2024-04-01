@@ -49,7 +49,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 12
-  _target: {fileID: 0}
 --- !u!114 &-8632913023601992456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,8 +64,8 @@ MonoBehaviour:
   _targetLayermask:
     serializedVersion: 2
     m_Bits: 128
-  _damage: 2
-  _destroyOnImpact: 1
+  _damage: 1
+  _destroyOnImpact: 0
 --- !u!212 &6471682421704177457
 SpriteRenderer:
   m_ObjectHideFlags: 0
