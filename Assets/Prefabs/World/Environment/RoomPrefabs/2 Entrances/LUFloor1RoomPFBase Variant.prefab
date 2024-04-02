@@ -1434,7 +1434,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -1768,6 +1768,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 975349433191326036, guid: 7bb7aaf87a35f5b4ab75f94a78680c41, type: 3}
+      propertyPath: m_SortingOrder
+      value: -2
+      objectReference: {fileID: 0}
     - target: {fileID: 2311207018210068637, guid: 7bb7aaf87a35f5b4ab75f94a78680c41, type: 3}
       propertyPath: m_Tiles.Array.size
       value: 169
@@ -2471,6 +2475,10 @@ PrefabInstance:
     - target: {fileID: 2311207018210068637, guid: 7bb7aaf87a35f5b4ab75f94a78680c41, type: 3}
       propertyPath: m_Tiles.Array.data[170].second.m_TileObjectToInstantiateIndex
       value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 4091478948240062659, guid: 7bb7aaf87a35f5b4ab75f94a78680c41, type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 6378671149249934396, guid: 7bb7aaf87a35f5b4ab75f94a78680c41, type: 3}
       propertyPath: m_TileAssetArray.Array.size

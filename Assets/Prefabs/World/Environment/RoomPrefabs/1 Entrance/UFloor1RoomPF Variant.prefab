@@ -167,6 +167,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 191295274977133286, guid: 2c3aee98e77dcd54f972ca543618fc70, type: 3}
+      propertyPath: m_SortingOrder
+      value: -2
+      objectReference: {fileID: 0}
     - target: {fileID: 4472119290623403650, guid: 2c3aee98e77dcd54f972ca543618fc70, type: 3}
       propertyPath: m_Tiles.Array.size
       value: 188
@@ -2010,6 +2014,10 @@ PrefabInstance:
     - target: {fileID: 8546107212013641795, guid: 2c3aee98e77dcd54f972ca543618fc70, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8588460621847399170, guid: 2c3aee98e77dcd54f972ca543618fc70, type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
