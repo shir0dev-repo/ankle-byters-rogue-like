@@ -63,16 +63,20 @@ public class ShadowManager : Singleton<ShadowManager>
         shadowPosition.Clear();
         _roomPosition = room.transform.position;
         edgeCollider.offset = _roomPosition;
-        for(int i = 0; i < edgeCollider.pointCount; i++)
-        {
-            edgeCollider.points[i] += (Vector2)_roomPosition;
-        }
+        //for(int i = 0; i < edgeCollider.pointCount; i++)
+        //{
+        //    edgeCollider.points[i] += (Vector2)_roomPosition;
+        //}
         //edgeCollider.offset = _roomPosition;
         for (int i = 0; i <= Random.Range(3, 6); i++)
         {
             SpawnShadowCluster(Random.Range(1, 5));
         }
         //InsanityStage(_insanityStage);
+        foreach(GameObject shadow in shadowLooking)
+        {
+            Debug.Log($"Looker, isLooking is {shadow.GetComponentInChildren<ShadowScript>().isLooking}");
+        }
     }
 
     void CurrentInsanityStage(int insanity)
