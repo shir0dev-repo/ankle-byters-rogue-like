@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5386318885355925800}
   - component: {fileID: 5961426043014120486}
+  - component: {fileID: 7499347096883848969}
   - component: {fileID: 6450479678835394032}
   - component: {fileID: 283100908046824469}
   - component: {fileID: 8893907405628569873}
@@ -52,6 +53,20 @@ MonoBehaviour:
   player: {fileID: 7102543446062241837, guid: a0444663fea7c594facb4489a8f2982e, type: 3}
   seekDistance: 10
   enemySpawner: {fileID: 0}
+--- !u!114 &7499347096883848969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817236994952152450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a2b965d03cc0d34f90a7066166db2ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 6450479678835394032}
+  flashTime: 0.15
 --- !u!114 &6450479678835394032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,6 +81,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 20
   _destroyOnDeath: 1
+  damageFlash: {fileID: 0}
 --- !u!114 &283100908046824469
 MonoBehaviour:
   m_ObjectHideFlags: 0
