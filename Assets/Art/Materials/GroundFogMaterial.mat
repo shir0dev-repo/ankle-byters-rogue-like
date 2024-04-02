@@ -63,7 +63,7 @@ Material:
     - _BaseFogThickness: 0.5
     - _FogDensity: 1
     - _FogScale: 25
-    - _Opacity: 0.231
+    - _Opacity: 0.6
     - _ScrollSpeed: 0.19
     - _SecondaryFogScale: 10
     - _SecondaryFogScrollSpeed: -0.2
