@@ -57,8 +57,13 @@ public class GameManager : Singleton<GameManager>
         InGame = false;
         GamePaused = false;
 
-        UIManager.Instance.DisplayGameOverMenu(true);
         SceneLoader.Instance.LoadScene(SceneLoader.GAME_OVER_SCENE_INDEX);
+        UIManager.Instance.DisplayGameOverMenu(true);
+        Instance.GamePaused = false;
+        Instance.InGame = false;
+        Time.timeScale = 1f;
+        if (InsanityManager.Instance != null)
+            InsanityManager.Instance.SetInsanityWithoutNotify(0);
     }
 
     public static void Quit(bool toMenu)
@@ -67,7 +72,11 @@ public class GameManager : Singleton<GameManager>
         {
             SceneLoader.Instance.LoadScene(SceneLoader.TITLE_SCENE_INDEX);
             UIManager.Instance.SetUI(true, false, false);
-
+            Instance.GamePaused = false;
+            Instance.InGame = false;
+            Time.timeScale = 1f;
+            if (InsanityManager.Instance != null)
+                InsanityManager.Instance.SetInsanityWithoutNotify(0);
             return;
         }
 #if !UNITY_EDITOR

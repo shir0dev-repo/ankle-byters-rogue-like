@@ -33,8 +33,7 @@ public class Room : MonoBehaviour
     private void GetDoors()
     {
         BoxCollider2D[] doorColliders = gameObject.GetComponentsInChildren<BoxCollider2D>();
-        if (doorColliders.Length >= 4)
-            Debug.LogError(this + "!!!!!!!!!!!!!!!!!!!!!");
+
         foreach (BoxCollider2D doorCollider in doorColliders)
         {
             Door key = doorCollider.gameObject.AddComponent<Door>();

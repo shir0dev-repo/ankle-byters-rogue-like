@@ -9,7 +9,6 @@ public class PlayerManager : Singleton<PlayerManager>
     [SerializeField] private Transform _player;
     public LayerMask PlayerLayer { get; private set; }
 
-    public static Action OnPlayerDeath;
     public Health PlayerHealth { get; private set; }
 
     private void OnEnable()
@@ -22,9 +21,15 @@ public class PlayerManager : Singleton<PlayerManager>
         base.Awake();
 
         PlayerHealth = _player.GetComponent<Health>();
-        PlayerHealth.OnDeath += BroadcastPlayerDeath;
+        PlayerHealth.OnDeath += GameManager.Instance.GameOver;
+        PlayerHealth.OnDeath += ClearReferences;
 
         PlayerLayer = LayerMask.NameToLayer("Player");
+    }
+
+    private void ClearReferences()
+    {
+        PlayerHealth.OnDeath -= GameManager.Instance.GameOver;
     }
 
     private void OnDisable()
@@ -43,12 +48,6 @@ public class PlayerManager : Singleton<PlayerManager>
         return _player.gameObject;
     }
 
-    private void BroadcastPlayerDeath()
-    {
-        Debug.Log("sdawada");
-
-        OnPlayerDeath?.Invoke();
-    }
     public Vector3 GetPlayerPosition()
     {
         if (_player == null) return Vector3.zero;
@@ -68,7 +67,6 @@ public class PlayerManager : Singleton<PlayerManager>
 
         playerPos.x -= scaleX * doorDirection.x;
         playerPos.y -= scaleY * doorDirection.y;
-
 
         _player.position = playerPos;
     }

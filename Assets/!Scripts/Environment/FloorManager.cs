@@ -30,7 +30,10 @@ public class FloorManager : Singleton<FloorManager>
         OnRoomCleared += ClearRoom;
         InsanityManager.OnInsanityChanged += SetFogValue;
     }
-
+    public Node GetNode(Room room)
+    {
+        return _nodeRoomDictionary.FirstOrDefault(x => x.Value == room).Key;
+    }
     private void SetFogValue(int newInsanity)
     {
         _fogMaterial.SetFloat("_Opacity", Mathf.Lerp(0.15f, 0.6f, newInsanity / 100f));

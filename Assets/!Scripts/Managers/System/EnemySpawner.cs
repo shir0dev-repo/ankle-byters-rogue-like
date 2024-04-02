@@ -14,13 +14,6 @@ public class EnemySpawner : Singleton<EnemySpawner>
     public bool bossSpawned = false;
     public bool bossDestroyed = false;
 
-    float minX = -26f;
-    float maxX = -12f;
-    float minY = 0f;
-    float maxY = 5f;
-
-    float minDistanceToPlayer = 5f;
-
     private (Room room, List<BasicEnemy> enemies) _currentRoomEnemies;
     private (Room room, List<BossMovement> bosses) _currentRoomBosses;
     private bool _inCombat = false;
@@ -49,12 +42,6 @@ public class EnemySpawner : Singleton<EnemySpawner>
         }
     }
 
-    public void OnBossKilled()
-    {
-        //winImage.SetActive(true);
-        //Debug.Log("You win!");
-        //winImageSpawned = true;
-    }
     public bool SpawnBoss(Room room)
     {
         _currentRoomBosses.room = room;
@@ -95,17 +82,5 @@ public class EnemySpawner : Singleton<EnemySpawner>
     private GameObject GetRandomEnemy()
     {
         return _spawnableEnemies[Random.Range(0, _spawnableEnemies.Count)];
-    }
-
-    private Vector3 GetRandomPosition()
-    {
-        Vector3 randomPosition;
-        Vector3 playerPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
-        do
-        {
-            randomPosition = new Vector3(Random.Range(minX, maxX), Random.Range(minY, maxY), 0f);
-        } while (Vector3.Distance(randomPosition, playerPosition) < minDistanceToPlayer);
-
-        return randomPosition;
     }
 }

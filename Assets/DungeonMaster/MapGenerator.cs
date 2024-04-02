@@ -22,11 +22,13 @@ namespace DungeonMaster2D
                 dungeon.AssignEntrances();
                 dungeon.AssignSpecialNodes(random);
 
-                if (dungeon.AddSecretNode())
-                {
-                    Debug.Log(GetFinalString(0, data.CurrentSeed, dungeon));
-                    return dungeon;
-                }
+                // if (dungeon.AddSecretNode())
+                // {
+                //     Debug.Log(GetFinalString(0, data.CurrentSeed, dungeon));
+                //     return dungeon;
+                // }
+
+                return dungeon;
             }
 
             // iterate through dungeon, creating a new dungeon if current iteration does not suffice
@@ -59,12 +61,14 @@ namespace DungeonMaster2D
                     dungeon.AssignEntrances();
                     dungeon.AssignSpecialNodes(random);
 
-                    if (dungeon.AddSecretNode())
-                    {
-                        Debug.Log(GetFinalString(currentIteration, data.CurrentSeed, dungeon));
+                    // if (dungeon.AddSecretNode())
+                    // {
+                    //     Debug.Log(GetFinalString(currentIteration, data.CurrentSeed, dungeon));
 
-                        return dungeon;
-                    }
+                    //     return dungeon;
+                    // }
+
+                    return dungeon;
                 }
                 else
                 {

@@ -98,6 +98,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 10
   _destroyOnDeath: 1
+  _hasIFrames: 1
+  _invincibilityDuration: 0.5
+  damageFlash: {fileID: 1951913507432011669}
 --- !u!114 &6177250601096842878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,7 +131,6 @@ MonoBehaviour:
   _fireCooldown: 0.3
   _damage: 2
   meleePrefab: {fileID: 5253270366236191422, guid: 5f46d9a6c8ffad24aa47040c90846a15, type: 3}
-  spawnDistance: 1
   attackPos: {fileID: 8473070690705915679}
   attackRange: 0.5
   enemyToAttack:
@@ -236,6 +238,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7600869369179688495}
   - component: {fileID: 6556738017152079386}
+  - component: {fileID: 1951913507432011669}
   m_Layer: 0
   m_Name: Head
   m_TagString: Untagged
@@ -311,6 +314,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1951913507432011669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2647573189678927069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a2b965d03cc0d34f90a7066166db2ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 1380345867270346519}
+  flashTime: 0.15
 --- !u!1 &8780375688808856329
 GameObject:
   m_ObjectHideFlags: 0

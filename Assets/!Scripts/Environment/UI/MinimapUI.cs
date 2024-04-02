@@ -24,7 +24,7 @@ public class MinimapUI : MonoBehaviour
         int textureResolution = (_ROOM_PIXEL_SIZE * 9) + (_ROOM_BORDER_PIXEL_SIZE * 11);
         _mapGridTexture = new Texture2D(textureResolution, textureResolution);
         PaintGridBorders(ref _mapGridTexture);
-        PaintRooms(ref _mapGridTexture, rooms);
+        PaintRooms(ref _mapGridTexture, rooms, FloorManager.Instance.GetNode(FloorManager.Instance.CurrentRoom).Position);
         _mapImage.texture = _mapGridTexture;
 
     }
@@ -48,7 +48,7 @@ public class MinimapUI : MonoBehaviour
         texture.Apply();
     }
 
-    private void PaintRooms(ref Texture2D texture, Room[] rooms)
+    private void PaintRooms(ref Texture2D texture, Room[] rooms, Vector2Int offset)
     {
         Color32[] c = new Color32[_ROOM_PIXEL_SIZE * _ROOM_PIXEL_SIZE];
 

@@ -8,7 +8,6 @@ public class PlayerMeleeAttack : MonoBehaviour
     [SerializeField] float _fireCooldown = 0.3f;
     [SerializeField] private int _damage = 2;
     [SerializeField] GameObject meleePrefab;
-    [SerializeField] float spawnDistance = 1f;
 
     private const string _MELEE_ATTACK_ACTION_NAME = "MeleeAttack";
     private InputAction _meleeAttack;
@@ -19,7 +18,6 @@ public class PlayerMeleeAttack : MonoBehaviour
     public Transform attackPos;
     public float attackRange;
     public LayerMask enemyToAttack;
-
 
     private void Awake()
     {
@@ -57,10 +55,10 @@ public class PlayerMeleeAttack : MonoBehaviour
         var spriteRenderer = meleeInstance.GetComponent<SpriteRenderer>();
         if (spriteRenderer != null)
         {
-            spriteRenderer.sortingOrder = 1; 
+            spriteRenderer.sortingOrder = 1;
         }
 
-        meleeInstance.transform.localRotation = Quaternion.Euler(0, 0, -90); 
+        meleeInstance.transform.localRotation = Quaternion.Euler(0, 0, -90);
 
         float swingDuration = 0.5f;
         float elapsedTime = 0;

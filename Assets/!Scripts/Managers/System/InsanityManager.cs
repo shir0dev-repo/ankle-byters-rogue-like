@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 public class InsanityManager : Singleton<InsanityManager>
 {
-    [SerializeField, ReadOnly] private int _currentInsanity = 0;
+    [SerializeField, ReadOnly] private int _currentInsanity;
     [SerializeField] private int _maxInsanity = 100;
 
     [SerializeField] private int _insanityIncrement;
@@ -23,8 +23,8 @@ public class InsanityManager : Singleton<InsanityManager>
     private void AddInsanityRecursive(object sender, TimeTickSystem.OnTickArgs e)
     {
         if (_incrementOverTime == false) return;
+        else if (SceneLoader.Instance.CurrentSceneIndex != SceneLoader.PLAY_SCENE_INDEX) return;
 
-        Debug.Log($"Increasing sanity at tick {e.CurrentTick} by {_insanityIncrement}.");
         AddInsanity(_insanityIncrement);
     }
 
@@ -43,4 +43,6 @@ public class InsanityManager : Singleton<InsanityManager>
         _currentInsanity = amount;
         OnInsanityChanged?.Invoke(_currentInsanity);
     }
+
+    public void SetInsanityWithoutNotify(int amount) => _currentInsanity = amount;
 }

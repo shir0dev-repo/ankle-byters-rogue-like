@@ -9,7 +9,7 @@ public class CollisionAttack : MonoBehaviour
     [SerializeField, Min(1)] private int _damage = 1;
     [SerializeField] private bool _destroyOnImpact = false;
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void DoDamage(Collider2D other)
     {
         // game object is not target layermask
         if (!_targetLayermask.IsLayer(other.gameObject.layer)) return;
@@ -21,5 +21,15 @@ public class CollisionAttack : MonoBehaviour
 
         if (_destroyOnImpact)
             Destroy(gameObject);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        DoDamage(other);
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        DoDamage(other);
     }
 }
