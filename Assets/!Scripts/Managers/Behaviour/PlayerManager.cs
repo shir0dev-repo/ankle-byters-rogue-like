@@ -20,9 +20,11 @@ public class PlayerManager : Singleton<PlayerManager>
     protected override void Awake()
     {
         base.Awake();
-
-        PlayerHealth = _player.GetComponent<Health>();
-        PlayerHealth.OnDeath += BroadcastPlayerDeath;
+        if(_player != null)
+        {
+            PlayerHealth = _player.GetComponent<Health>();
+            PlayerHealth.OnDeath += BroadcastPlayerDeath;
+        }
 
         PlayerLayer = LayerMask.NameToLayer("Player");
     }
