@@ -20,6 +20,7 @@ public class PlayerManager : Singleton<PlayerManager>
     protected override void Awake()
     {
         base.Awake();
+        //Added null check here
         if(_player != null)
         {
             PlayerHealth = _player.GetComponent<Health>();
