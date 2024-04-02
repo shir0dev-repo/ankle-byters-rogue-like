@@ -51,27 +51,32 @@ public class PlayerMeleeAttack : MonoBehaviour
     }
     private IEnumerator SpawnMeleePrefab()
     {
-        Vector3 spawnPosition = transform.position + transform.up * spawnDistance;
-        GameObject meleeInstance = Instantiate(meleePrefab, spawnPosition, Quaternion.identity);
+        GameObject meleeInstance = Instantiate(meleePrefab, transform.position, Quaternion.identity);
+        meleeInstance.transform.SetParent(transform);
 
-        Vector3 directionToPlayer = transform.position - meleeInstance.transform.position;
-        float angle = Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg;
-        meleeInstance.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward); // <- alex code im pretty sure for turrets;
-
-        // now the swiping motion;
-        Vector3 initialPosition = meleeInstance.transform.position;
-        Vector3 endPosition = initialPosition + transform.right * spawnDistance * 2f;
-        float moveDuration = 0.3f;
-        float elapsedTime = 0f;
-        while (elapsedTime < moveDuration)
+        var spriteRenderer = meleeInstance.GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
         {
-            meleeInstance.transform.position = Vector3.Lerp(initialPosition, endPosition, elapsedTime / moveDuration);
-            // https://docs.unity3d.com/ScriptReference/Vector3.Lerp.html
+            spriteRenderer.sortingOrder = 1; 
+        }
+
+        meleeInstance.transform.localRotation = Quaternion.Euler(0, 0, -90); 
+
+        float swingDuration = 0.5f;
+        float elapsedTime = 0;
+
+        float startAngle = 90; //start angle
+        float endAngle = 270; //end angle
+
+        while (elapsedTime < swingDuration)
+        {
+            float angle = Mathf.Lerp(startAngle, endAngle, elapsedTime / swingDuration);
+            meleeInstance.transform.localRotation = Quaternion.Euler(0, 0, angle);
+
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-            //yield return new WaitForSeconds(0.1f);
         Destroy(meleeInstance);
     }
     private void OnDrawGizmosSelected()
