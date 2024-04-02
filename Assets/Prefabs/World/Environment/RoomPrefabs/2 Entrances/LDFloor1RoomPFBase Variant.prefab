@@ -1051,7 +1051,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -1544,9 +1544,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6587133620031673871, guid: 137a16f9790fc8e42b7d4c8a066daa68, type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 7778604897240608008, guid: 137a16f9790fc8e42b7d4c8a066daa68, type: 3}
       propertyPath: m_Name
       value: LDFloor1RoomPFBase Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 8303160307374200431, guid: 137a16f9790fc8e42b7d4c8a066daa68, type: 3}
+      propertyPath: m_SortingOrder
+      value: -2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
