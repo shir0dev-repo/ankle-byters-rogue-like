@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShadowManager : MonoBehaviour
+public class ShadowManager : Singleton<ShadowManager>
 {
     //Shadows not looking at the player
     List<GameObject> shadowPassive = new List<GameObject>();
@@ -21,11 +21,6 @@ public class ShadowManager : MonoBehaviour
     {
         InsanityManager.OnInsanityChanged += CurrentInsanityStage;
         FloorManager.OnRoomEntered += PlaceShadows;
-        SpawnShadowCluster(1);
-        SpawnShadowCluster(1);
-        SpawnShadowCluster(1);
-        SpawnShadowCluster(1);
-        SpawnShadowCluster(1);
         //SpawnShadows();
     }
 
@@ -34,7 +29,32 @@ public class ShadowManager : MonoBehaviour
     {
         
     }
-
+    public void PlaceShadows()
+    {
+        foreach (GameObject shadow in shadowPassive)
+        {
+            Destroy(shadow);
+        }
+        shadowPassive.Clear();
+        foreach (GameObject shadow in shadowLooking)
+        {
+            Destroy(shadow);
+        }
+        shadowLooking.Clear();
+        shadowPosition.Clear();
+        _roomPosition = new Vector3(0, 0);
+        edgeCollider.offset = _roomPosition;
+        for (int i = 0; i < edgeCollider.pointCount; i++)
+        {
+            edgeCollider.points[i] += (Vector2)_roomPosition;
+        }
+        //edgeCollider.offset = _roomPosition;
+        for (int i = 0; i <= Random.Range(3, 6); i++)
+        {
+            SpawnShadowCluster(Random.Range(1, 5));
+        }
+        InsanityStage(_insanityStage);
+    }
     void PlaceShadows(Room room, Door door)
     {
         foreach(GameObject shadow in shadowPassive)

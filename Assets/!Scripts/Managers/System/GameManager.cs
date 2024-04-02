@@ -37,6 +37,8 @@ public class GameManager : Singleton<GameManager>
         UIManager.Instance.SetUI(false, false, false);
 
         SceneLoader.Instance.LoadScene(SceneLoader.PLAY_SCENE_INDEX);
+        //Added Call to ShadowManager's PlaceShadows() function
+        ShadowManager.Instance.PlaceShadows();
     }
 
     public void PauseGame()
