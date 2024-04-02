@@ -9,19 +9,24 @@ public class ShadowManager : MonoBehaviour
     //Shadows looking at the player
     List<GameObject> shadowLooking = new List<GameObject>();
 
+    List<Vector2> shadowPosition = new List<Vector2>();
+
     [SerializeField] GameObject shadowPrefab;
+    [SerializeField] GameObject EdgeColliderObject;
     int _insanityStage;
+    [SerializeField] EdgeCollider2D edgeCollider;
     private Vector3 _roomPosition = new Vector3(0, 0);
-    private Bounds _roomBounds;
+    int spawnLoop = 0;
     void Start()
     {
         InsanityManager.OnInsanityChanged += CurrentInsanityStage;
         FloorManager.OnRoomEntered += PlaceShadows;
+        SpawnShadowCluster(1);
+        SpawnShadowCluster(1);
+        SpawnShadowCluster(1);
+        SpawnShadowCluster(1);
+        SpawnShadowCluster(1);
         //SpawnShadows();
-        SpawnShadowCluster();
-        SpawnShadowCluster(3);
-        SpawnShadowCluster(8);
-        _roomBounds = new Bounds(_roomPosition, new Vector3(14, 6));
     }
 
     // Update is called once per frame
@@ -42,26 +47,19 @@ public class ShadowManager : MonoBehaviour
             Destroy(shadow);
         }
         shadowLooking.Clear();
+        shadowPosition.Clear();
         _roomPosition = room.transform.position;
-        _roomBounds = new Bounds(_roomPosition, new Vector3(14, 6));
-        for (int i = 0; i <= Random.Range(1, 5); i++)
+        edgeCollider.offset = _roomPosition;
+        for(int i = 0; i < edgeCollider.pointCount; i++)
         {
-            SpawnShadowCluster(Random.Range(2, 7));
+            edgeCollider.points[i] += (Vector2)_roomPosition;
+        }
+        //edgeCollider.offset = _roomPosition;
+        for (int i = 0; i <= Random.Range(3, 6); i++)
+        {
+            SpawnShadowCluster(Random.Range(1, 5));
         }
         InsanityStage(_insanityStage);
-    }
-
-    
-    //Note: Code used to see _roomBounds, code was copy and pasted from unity's Renderer.bounds page and slightly modified
-    // code has no gameplay purpose and can be deleted, if you're reading this then I forgot to delete it myself
-    public void OnDrawGizmosSelected()
-    {
-        if (_roomBounds == null)
-            return;
-        Bounds bounds = _roomBounds;
-        Gizmos.matrix = Matrix4x4.identity;
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(bounds.center, bounds.extents * 2);
     }
 
     void CurrentInsanityStage(int insanity)
@@ -128,28 +126,41 @@ public class ShadowManager : MonoBehaviour
         }
     }
 
-    Vector3 GetRandomSpawn()
+    Vector3 GenerateSpawn()
     {
-        Vector3 randomSpawn;
-        int randomSpawnIndex = 0;
-        do
+        spawnLoop++;
+        Vector3 fullRandom = new Vector3(_roomPosition.x + Random.Range(-9.0f, 9.0f), _roomPosition.y + Random.Range(-5.0f, 5.0f));
+        Vector3 randomSpawn = edgeCollider.ClosestPoint(fullRandom);
+        if (shadowPosition == null || spawnLoop >= 15)
+            return randomSpawn;
+        foreach (Vector2 shadowPoint in shadowPosition)
         {
-            randomSpawn = new Vector3(_roomPosition.x + Random.Range(-7.0f, 7.0f), _roomPosition.y + Random.Range(-3.0f, 3.0f));
-            randomSpawnIndex++;
-        } while (_roomBounds.Contains(randomSpawn));
-        Debug.Log(randomSpawnIndex);
+            if (Vector3.Distance(shadowPoint, randomSpawn) <= 5.0f)
+            {
+                GenerateSpawn();
+            }
+        }
         return randomSpawn;
     }
 
     void SpawnShadowCluster(int cluserSize = 6)
     {
+        spawnLoop = 0;
         if (cluserSize == 0)
         {
             Debug.LogWarning("Cluster Size shouldn't be zero");
             return;
         }
+        //Debug.Log($"SpawnShadowCluster() Room Position, {_roomPosition.x}X, {_roomPosition.y}Y");
+        Vector3 randomSpawn = GenerateSpawn();
+        shadowPosition.Add(randomSpawn);
+        //Debug.Log($"Spawning shadow at {randomSpawn.x}X, {randomSpawn.y}Y, rolled spawn {fullRandom.x}X, {fullRandom.y}Y");
+        if (cluserSize == 1)
+        {
+            shadowPassive.Add(Instantiate(shadowPrefab, transform.TransformPoint(randomSpawn), Quaternion.identity, transform));
+            return;
+        }
         float spawnAngles = 360 / (cluserSize - 1);
-        Vector3 randomSpawn = GetRandomSpawn();
         // Quaternion.Euler(0, 0, Random.Range(0, 359)) * vector3.up // How to rotate vector randomly, comment for now will add later
         // Makes a cluster of 3 shadows not just a straight line
         if (cluserSize == 3)
@@ -172,7 +183,7 @@ public class ShadowManager : MonoBehaviour
             float newX = Mathf.Cos(spawnRad);
             float newY = Mathf.Sin(spawnRad);
             Vector3 circleSpawn = new Vector3((newX + randomSpawn.x) + Random.Range(-0.5f, 0.5f), (newY + randomSpawn.y) + Random.Range(-0.5f, 0.5f));
-            shadowPassive.Add(Instantiate(shadowPrefab, circleSpawn, Quaternion.identity, transform));
+            shadowPassive.Add(Instantiate(shadowPrefab, edgeCollider.ClosestPoint(circleSpawn), Quaternion.identity, transform));
         }
 
     }
