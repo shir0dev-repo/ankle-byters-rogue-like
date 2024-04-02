@@ -21,13 +21,6 @@ public class ShadowManager : Singleton<ShadowManager>
     {
         InsanityManager.OnInsanityChanged += CurrentInsanityStage;
         FloorManager.OnRoomEntered += PlaceShadows;
-        //SpawnShadows();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
     public void PlaceShadows()
     {
