@@ -12,7 +12,7 @@ public class ShadowScript : MonoBehaviour
     void Start()
     {
         isLooking = false;
-        player = GameManager.Instance.Player;
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
@@ -20,6 +20,8 @@ public class ShadowScript : MonoBehaviour
     {
         if (isLooking)
         {
+            if (player == null)
+                return;
             Vector2 toPlayer = (player.transform.position - transform.position).normalized;
             float targetAngle = Mathf.Atan2(toPlayer.y, toPlayer.x) * Mathf.Rad2Deg + 90f;
 

@@ -72,7 +72,7 @@ public class ShadowManager : Singleton<ShadowManager>
         {
             SpawnShadowCluster(Random.Range(1, 5));
         }
-        InsanityStage(_insanityStage);
+        //InsanityStage(_insanityStage);
     }
 
     void CurrentInsanityStage(int insanity)
@@ -90,12 +90,13 @@ public class ShadowManager : Singleton<ShadowManager>
 
     void InsanityStage(int stage)
     {
-        if (stage == 10)
-        {
-            //all attack player
-            return;
-        }
+        //if (stage == 10)
+        //{
+        //    //commented out since not implemented
+        //    //return;
+        //}
         // Calculate the ratio between Lookers and Passives,
+        Debug.Log($"InsanityStage: {_insanityStage}");
         float lookerRatio = ((shadowLooking.Count / (float)(shadowLooking.Count + shadowPassive.Count)) * 10);
 
         if (lookerRatio < stage)
@@ -158,6 +159,7 @@ public class ShadowManager : Singleton<ShadowManager>
 
     void SpawnShadowCluster(int cluserSize = 6)
     {
+        List<GameObject> shadowList = _insanityStage == 10 ? shadowLooking : shadowPassive;
         spawnLoop = 0;
         if (cluserSize == 0)
         {
@@ -170,7 +172,7 @@ public class ShadowManager : Singleton<ShadowManager>
         //Debug.Log($"Spawning shadow at {randomSpawn.x}X, {randomSpawn.y}Y, rolled spawn {fullRandom.x}X, {fullRandom.y}Y");
         if (cluserSize == 1)
         {
-            shadowPassive.Add(Instantiate(shadowPrefab, transform.TransformPoint(randomSpawn), Quaternion.identity, transform));
+            shadowList.Add(Instantiate(shadowPrefab, transform.TransformPoint(randomSpawn), Quaternion.identity, transform));
             return;
         }
         float spawnAngles = 360 / (cluserSize - 1);
@@ -185,19 +187,27 @@ public class ShadowManager : Singleton<ShadowManager>
                 float newX = Mathf.Cos(spawnRad);
                 float newY = Mathf.Sin(spawnRad);
                 Vector3 circleSpawn = new Vector3((newX + randomSpawn.x) + Random.Range(-0.5f, 0.5f), (newY + randomSpawn.y) + Random.Range(-0.5f, 0.5f));
-                shadowPassive.Add(Instantiate(shadowPrefab, circleSpawn, Quaternion.identity, transform));
+                shadowList.Add(Instantiate(shadowPrefab, circleSpawn, Quaternion.identity, transform));
             }
             return;
         }
-        shadowPassive.Add(Instantiate(shadowPrefab, randomSpawn, Quaternion.identity, transform));
+        shadowList.Add(Instantiate(shadowPrefab, randomSpawn, Quaternion.identity, transform));
         for(int i = 0; i < cluserSize -1; i++)
         {
             float spawnRad = (spawnAngles * i) * Mathf.Deg2Rad;
             float newX = Mathf.Cos(spawnRad);
             float newY = Mathf.Sin(spawnRad);
             Vector3 circleSpawn = new Vector3((newX + randomSpawn.x) + Random.Range(-0.5f, 0.5f), (newY + randomSpawn.y) + Random.Range(-0.5f, 0.5f));
-            shadowPassive.Add(Instantiate(shadowPrefab, edgeCollider.ClosestPoint(circleSpawn), Quaternion.identity, transform));
+            shadowList.Add(Instantiate(shadowPrefab, edgeCollider.ClosestPoint(circleSpawn), Quaternion.identity, transform));
         }
-
+        if (_insanityStage == 10)
+        {
+            shadowLooking = shadowList;
+        }
+        else
+        {
+            shadowPassive = shadowList;
+        }
+        InsanityStage(_insanityStage);
     }
 }
