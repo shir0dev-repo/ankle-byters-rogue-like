@@ -98,6 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 10
   _destroyOnDeath: 1
+  damageFlash: {fileID: 0}
 --- !u!114 &6177250601096842878
 MonoBehaviour:
   m_ObjectHideFlags: 0

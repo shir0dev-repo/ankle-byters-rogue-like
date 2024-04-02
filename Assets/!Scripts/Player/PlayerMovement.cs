@@ -98,6 +98,12 @@ public class PlayerMovement : Movement
         CanMove = true;
     }
 
+    //temporary method so I can see whats deleting the player
+    private void OnDestroy()
+    {
+        Debug.LogWarning("Ack!");
+    }
+
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {

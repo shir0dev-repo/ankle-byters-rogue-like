@@ -20,12 +20,7 @@ public class PlayerManager : Singleton<PlayerManager>
     protected override void Awake()
     {
         base.Awake();
-        //Added null check here
-        if(_player != null)
-        {
-            PlayerHealth = _player.GetComponent<Health>();
-            PlayerHealth.OnDeath += BroadcastPlayerDeath;
-        }
+        // Moved to StartGame method, called by gamemanager
 
         PlayerLayer = LayerMask.NameToLayer("Player");
     }
@@ -35,6 +30,21 @@ public class PlayerManager : Singleton<PlayerManager>
         FloorManager.OnRoomEntered -= SetPlayerPosition;
     }
 
+    //Method for when play scene starts, called by game manager
+    public void StartGame()
+    {
+        Debug.Log(_player == null);
+        _player = SpawnPlayer(GetPlayerPosition()).transform;
+        GameManager.Instance.SetPlayer(_player.gameObject);
+        Debug.Log(_player == null);
+        //Added null check here
+        if (_player != null)
+        {
+            //The two lines below where moved here from Awake method
+            PlayerHealth = _player.GetComponent<Health>();
+            PlayerHealth.OnDeath += BroadcastPlayerDeath;
+        }
+    }
     public GameObject SpawnPlayer(Vector3 position)
     {
         // would not work for multiplayer

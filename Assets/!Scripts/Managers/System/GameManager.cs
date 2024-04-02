@@ -37,6 +37,11 @@ public class GameManager : Singleton<GameManager>
         UIManager.Instance.SetUI(false, false, false);
 
         SceneLoader.Instance.LoadScene(SceneLoader.PLAY_SCENE_INDEX);
+
+        //Player manager starts disabled and is awoken by gamemanger
+        PlayerManager.Instance.StartGame();
+        //See insanity manager
+        InsanityManager.Instance.IncrementOverTime();
         //Added Call to ShadowManager's PlaceShadows() function
         ShadowManager.Instance.PlaceShadows();
     }
@@ -62,6 +67,9 @@ public class GameManager : Singleton<GameManager>
         UIManager.Instance.DisplayGameOverMenu(true);
         SceneLoader.Instance.LoadScene(SceneLoader.GAME_OVER_SCENE_INDEX);
     }
+    
+    // setter for GameManagers player which is used by ShadowManager
+    public void SetPlayer(GameObject player) { Player = player; }
 
     public static void Quit(bool toMenu)
     {

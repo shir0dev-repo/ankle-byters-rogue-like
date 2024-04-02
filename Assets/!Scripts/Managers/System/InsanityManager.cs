@@ -43,4 +43,7 @@ public class InsanityManager : Singleton<InsanityManager>
         _currentInsanity = amount;
         OnInsanityChanged?.Invoke(_currentInsanity);
     }
+
+    // Setter for increment over time so gamemanager can enable on scene change
+    public void IncrementOverTime(bool state = true) { _incrementOverTime = state; }
 }

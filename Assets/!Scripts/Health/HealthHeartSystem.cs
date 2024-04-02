@@ -9,8 +9,9 @@ public class HealthHeartSystem : MonoBehaviour
 
     private void Start()
     {
-        DrawHearts();
+        //Moved health assignment above draw hearts since draw hearts uses health variable
         health = PlayerManager.Instance.PlayerHealth;
+        DrawHearts();
 
         health.OnHealthChanged += UpdateHearts;
     }
