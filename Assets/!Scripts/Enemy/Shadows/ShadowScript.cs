@@ -9,30 +9,38 @@ public class ShadowScript : MonoBehaviour
     public bool isDrifting;
     [SerializeField] float lookSpeed;
     GameObject player;
-    void Start()
+
+    private void Awake()
     {
         isLooking = false;
-        player = GameManager.Instance.Player;
+        
+    }
+    void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
     void Update()
     {
         if (isLooking)
-        {
-            Vector2 toPlayer = (player.transform.position - transform.position).normalized;
-            float targetAngle = Mathf.Atan2(toPlayer.y, toPlayer.x) * Mathf.Rad2Deg + 90f;
+            LookToPlayer();
+    }
 
-            float angleDifference = Mathf.DeltaAngle(targetAngle, transform.eulerAngles.z);
-            float rotationStep = (lookSpeed * Time.deltaTime) /* / Mathf.Abs(angleDifference/100)*/;//Commented section was me messing with increasing the turn speed if greater the angle difference between them and the player
-            float rotationAmount = Mathf.Clamp(angleDifference, -rotationStep, rotationStep);
+    void LookToPlayer()
+    {
+        if (player == null)
+            return;
+        Vector2 toPlayer = (player.transform.position - transform.position).normalized;
+        float targetAngle = Mathf.Atan2(toPlayer.y, toPlayer.x) * Mathf.Rad2Deg + 90f;
 
-            transform.Rotate(Vector3.forward, rotationAmount);
-            if (isDrifting && ((player.transform.position - transform.position).magnitude < 2 && (player.transform.position - transform.position).magnitude > 1.05))
-            {
-                transform.parent.position = Vector3.MoveTowards(transform.position, player.transform.position, 0.2f * Time.deltaTime);
-            }
-        }
+        float angleDifference = Mathf.DeltaAngle(targetAngle, transform.eulerAngles.z);
+        float rotationStep = (lookSpeed * Time.deltaTime) /* / Mathf.Abs(angleDifference/100)*/;//Commented section was me messing with increasing the turn speed if greater the angle difference between them and the player
+        float rotationAmount = Mathf.Clamp(angleDifference, -rotationStep, rotationStep);
+        transform.Rotate(Vector3.forward, rotationAmount);
+        if (isDrifting && ((player.transform.position - transform.position).magnitude < 2 && (player.transform.position - transform.position).magnitude > 1.05))
+            transform.parent.position = Vector3.MoveTowards(transform.position, player.transform.position, 0.2f * Time.deltaTime);
+
     }
 
     public void MakeLooker()
