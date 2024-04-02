@@ -11,19 +11,57 @@ public class ShadowManager : MonoBehaviour
 
     [SerializeField] GameObject shadowPrefab;
     int _insanityStage;
+    private Vector3 _roomPosition = new Vector3(0, 0);
+    private Bounds _roomBounds;
     void Start()
     {
         InsanityManager.OnInsanityChanged += CurrentInsanityStage;
+        FloorManager.OnRoomEntered += PlaceShadows;
         //SpawnShadows();
         SpawnShadowCluster();
         SpawnShadowCluster(3);
         SpawnShadowCluster(8);
+        _roomBounds = new Bounds(_roomPosition, new Vector3(14, 6));
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    void PlaceShadows(Room room, Door door)
+    {
+        foreach(GameObject shadow in shadowPassive)
+        {
+            Destroy(shadow);
+        }
+        shadowPassive.Clear();
+        foreach(GameObject shadow in shadowLooking)
+        {
+            Destroy(shadow);
+        }
+        shadowLooking.Clear();
+        _roomPosition = room.transform.position;
+        _roomBounds = new Bounds(_roomPosition, new Vector3(14, 6));
+        for (int i = 0; i <= Random.Range(1, 5); i++)
+        {
+            SpawnShadowCluster(Random.Range(2, 7));
+        }
+        InsanityStage(_insanityStage);
+    }
+
+    
+    //Note: Code used to see _roomBounds, code was copy and pasted from unity's Renderer.bounds page and slightly modified
+    // code has no gameplay purpose and can be deleted, if you're reading this then I forgot to delete it myself
+    public void OnDrawGizmosSelected()
+    {
+        if (_roomBounds == null)
+            return;
+        Bounds bounds = _roomBounds;
+        Gizmos.matrix = Matrix4x4.identity;
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(bounds.center, bounds.extents * 2);
     }
 
     void CurrentInsanityStage(int insanity)
@@ -74,14 +112,33 @@ public class ShadowManager : MonoBehaviour
 
     void SetLookerState()
     {
-        foreach (GameObject looker in shadowLooking)
+        if (shadowLooking != null)
         {
-            looker.GetComponentInChildren<ShadowScript>().MakeLooker();
+            foreach (GameObject looker in shadowLooking)
+            {
+                looker.GetComponentInChildren<ShadowScript>().MakeLooker();
+            }
         }
-        foreach (GameObject passive in shadowPassive)
+        if (shadowPassive != null)
         {
-            passive.GetComponentInChildren<ShadowScript>().MakePassive();
+            foreach (GameObject passive in shadowPassive)
+            {
+                passive.GetComponentInChildren<ShadowScript>().MakePassive();
+            }
         }
+    }
+
+    Vector3 GetRandomSpawn()
+    {
+        Vector3 randomSpawn;
+        int randomSpawnIndex = 0;
+        do
+        {
+            randomSpawn = new Vector3(_roomPosition.x + Random.Range(-7.0f, 7.0f), _roomPosition.y + Random.Range(-3.0f, 3.0f));
+            randomSpawnIndex++;
+        } while (_roomBounds.Contains(randomSpawn));
+        Debug.Log(randomSpawnIndex);
+        return randomSpawn;
     }
 
     void SpawnShadowCluster(int cluserSize = 6)
@@ -92,7 +149,7 @@ public class ShadowManager : MonoBehaviour
             return;
         }
         float spawnAngles = 360 / (cluserSize - 1);
-        Vector3 randomSpawn = new Vector3(Random.Range(-7.0f, 7.0f), Random.Range(-3.0f, 3.0f));
+        Vector3 randomSpawn = GetRandomSpawn();
         // Quaternion.Euler(0, 0, Random.Range(0, 359)) * vector3.up // How to rotate vector randomly, comment for now will add later
         // Makes a cluster of 3 shadows not just a straight line
         if (cluserSize == 3)
